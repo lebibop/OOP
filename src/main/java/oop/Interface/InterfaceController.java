@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+
 public class InterfaceController implements Initializable
 {
     @FXML
@@ -59,15 +60,15 @@ public class InterfaceController implements Initializable
     }
 
     ObservableList<User> List = FXCollections.observableArrayList(
-            new User("1","David","Airapetov","20"),
-            new User("2","Andrey","Vinogradov","20"),
-            new User("3","Klim","Nikolaev","19"),
-            new User("4","Vlad","Talankov","19")
+            new User(1,"David","Airapetov",20),
+            new User(2,"Andrey","Vinogradov",20),
+            new User(3,"Klim","Nikolaev",19),
+            new User(4,"Vlad","Talankov",19)
     );
     @FXML
     private void add(ActionEvent event)
     {
-        List.add(new User("5","Misha","Ugryumov","19"));
+        List.add(new User(5,"Misha","Ugryumov",19));
         table.setItems(List);
         search();
     }
@@ -144,7 +145,7 @@ public class InterfaceController implements Initializable
                 temp = reader.readLine();
                 if(temp!=null){
                     String[] temp2 = temp.split(";");
-                    List.add(new User(temp2[0],temp2[1],temp2[2],temp2[3]));
+                    List.add(new User(Integer.parseInt(temp2[0]),temp2[1],temp2[2],Integer.parseInt(temp2[3])));
                 }
             }
             while(temp!=null);
@@ -175,8 +176,8 @@ public class InterfaceController implements Initializable
                         String lowerCaseFilter = newValue.toLowerCase();
                         return person.getName().toLowerCase().contains(lowerCaseFilter) ||
                                 person.getSurname().toLowerCase().contains(lowerCaseFilter) ||
-                                person.getAge().toLowerCase().contains(lowerCaseFilter) ||
-                                person.getID().toLowerCase().contains(lowerCaseFilter);
+                                String.valueOf(person.getID()).contains(lowerCaseFilter) ||
+                                String.valueOf(person.getAge()).contains(lowerCaseFilter);
                     });
         });
         SortedList<User> sortedData = new SortedList<>(filteredData);
@@ -184,7 +185,7 @@ public class InterfaceController implements Initializable
         table.setItems(sortedData);
     }
 
-    public void onEditChanged1(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
+    public void onEditChanged1(TableColumn.CellEditEvent<User, Integer> userStringCellEditEvent)
     {
         User user = table.getSelectionModel().getSelectedItem();
         user.setID(userStringCellEditEvent.getNewValue());
@@ -202,7 +203,7 @@ public class InterfaceController implements Initializable
         user.setSurname(userStringCellEditEvent.getNewValue());
         search();
     }
-    public void onEditChanged4(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
+    public void onEditChanged4(TableColumn.CellEditEvent<User, Integer> userStringCellEditEvent)
     {
         User user = table.getSelectionModel().getSelectedItem();
         user.setAge(userStringCellEditEvent.getNewValue());
@@ -264,10 +265,8 @@ public class InterfaceController implements Initializable
 
         table.setItems(List);
         table.setEditable(true);
-        id_column.setCellFactory(TextFieldTableCell.<User>forTableColumn());
         name_column.setCellFactory(TextFieldTableCell.<User>forTableColumn());
         surname_column.setCellFactory(TextFieldTableCell.<User>forTableColumn());
-        age_column.setCellFactory(TextFieldTableCell.<User>forTableColumn());
 
         search();
     }

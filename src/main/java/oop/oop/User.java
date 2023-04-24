@@ -1,45 +1,48 @@
 package oop.oop;
 
-public class User {
-    private String ID;
-    private String Name;
-    private String Surname;
-    private String Age;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
-    public User(String id, String name, String surname, String age) {
-        Name = name;
-        Surname = surname;
-        Age = age;
-        ID = id;
+public class User {
+    private final SimpleIntegerProperty ID;
+    private final SimpleStringProperty Name;
+    private final SimpleStringProperty Surname;
+    private final SimpleIntegerProperty Age;
+
+    public User(Integer id, String name, String surname, Integer age) {
+        ID = new SimpleIntegerProperty(id);
+        Name = new SimpleStringProperty(name);
+        Surname = new SimpleStringProperty(surname);
+        Age = new SimpleIntegerProperty(age);
     }
 
-    public String getID() {
-        return this.ID;
+    public Integer getID() {
+        return ID.get();
     }
 
     public String getName() {
-        return this.Name;
+        return Name.get();
     }
 
     public String getSurname() {
-        return this.Surname;
+        return Surname.get();
     }
 
-    public String getAge() { return this.Age;}
+    public Integer getAge() { return Age.get();}
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(Integer ID) {
+        this.ID.set(ID);
     }
 
     public void setName(String name) {
-        this.Name = name;
+        this.Name.set(name);
     }
 
     public void setSurname(String surname) {
-        this.Surname = surname;
+        this.Surname.set(surname);
     }
 
-    public void setAge(String age) {
-        this.Age = age;
+    public void setAge(Integer age) {
+        this.Age.set(age);
     }
 }
