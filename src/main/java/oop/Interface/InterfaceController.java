@@ -55,11 +55,11 @@ public class InterfaceController implements Initializable
         {
             System.out.println("Workers");
         }
+        search();
     }
 
     ObservableList<User> List = FXCollections.observableArrayList(
             new User("1","David","Airapetov","20"),
-
             new User("2","Andrey","Vinogradov","20"),
             new User("3","Klim","Nikolaev","19"),
             new User("4","Vlad","Talankov","19")
@@ -69,6 +69,7 @@ public class InterfaceController implements Initializable
     {
         List.add(new User("5","Misha","Ugryumov","19"));
         table.setItems(List);
+        search();
     }
 
     private void remove_row() throws MyException
@@ -104,7 +105,7 @@ public class InterfaceController implements Initializable
                 IOAlert.close();
             }
         }
-
+        search();
     }
     @FXML
     private void save(ActionEvent event) throws IOException
@@ -129,6 +130,7 @@ public class InterfaceController implements Initializable
                 IOAlert.close();
             }
         }
+        search();
     }
     @FXML
     private void upload(ActionEvent event) throws IOException
@@ -137,6 +139,7 @@ public class InterfaceController implements Initializable
         {
             BufferedReader reader = new BufferedReader(new FileReader("saves/save.csv"));
             String temp;
+            List.clear();
             do{
                 temp = reader.readLine();
                 if(temp!=null){
@@ -158,6 +161,7 @@ public class InterfaceController implements Initializable
                 IOAlert.close();
             }
         }
+        search();
     }
 
     @FXML
@@ -184,21 +188,25 @@ public class InterfaceController implements Initializable
     {
         User user = table.getSelectionModel().getSelectedItem();
         user.setID(userStringCellEditEvent.getNewValue());
+        search();
     }
     public void onEditChanged2(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
         User user = table.getSelectionModel().getSelectedItem();
         user.setName(userStringCellEditEvent.getNewValue());
+        search();
     }
     public void onEditChanged3(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
         User user = table.getSelectionModel().getSelectedItem();
         user.setSurname(userStringCellEditEvent.getNewValue());
+        search();
     }
     public void onEditChanged4(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
         User user = table.getSelectionModel().getSelectedItem();
         user.setAge(userStringCellEditEvent.getNewValue());
+        search();
     }
 
     public void toPDF(ActionEvent actionEvent) throws Exception
@@ -238,6 +246,7 @@ public class InterfaceController implements Initializable
         {
             e.printStackTrace();
         }
+        search();
     }
 
 
