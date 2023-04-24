@@ -57,12 +57,17 @@ public class InterfaceController implements Initializable
         }
     }
 
-    ObservableList<User> List = FXCollections.observableArrayList();
+    ObservableList<User> List = FXCollections.observableArrayList(
+            new User("1","David","Airapetov","20"),
 
+            new User("2","Andrey","Vinogradov","20"),
+            new User("3","Klim","Nikolaev","19"),
+            new User("4","Vlad","Talankov","19")
+    );
     @FXML
     private void add(ActionEvent event)
     {
-        List.add(new User("-","-","-","-"));
+        List.add(new User("5","Misha","Ugryumov","19"));
         table.setItems(List);
     }
 
