@@ -1,4 +1,4 @@
-package oop.Interface;
+package oop.oop;
 
 public class User {
     private String ID;
@@ -13,35 +13,33 @@ public class User {
         ID = id;
     }
 
+    public String getID() {
+        return this.ID;
+    }
+
+    public String getName() {
+        return this.Name;
+    }
+
+    public String getSurname() {
+        return this.Surname;
+    }
+
+    public String getAge() { return this.Age;}
+
     public void setID(String ID) {
         this.ID = ID;
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public String getSurname() {
-        return Surname;
-    }
-
-    public String getAge() {
-        return Age;
-    }
-
     public void setName(String name) {
-        Name = name;
+        this.Name = name;
     }
 
     public void setSurname(String surname) {
-        Surname = surname;
+        this.Surname = surname;
     }
 
     public void setAge(String age) {
-        Age = age;
+        this.Age = age;
     }
 }

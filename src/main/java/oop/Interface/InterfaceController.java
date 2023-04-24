@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.collections.transformation.FilteredList;
+import oop.oop.User;
 
 import java.io.*;
 import java.net.URL;
