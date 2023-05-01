@@ -14,6 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.collections.transformation.FilteredList;
 import oop.oop.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -22,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class InterfaceController implements Initializable
 {
+    private static final Logger log = LoggerFactory.getLogger("Interface logger");
     @FXML
     private TableColumn<User, String> age_column;
 
@@ -67,9 +70,11 @@ public class InterfaceController implements Initializable
     @FXML
     private void add(ActionEvent event)
     {
+        log.debug("adding a user");
         List.add(new User("5","Misha","Ugryumov","19"));
         table.setItems(List);
         search();
+        log.info("user added");
     }
 
     private void remove_row() throws MyException
@@ -92,10 +97,13 @@ public class InterfaceController implements Initializable
     private void delete(ActionEvent event)
     {
         try {
+            log.debug("deleting a user");
             search_invalid_label.setText("");
             remove_row();
+            log.info("user deleted");
         }
         catch (MyException myEx){
+            log.warn("Exception " + myEx);
             search_invalid_label.setText("Choose a row to delete");
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, myEx.getMessage(), ButtonType.OK);
             IOAlert.setContentText(myEx.getMessage());
@@ -112,6 +120,7 @@ public class InterfaceController implements Initializable
     {
         try
         {
+            log.debug("saving to file");
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
             for(User users : List)
             {
@@ -119,9 +128,11 @@ public class InterfaceController implements Initializable
                 writer.newLine();
             }
             writer.close();
+            log.info("saved to file");
         }
         catch (IOException e)
         {
+            log.warn("Exception " + e);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
             IOAlert.setContentText("Error");
             IOAlert.showAndWait();
@@ -137,6 +148,7 @@ public class InterfaceController implements Initializable
     {
         try
         {
+            log.debug("uploading to file");
             BufferedReader reader = new BufferedReader(new FileReader("saves/save.csv"));
             String temp;
             List.clear();
@@ -150,9 +162,11 @@ public class InterfaceController implements Initializable
             while(temp!=null);
             table.setItems(List);
             reader.close();
+            log.info("uploaded to file");
         }
         catch (IOException e)
         {
+            log.warn("Exception " + e);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
             IOAlert.setContentText("Error");
             IOAlert.showAndWait();
@@ -186,32 +200,41 @@ public class InterfaceController implements Initializable
 
     public void onEditChanged1(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
+        log.debug("Editing cell");
         User user = table.getSelectionModel().getSelectedItem();
         user.setID(userStringCellEditEvent.getNewValue());
         search();
+        log.info("edited cell");
     }
     public void onEditChanged2(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
+        log.debug("Editing cell");
         User user = table.getSelectionModel().getSelectedItem();
         user.setName(userStringCellEditEvent.getNewValue());
         search();
+        log.info("edited cell");
     }
     public void onEditChanged3(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
+        log.debug("Editing cell");
         User user = table.getSelectionModel().getSelectedItem();
         user.setSurname(userStringCellEditEvent.getNewValue());
         search();
+        log.info("edited cell");
     }
     public void onEditChanged4(TableColumn.CellEditEvent<User, String> userStringCellEditEvent)
     {
+        log.debug("Editing cell");
         User user = table.getSelectionModel().getSelectedItem();
         user.setAge(userStringCellEditEvent.getNewValue());
         search();
+        log.info("edited cell");
     }
 
     public void toPDF(ActionEvent actionEvent) throws Exception
     {
         try {
+            log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
             PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
             my_pdf_report.open();
@@ -241,9 +264,11 @@ public class InterfaceController implements Initializable
             }
             my_pdf_report.add(my_report_table);
             my_pdf_report.close();
+            log.info("Saved to PDF");
         }
         catch (FileNotFoundException | DocumentException | MyException e)
         {
+            log.warn("Exception " + e);
             e.printStackTrace();
         }
         search();

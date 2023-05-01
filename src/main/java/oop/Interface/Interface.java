@@ -6,14 +6,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.slf4j.*;
 
 import java.util.Objects;
 
 public class Interface extends Application {
 
+    private static final Logger log = LoggerFactory.getLogger("Main logger");
     @Override
     public void start(Stage MainStage) throws Exception
     {
+        log.debug("Start program");
         Parent LoginParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
         Scene LoginScene = new Scene(LoginParent);
         MainStage.setScene(LoginScene);

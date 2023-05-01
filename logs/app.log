@@ -1,0 +1,35 @@
+{Main logger} 2023-05-01 20:30:39.677 [DEBUG]: Start program
+{Main logger} 2023-05-01 20:33:40.647 [DEBUG]: Start program
+{Login logger} 2023-05-01 20:33:43.856 [DEBUG]: Button pressed
+{Main logger} 2023-05-01 20:38:27.174 [DEBUG]: Start program
+{Login logger} 2023-05-01 20:38:29.776 [DEBUG]: Button pressed
+{Login logger} 2023-05-01 20:38:29.811 [DEBUG]: password verification was successful. switching to a new screen
+{Main logger} 2023-05-01 20:47:51.835 [DEBUG]: Start program
+{Login logger} 2023-05-01 20:47:53.807 [DEBUG]: Button pressed
+{Interface logger} 2023-05-01 20:47:53.842 [DEBUG]: Searching
+{Login logger} 2023-05-01 20:47:53.844 [DEBUG]: password verification was successful. switching to a new screen
+{Main logger} 2023-05-01 20:50:59.799 [DEBUG]: Start program
+{Login logger} 2023-05-01 20:51:03.745 [DEBUG]: Button pressed
+{Login logger} 2023-05-01 20:51:03.783 [DEBUG]: password verification was successful. switching to a new screen
+{Interface logger} 2023-05-01 20:51:09.799 [DEBUG]: Editing cell
+{Interface logger} 2023-05-01 20:51:09.800 [INFO ]: edited cell
+{Interface logger} 2023-05-01 20:51:12.741 [DEBUG]: saving to file
+{Interface logger} 2023-05-01 20:51:12.771 [INFO ]: saved to file
+{Interface logger} 2023-05-01 20:51:16.145 [DEBUG]: uploading to file
+{Interface logger} 2023-05-01 20:51:16.147 [INFO ]: uploaded to file
+{Interface logger} 2023-05-01 20:51:19.564 [DEBUG]: adding a user
+{Interface logger} 2023-05-01 20:51:19.564 [INFO ]: user added
+{Interface logger} 2023-05-01 20:51:23.791 [DEBUG]: deleting a user
+{Interface logger} 2023-05-01 20:51:23.805 [INFO ]: user deleted
+{Interface logger} 2023-05-01 20:51:25.569 [DEBUG]: deleting a user
+{Interface logger} 2023-05-01 20:51:25.570 [INFO ]: user deleted
+{Interface logger} 2023-05-01 20:51:27.629 [DEBUG]: deleting a user
+{Interface logger} 2023-05-01 20:51:27.630 [INFO ]: user deleted
+{Interface logger} 2023-05-01 20:51:28.299 [DEBUG]: deleting a user
+{Interface logger} 2023-05-01 20:51:28.300 [INFO ]: user deleted
+{Interface logger} 2023-05-01 20:51:28.894 [DEBUG]: deleting a user
+{Interface logger} 2023-05-01 20:51:28.895 [INFO ]: user deleted
+{Interface logger} 2023-05-01 20:51:29.641 [DEBUG]: uploading to file
+{Interface logger} 2023-05-01 20:51:29.642 [INFO ]: uploaded to file
+{Interface logger} 2023-05-01 20:51:30.855 [DEBUG]: deleting a user
+{Interface logger} 2023-05-01 20:51:30.856 [WARN ]: Exception oop.Interface.InterfaceController$MyException: Choose a row to delete

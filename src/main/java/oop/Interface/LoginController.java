@@ -18,9 +18,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LoginController implements Initializable {
 
+    private static final Logger log = LoggerFactory.getLogger("Login logger");
     public Button LoginButton;
 
     @FXML
@@ -35,7 +38,7 @@ public class LoginController implements Initializable {
     @FXML
     private void LoginButtonAction(ActionEvent event) throws IOException
     {
-        System.out.println("You clicked me!");
+        log.debug("Button pressed");
 
         Parent MainParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainItems.fxml")));
         Scene MainScene = new Scene(MainParent);
@@ -46,11 +49,13 @@ public class LoginController implements Initializable {
 
         if (/*isValidCredentials()*/true)
         {
+            log.debug("password verification was successful. switching to a new screen");
             MainStage.setScene(MainScene);
             MainStage.show();
         }
         else
         {
+            log.debug("password verification was unsuccessful");
             username_box.clear();
             password_box.clear();
             invalid_label.setText("Sorry, invalid credentials");
@@ -62,6 +67,7 @@ public class LoginController implements Initializable {
         Connection Connection = null;
         java.sql.Statement Statement = null;
         try {
+            log.debug("password verification");
             Connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/LoginDB", "root", "1234");
             Connection.setAutoCommit(false);
             Statement = Connection.createStatement();
@@ -80,6 +86,7 @@ public class LoginController implements Initializable {
         }
         catch ( Exception e )
         {
+            log.warn("Exception " + e);
             System.exit(0);
         }
         return LetIn;
