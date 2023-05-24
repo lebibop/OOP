@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="oop.oop">
+
+    <class name="Worker" table="worker">
+        <id name="id_worker" type="int" column="id_worker" >
+            <generator class="assigned" />
+        </id>
+
+        <property name="name" >
+            <column name="name" />
+        </property>
+        <property name="surname" >
+            <column name="surname" />
+        </property>
+        <property name="date_bd">
+            <column name="date_bd" />
+        </property>
+        <property name="position" >
+            <column name="position" />
+        </property>
+        <property name="experience" >
+            <column name="experience" />
+        </property>
+    </class>
+
+</hibernate-mapping>

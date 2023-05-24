@@ -40,7 +40,7 @@ public class LoginController implements Initializable {
     {
         log.debug("Button pressed");
 
-        Parent MainParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainItems.fxml")));
+        Parent MainParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/MainItems.fxml")));
         Scene MainScene = new Scene(MainParent);
 
         Stage MainStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

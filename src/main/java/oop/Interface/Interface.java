@@ -17,7 +17,7 @@ public class Interface extends Application {
     public void start(Stage MainStage) throws Exception
     {
         log.debug("Start program");
-        Parent LoginParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+        Parent LoginParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/login.fxml")));
         Scene LoginScene = new Scene(LoginParent);
         MainStage.setScene(LoginScene);
 //        MainStage.initStyle(StageStyle.UTILITY);

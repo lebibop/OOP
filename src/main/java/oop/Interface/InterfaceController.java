@@ -51,22 +51,18 @@ public class InterfaceController implements Initializable
 
     private final String[] choices = {"Workers","Clients","Rooms","Reports"};
 
-    private void getChoices(ActionEvent event)
-    {
+    @FXML
+    private void getChoices(ActionEvent event) throws IOException {
         String choice = choice_box.getValue();
+        if (Objects.equals(choice, "Clients"))
+            SceneController.getClientsScene(event);
         if (Objects.equals(choice, "Workers"))
-        {
-            System.out.println("Workers");
-        }
+            SceneController.getWorkersScene(event);
+
         search();
     }
 
-    ObservableList<User> List = FXCollections.observableArrayList(
-            new User("1","David","Airapetov","20"),
-            new User("2","Andrey","Vinogradov","20"),
-            new User("3","Klim","Nikolaev","19"),
-            new User("4","Vlad","Talankov","19")
-    );
+    ObservableList<User> List = FXCollections.observableArrayList();
     @FXML
     private void add(ActionEvent event)
     {
@@ -279,7 +275,7 @@ public class InterfaceController implements Initializable
     public void initialize(URL url, ResourceBundle rb)
     {
         choice_box.getItems().addAll(choices);
-        choice_box.setOnAction(this::getChoices);
+        choice_box.setValue("Choose a table");
 
         id_column.setCellValueFactory(new PropertyValueFactory<User, String>("ID"));
         name_column.setCellValueFactory(new PropertyValueFactory<User, String>("Name"));

@@ -7,10 +7,14 @@ module sample {
     requires itextpdf;
     requires org.apache.logging.log4j.slf4j;
     requires slf4j.api;
+    requires java.persistence;
+    requires org.hibernate.orm.core;
+    requires java.naming;
+    requires java.annotation;
 
 
     opens oop.Interface to javafx.fxml;
     exports oop.Interface;
     exports oop.oop;
-    opens oop.oop to javafx.fxml;
+    opens oop.oop;
 }
