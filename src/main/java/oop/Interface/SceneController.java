@@ -39,15 +39,6 @@ public class SceneController {
         changeScreen(event, "/Clients.fxml");
     }
 
-    public static void getAddWorkerScene(ActionEvent event) throws IOException {
-
-        logger.debug("Transition to CLIENTS list scene");
-
-        changeScreen(event, "/addWorker.fxml");
-    }
-
-
-
     private static void changeScreen(ActionEvent event, String path) throws IOException
     {
 

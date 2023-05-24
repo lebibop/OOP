@@ -21,18 +21,18 @@ public class newWindowController {
         getPopUpWindow("/addWorker.fxml");
     }
 
-    public static Stage getNewVetWindow() throws IOException {
-        Stage stage = new Stage();
-        Pane main = FXMLLoader.load(Objects.requireNonNull(newWindowController.class.getResource("/addWorker.fxml")));
-        controlDrag(main, stage);
-        stage.setScene(new Scene(main));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("Pet Clinic CRM");
-        stage.getScene();
-        stage.showAndWait();
-        return stage;
-    }
+//    public static Stage getNewVetWindow() throws IOException {
+//        Stage stage = new Stage();
+//        Pane main = FXMLLoader.load(Objects.requireNonNull(newWindowController.class.getResource("/addWorker.fxml")));
+//        controlDrag(main, stage);
+//        stage.setScene(new Scene(main));
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.setTitle("Pet Clinic CRM");
+//        stage.getScene();
+//        stage.showAndWait();
+//        return stage;
+//    }
 
 //    public static void getNewVisitWindow() throws IOException {
 //        getPopUpWindow(ScenePath.ADD_VISIT.getPath());

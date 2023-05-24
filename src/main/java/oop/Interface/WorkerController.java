@@ -92,15 +92,13 @@ public class WorkerController implements Initializable
 
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
-        SceneController.getAddWorkerScene(event);
+        SceneController.getWorkersScene(event);
     }
-
-
     @FXML
     private void add(ActionEvent event) throws IOException {
         log.debug("adding a worker");
 
-        newWindowController.getNewVetWindow();
+        newWindowController.getNewPetWindow();
         if(UpdateStatus.isIsWorkerAdded()) {
             refreshScreen(event);
             UpdateStatus.setIsWorkerAdded(false);
