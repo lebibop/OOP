@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <?import javafx.scene.Cursor?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="444.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.oop.AddWorkerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="444.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.oop.AddWorkerController">
    <children>
       <TextField fx:id="name" layoutX="33.0" layoutY="65.0" promptText="Enter Name" />
       <TextField fx:id="surname" layoutX="33.0" layoutY="111.0" promptText="Enter Surname" />

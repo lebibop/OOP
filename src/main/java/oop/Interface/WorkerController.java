@@ -227,7 +227,7 @@ public class WorkerController implements Initializable
             PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
             my_pdf_report.open();
 
-            PdfPTable my_report_table = new PdfPTable(4);
+            PdfPTable my_report_table = new PdfPTable(5);
 
             PdfPCell table_cell;
             my_report_table.setHeaderRows(1);
@@ -253,8 +253,9 @@ public class WorkerController implements Initializable
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(workers.getPosition()));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getExperience()));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(workers.getExperience())));
                 my_report_table.addCell(table_cell);
+                System.out.println(workers.getExperience());
             }
             my_pdf_report.add(my_report_table);
             my_pdf_report.close();

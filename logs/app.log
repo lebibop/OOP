@@ -4015,3 +4015,23 @@ java.lang.Exception: exception just for purpose of providing stack trace
 {Scene Logger} 2023-05-24 19:58:38.732 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-24 20:27:20.459 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-24 20:27:45.393 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:29:17.606 [ERROR]: Transition to WORKERS list scene
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-24 23:29:18.044 [ERROR]: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+{Scene Logger} 2023-05-24 23:29:32.132 [ERROR]: Transition to WORKERS list scene
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-24 23:29:32.560 [ERROR]: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+{Scene Logger} 2023-05-24 23:36:33.729 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:37:30.343 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:39:08.245 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:39:28.240 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:39:46.469 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:44:13.266 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:44:25.245 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:45:23.010 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:45:58.036 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:47:20.082 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:48:59.912 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-24 23:50:08.259 [ERROR]: Transition to WORKERS list scene

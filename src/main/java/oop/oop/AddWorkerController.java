@@ -31,7 +31,7 @@ public class AddWorkerController {
     private Label alertText;
 
     @FXML
-    private void saveNewVetToDb(ActionEvent event) throws IOException {
+    private void saveNewVetToDb(ActionEvent event){
         if (true/*validateInputs()*/) {
             Worker vet = createVetFromInput();
             boolean isSaved = new WorkerService().createWorker(vet);
