@@ -1,13 +1,9 @@
 package oop.oop;
 
-import oop.oop.Worker;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-
-import javax.persistence.TypedQuery;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,16 +71,4 @@ public class WorkerService {
             return new ArrayList<>();
         }
     }
-
-//    public Long getWorkersNumber() {
-//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//            Query<?> query = session.createQuery("SELECT count(v) FROM Worker v");
-//            return (Long) query.uniqueResult();
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            return 0L;
-//        }
-//    }
-
-
 }

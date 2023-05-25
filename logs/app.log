@@ -4035,3 +4035,232 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 {Scene Logger} 2023-05-24 23:47:20.082 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-24 23:48:59.912 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-24 23:50:08.259 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 17:56:50.018 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:01:23.694 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:01:29.873 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:01:57.162 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:02:22.180 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:02:35.071 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:05:05.911 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:05:22.773 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:05:53.835 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:06:05.081 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:06:38.678 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:06:48.407 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:06:49.360 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:06:50.102 [ERROR]: Transition to WORKERS list scene
+{org.hibernate.id.enhanced.TableStructure} 2023-05-25 18:15:25.324 [ERROR]: could not read a hi value
+java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequence' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at org.hibernate.id.enhanced.TableStructure.executeQuery(TableStructure.java:216) ~[hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure.access$300(TableStructure.java:46) ~[hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure$1$1.execute(TableStructure.java:138) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure$1$1.execute(TableStructure.java:126) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.jdbc.WorkExecutor.executeReturningWork(WorkExecutor.java:55) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.jdbc.AbstractReturningWork.accept(AbstractReturningWork.java:34) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:57) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure$1.getNextValue(TableStructure.java:125) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.NoopOptimizer.generate(NoopOptimizer.java:40) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.SequenceStyleGenerator.generate(SequenceStyleGenerator.java:482) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:119) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:192) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:177) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:97) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:73) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:679) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:671) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:666) [hibernate-core-5.3.20.Final.jar:?]
+	at oop.oop.app_worker.main(app_worker.java:28) [classes/:?]
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-25 18:15:25.329 [ERROR]: Table 'mydb.hibernate_sequence' doesn't exist
+{org.hibernate.id.enhanced.TableStructure} 2023-05-25 18:15:55.059 [ERROR]: could not read a hi value
+java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequence' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at org.hibernate.id.enhanced.TableStructure.executeQuery(TableStructure.java:216) ~[hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure.access$300(TableStructure.java:46) ~[hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure$1$1.execute(TableStructure.java:138) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure$1$1.execute(TableStructure.java:126) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.jdbc.WorkExecutor.executeReturningWork(WorkExecutor.java:55) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.jdbc.AbstractReturningWork.accept(AbstractReturningWork.java:34) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:57) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableStructure$1.getNextValue(TableStructure.java:125) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.NoopOptimizer.generate(NoopOptimizer.java:40) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.SequenceStyleGenerator.generate(SequenceStyleGenerator.java:482) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:119) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:192) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:177) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:97) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:73) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:679) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:671) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:666) [hibernate-core-5.3.20.Final.jar:?]
+	at oop.oop.app_worker.main(app_worker.java:28) [classes/:?]
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-25 18:15:55.064 [ERROR]: Table 'mydb.hibernate_sequence' doesn't exist
+{org.hibernate.id.enhanced.TableGenerator} 2023-05-25 18:16:15.093 [ERROR]: HHH000351: Could not read or init a hi value
+java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972) ~[mysql-connector-j-8.0.32.jar:8.0.32]
+	at org.hibernate.id.enhanced.TableGenerator.executeQuery(TableGenerator.java:705) ~[hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableGenerator.access$400(TableGenerator.java:132) ~[hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableGenerator$1$1.execute(TableGenerator.java:589) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableGenerator$1$1.execute(TableGenerator.java:575) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.jdbc.WorkExecutor.executeReturningWork(WorkExecutor.java:55) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.jdbc.AbstractReturningWork.accept(AbstractReturningWork.java:34) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:57) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableGenerator$1.getNextValue(TableGenerator.java:574) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.NoopOptimizer.generate(NoopOptimizer.java:40) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.id.enhanced.TableGenerator.generate(TableGenerator.java:570) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:119) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:192) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:177) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:97) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:73) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:679) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:671) [hibernate-core-5.3.20.Final.jar:?]
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:666) [hibernate-core-5.3.20.Final.jar:?]
+	at oop.oop.app_worker.main(app_worker.java:28) [classes/:?]
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-25 18:16:15.098 [ERROR]: Table 'mydb.hibernate_sequences' doesn't exist
+{Scene Logger} 2023-05-25 18:39:41.101 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:41:01.961 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:51:52.810 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:51:58.777 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:55:31.626 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:55:47.329 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:56:22.624 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:57:20.501 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 18:57:36.334 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:04:47.868 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:05:13.307 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:05:25.250 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:06:06.846 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:07:40.215 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:08:10.500 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:10:55.633 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:11:05.549 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:11:10.848 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:11:12.329 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:11:23.770 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:11:25.316 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:11:29.911 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:13:14.990 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:13:18.356 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:13:22.668 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:16:21.208 [ERROR]: Transition to WORKERS list scene
+{Worker logger} 2023-05-25 19:16:23.572 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Scene Logger} 2023-05-25 19:24:30.940 [ERROR]: Transition to WORKERS list scene
+{Worker logger} 2023-05-25 19:24:34.051 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Scene Logger} 2023-05-25 19:24:38.485 [ERROR]: Transition to WORKERS list scene
+{Worker logger} 2023-05-25 19:24:40.318 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Scene Logger} 2023-05-25 19:31:59.698 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:32:27.284 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:34:00.270 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:34:09.884 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:34:49.079 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:35:00.876 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:35:03.041 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:37:44.501 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:43:16.851 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:43:57.044 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:44:14.355 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:53:00.440 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:53:14.397 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:55:06.666 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:55:14.288 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:58:18.830 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 19:58:23.868 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:01:00.243 [ERROR]: Transition to WORKERS list scene
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-25 20:01:03.356 [ERROR]: Can't drop database 'restaurantapp'; database doesn't exist
+{Scene Logger} 2023-05-25 20:03:36.104 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:03:41.934 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:03:42.016 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:04:08.800 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:04:13.915 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:04:13.967 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:04:47.832 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:04:50.933 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:05:52.070 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:06:46.755 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:06:55.366 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:07:31.224 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:07:39.666 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:21:02.932 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:21:54.783 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:26:21.555 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:27:34.250 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:37:31.960 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:40:16.713 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:44:53.617 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:46:04.837 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:50:18.672 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:51:52.940 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:52:57.100 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:53:51.070 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 20:55:48.046 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 21:01:09.254 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 21:34:18.793 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 21:58:23.311 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:02:52.252 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:15:11.597 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:16:15.579 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:18:04.427 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:31:58.156 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:32:15.310 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:34:06.805 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:34:13.308 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:36:41.533 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:36:47.934 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:37:32.513 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:38:25.286 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:44:31.635 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:45:48.869 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:46:15.709 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:46:33.460 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:50:39.345 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:51:28.835 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:51:51.424 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:52:33.723 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 22:52:51.307 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:02:08.392 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:02:52.560 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:06:36.216 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:06:43.036 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:06:56.909 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:07:50.415 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:07:56.185 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:08:45.625 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:15:01.028 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:15:12.814 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:16:19.208 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:27:22.746 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:34:05.376 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:53:50.943 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:56:40.460 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:57:18.703 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:57:53.282 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-25 23:59:51.638 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:00:08.410 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:00:39.392 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:03:17.618 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:24:11.928 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:31:51.170 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:32:32.569 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:33:14.492 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:37:30.442 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:38:39.244 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:42:52.138 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:43:50.403 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:44:29.461 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:44:57.139 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:45:57.373 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:46:20.535 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:46:40.164 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:47:44.385 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:50:48.995 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:51:04.269 [ERROR]: Transition to WORKERS list scene

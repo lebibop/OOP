@@ -4,7 +4,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,51 +12,43 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.Duration;
-import oop.oop.UpdateStatus;
-import oop.oop.Worker;
-import oop.oop.WorkerService;
-import oop.oop.newWindowController;
+import javafx.util.converter.IntegerStringConverter;
+import oop.oop.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.*;
 import java.net.URL;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+
+
 public class WorkerController implements Initializable
 {
+    @FXML
+    private TableColumn<Worker, String> name_column;
+    @FXML
+    private TableColumn<Worker, String> surname_column;
     @FXML
     public TableColumn<Worker, String> date_column;
     @FXML
     public TableColumn<Worker, String> position_column;
     @FXML
-    public TableColumn<Worker, String> exp_column;
+    public TableColumn<Worker, Integer> exp_column;
     private static final Logger log = LoggerFactory.getLogger("Worker logger");
-
-
 
     @FXML
     private ChoiceBox<String> choice_box;
 
     @FXML
-    private TableColumn<Worker, String> name_column;
-
-    @FXML
     private TextField search;
 
     @FXML
-    private TableColumn<Worker, String> surname_column;
-
-    @FXML
-    private TableView<Worker> table;
+    private TableView<Worker> table = new TableView<Worker>();
 
     @FXML
     private Label search_invalid_label;
@@ -70,14 +61,15 @@ public class WorkerController implements Initializable
 
 
 
-//    @FXML
-//    private void initialize() {
-//        setTexts();
-//        setObList();
-//        fillTable();
-//        addTableSettings();
-//        exitBtn.setOnAction(SceneController::close);
-//    }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -115,12 +107,17 @@ public class WorkerController implements Initializable
 
 
 
-    private void remove_row() throws MyException
-    {
-        table.setItems(List);
+    private void remove_row(ActionEvent event) throws MyException, IOException {
+
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
-        else table.getItems().remove(selectedID);
+        else {
+            ObservableList<Worker> selectedRows = table.getSelectionModel().getSelectedItems();
+            for (Worker worker : selectedRows) {
+                workerService.deleteWorker(worker);
+            }
+            refreshScreen(event);
+        }
     }
 
     static class MyException extends Exception
@@ -137,12 +134,12 @@ public class WorkerController implements Initializable
         try {
             log.debug("deleting a worker");
             search_invalid_label.setText("");
-            remove_row();
+            remove_row(event);
             log.info("worker deleted");
         }
-        catch (MyException myEx){
-            log.warn("Exception " + myEx);
-            search_invalid_label.setText("Choose a row to delete");
+
+        catch (MyException | IOException myEx){
+            log.error("Exception " + myEx);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, myEx.getMessage(), ButtonType.OK);
             IOAlert.setContentText(myEx.getMessage());
             IOAlert.showAndWait();
@@ -161,7 +158,7 @@ public class WorkerController implements Initializable
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
             for(Worker workers : List)
             {
-                writer.write(workers.getId_worker() + ";" + workers.getName() + ";" + workers.getSurname() + ";"
+                writer.write(workers.getName() + ";" + workers.getSurname() + ";"
                         + workers.getDate_bd() + ";" + workers.getPosition() + ";" + workers.getExperience());
                 writer.newLine();
             }
@@ -183,23 +180,36 @@ public class WorkerController implements Initializable
     @FXML
     private void upload(ActionEvent event) throws IOException
     {
-        try
-        {
+        try {
+            ObservableList<Worker> selectedRows = table.getItems();
+            for (Worker worker : selectedRows) {
+                workerService.deleteWorker(worker);
+            }
+
+
+
+
             log.debug("uploading to file");
             BufferedReader reader = new BufferedReader(new FileReader("saves/save.csv"));
             String temp;
-            List.clear();
             do{
                 temp = reader.readLine();
                 if(temp!=null){
                     String[] temp2 = temp.split(";");
-                    String[] words = temp2[3].split("-");
-                    List.add(new Worker(Integer.parseInt(temp2[0]),temp2[1],temp2[2], LocalDate.of(Integer.parseInt(words[2]), Integer.parseInt(words[1]), Integer.parseInt(words[0])),temp2[4],Integer.parseInt(temp2[5])));
+                    Worker st = new Worker();
+                    st.setName(temp2[0]);
+                    st.setSurname(temp2[1]);
+                    String[] words = temp2[2].split("-");
+                    st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
+                    st.setPosition(temp2[3]);
+                    st.setExperience(Integer.parseInt(temp2[4]));
+
+                    workerService.createWorker(st);
                 }
             }
             while(temp!=null);
-            table.setItems(List);
             reader.close();
+            refreshScreen(event);
             log.info("uploaded to file");
         }
         catch (IOException e)
@@ -255,7 +265,6 @@ public class WorkerController implements Initializable
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(String.valueOf(workers.getExperience())));
                 my_report_table.addCell(table_cell);
-                System.out.println(workers.getExperience());
             }
             my_pdf_report.add(my_report_table);
             my_pdf_report.close();
@@ -267,6 +276,44 @@ public class WorkerController implements Initializable
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void change_name(TableColumn.CellEditEvent<Worker, String> editEvent) {
+        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setName(editEvent.getNewValue());
+        workerService.updateWorker(selectedPet);
+    }
+    @FXML
+    private void change_surname(TableColumn.CellEditEvent<Worker, String> editEvent) {
+        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setSurname(editEvent.getNewValue());
+        workerService.updateWorker(selectedPet);
+    }
+    @FXML
+    private void change_exp(TableColumn.CellEditEvent<Worker, Integer> editEvent) {
+        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setExperience(editEvent.getNewValue());
+        workerService.updateWorker(selectedPet);
+    }
+
+
+
+    @FXML
+    private void change_pos(TableColumn.CellEditEvent<Worker, String> editEvent) {
+        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setPosition(editEvent.getNewValue());
+        System.out.println(11111111);
+        workerService.updateWorker(selectedPet);
+    }
+
+//    @FXML
+//    private void change_date(TableColumn.CellEditEvent<Worker, LocalDate> editEvent) {
+//        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+//        selectedPet.setDate_bd(editEvent.getNewValue());
+//        System.out.println(11111111);
+//        workerService.updateWorker(selectedPet);
+//    }
+
 
 
 
@@ -299,9 +346,13 @@ public class WorkerController implements Initializable
     }
 
 
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
         choice_box.setValue("Choose a table");
 
@@ -310,9 +361,24 @@ public class WorkerController implements Initializable
         //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
         surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
-        date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
+        date_column.setCellValueFactory(new PropertyValueFactory<Worker, String>("Date_bd"));
         position_column.setCellValueFactory(new PropertyValueFactory<>("Position"));
         exp_column.setCellValueFactory(new PropertyValueFactory<>("Experience"));
+
+
+        table.setEditable(true);
+        name_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
+        surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
+        position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
+        exp_column.setCellFactory(TextFieldTableCell.<Worker, Integer>forTableColumn(new IntegerStringConverter()));
+
+
+
+
+
+
+
+
 
 
 
@@ -320,12 +386,7 @@ public class WorkerController implements Initializable
 
         System.out.println(getSortedList());
         table.setItems(getSortedList());
-//        table.setEditable(true);
-//        name_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-//        surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-//        position_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
 
-//        search();
     }
 
 
