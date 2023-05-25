@@ -34,7 +34,7 @@ public class WorkerController implements Initializable
     @FXML
     private TableColumn<Worker, String> surname_column;
     @FXML
-    public TableColumn<Worker, String> date_column;
+    public TableColumn<Worker, LocalDate> date_column;
     @FXML
     public TableColumn<Worker, String> position_column;
     @FXML
@@ -302,17 +302,15 @@ public class WorkerController implements Initializable
     private void change_pos(TableColumn.CellEditEvent<Worker, String> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
         selectedPet.setPosition(editEvent.getNewValue());
-        System.out.println(11111111);
         workerService.updateWorker(selectedPet);
     }
 
-//    @FXML
-//    private void change_date(TableColumn.CellEditEvent<Worker, LocalDate> editEvent) {
-//        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-//        selectedPet.setDate_bd(editEvent.getNewValue());
-//        System.out.println(11111111);
-//        workerService.updateWorker(selectedPet);
-//    }
+    @FXML
+    private void change_data(TableColumn.CellEditEvent<Worker, LocalDate> editEvent) {
+        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setDate_bd(editEvent.getNewValue());
+        workerService.updateWorker(selectedPet);
+    }
 
 
 
@@ -349,6 +347,8 @@ public class WorkerController implements Initializable
 
 
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -361,7 +361,7 @@ public class WorkerController implements Initializable
         //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
         surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
-        date_column.setCellValueFactory(new PropertyValueFactory<Worker, String>("Date_bd"));
+//        date_column.setCellValueFactory(new PropertyValueFactory<Worker, String>("Date_bd"));
         position_column.setCellValueFactory(new PropertyValueFactory<>("Position"));
         exp_column.setCellValueFactory(new PropertyValueFactory<>("Experience"));
 
@@ -371,6 +371,9 @@ public class WorkerController implements Initializable
         surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
         position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
         exp_column.setCellFactory(TextFieldTableCell.<Worker, Integer>forTableColumn(new IntegerStringConverter()));
+
+        date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
+        date_column.setCellFactory(new LocalDateCellFactory());
 
 
 

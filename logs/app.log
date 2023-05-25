@@ -4264,3 +4264,24 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-05-26 00:47:44.385 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 00:50:48.995 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 00:51:04.269 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 00:53:20.206 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:02:53.236 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:07:29.041 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:07:39.883 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:08:45.812 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:09:04.666 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:14:55.503 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:15:19.745 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:17:11.380 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:20:08.975 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:24:06.757 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:24:48.717 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:25:04.405 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:25:07.997 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:26:58.802 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:27:16.254 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:27:37.009 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:28:02.095 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 01:28:55.010 [ERROR]: Transition to WORKERS list scene
+{Worker logger} 2023-05-26 01:28:55.895 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Scene Logger} 2023-05-26 01:29:01.640 [ERROR]: Transition to WORKERS list scene

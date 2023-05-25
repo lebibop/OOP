@@ -15,7 +15,7 @@
       <columns>
          <TableColumn fx:id="name_column" onEditCommit="#change_name" prefWidth="93.60003662109375" text="Name" />
          <TableColumn fx:id="surname_column" onEditCommit="#change_surname" prefWidth="98.39996337890625" text="Surname" />
-         <TableColumn fx:id="date_column"  prefWidth="126.4000244140625" text="Date" />
+         <TableColumn fx:id="date_column" onEditCommit="#change_data" prefWidth="126.4000244140625" text="Date" />
          <TableColumn fx:id="position_column" onEditCommit="#change_pos" prefWidth="128.80010986328125" text="Position" />
          <TableColumn fx:id="exp_column" onEditCommit="#change_exp" prefWidth="91.9998779296875" text="Experience" />
       </columns>
