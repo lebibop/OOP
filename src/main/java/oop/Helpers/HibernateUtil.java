@@ -1,5 +1,6 @@
-package oop.oop;
+package oop.Helpers;
 
+import oop.Model.Worker;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

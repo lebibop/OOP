@@ -1,4 +1,4 @@
-package oop.oop;
+package oop.Helpers;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

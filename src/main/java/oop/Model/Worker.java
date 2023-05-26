@@ -1,4 +1,4 @@
-package oop.oop;
+package oop.Model;
 
 import javax.persistence.*;
 import java.sql.Date;

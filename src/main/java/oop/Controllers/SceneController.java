@@ -1,17 +1,11 @@
-package oop.Interface;
+package oop.Controllers;
 
-import oop.Interface.Interface;
-import oop.Interface.InterfaceController;
-import oop.oop.User;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

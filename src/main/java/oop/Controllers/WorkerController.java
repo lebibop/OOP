@@ -1,4 +1,4 @@
-package oop.Interface;
+package oop.Controllers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
@@ -20,8 +20,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
-import oop.oop.*;
+import oop.Helpers.CustomIntegerStringConverter;
+import oop.Helpers.LocalDateCellFactory;
+import oop.Helpers.UpdateStatus;
+import oop.Model.Worker;
+import oop.Services.WorkerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +33,10 @@ import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static oop.oop.AddWorkerController.isNumeric;
+import static oop.AddControllers.AddWorkerController.isNumeric;
 
 
 public class WorkerController implements Initializable
@@ -187,7 +189,6 @@ public class WorkerController implements Initializable
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
             File file = fileChooser.showOpenDialog(stage);
 
-            System.out.println(file.toURI().toString().substring(6));
             BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
             ObservableList<Worker> selectedRows = table.getItems();
             for (Worker worker : selectedRows) {

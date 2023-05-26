@@ -1,13 +1,11 @@
-package oop.oop;
+package oop.AppClasses;
 
+import oop.Helpers.HibernateUtil;
+import oop.Model.Worker;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.time.LocalDate;
-import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;

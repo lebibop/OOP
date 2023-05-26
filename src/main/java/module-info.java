@@ -13,8 +13,18 @@ module sample {
     requires java.annotation;
 
 
-    opens oop.Interface to javafx.fxml;
-    exports oop.Interface;
-    exports oop.oop;
-    opens oop.oop;
+    opens oop to javafx.fxml;
+    exports oop;
+    exports oop.Controllers;
+    exports oop.AddControllers;
+    opens oop.AddControllers;
+    opens oop.AppClasses;
+    exports oop.AppClasses;
+    exports oop.Model;
+    opens oop.Model;
+    exports oop.Helpers;
+    opens oop.Helpers;
+    exports oop.Services;
+    opens oop.Services;
+    opens oop.Controllers;
 }

@@ -1,4 +1,4 @@
-package oop.oop;
+package oop.Helpers;
 
 public final class UpdateStatus {
 

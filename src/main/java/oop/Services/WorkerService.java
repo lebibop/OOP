@@ -1,6 +1,8 @@
-package oop.oop;
+package oop.Services;
 
 
+import oop.Helpers.HibernateUtil;
+import oop.Model.Worker;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;

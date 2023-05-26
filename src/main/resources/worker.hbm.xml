@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="oop.oop">
 
-    <class name="Worker" table="worker">
+    <class name="oop.Model.Worker" table="worker">
         <id name="id_worker" type="int" column="id_worker" >
             <generator class="assigned" />
         </id>

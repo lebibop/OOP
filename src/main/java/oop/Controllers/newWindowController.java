@@ -1,4 +1,4 @@
-package oop.oop;
+package oop.Controllers;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;

@@ -1,19 +1,25 @@
-package oop.oop;
+package oop.AddControllers;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
-import oop.Interface.SceneController;
+import oop.Controllers.SceneController;
+import oop.Helpers.UpdateStatus;
+import oop.Model.Worker;
+import oop.Services.WorkerService;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class AddWorkerController implements Initializable  {
@@ -106,21 +112,33 @@ public class AddWorkerController implements Initializable  {
     private void add_file(ActionEvent event){
         try {
             //log.debug("uploading to file");
-            BufferedReader reader = new BufferedReader(new FileReader("saves/save.csv"));
+            Stage stage = new Stage();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File("saves"));
+            fileChooser.setTitle("select file");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
+            File file = fileChooser.showOpenDialog(stage);
+
+            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
+            java.util.List<String> positions = Arrays.asList("doorman", "receptionist", "bellboy", "liftman", "concierge", "porter", "waiter", "manager");
             String temp;
             do{
                 temp = reader.readLine();
-                if(temp!=null){
+                if(temp!=null) {
                     String[] temp2 = temp.split(";");
-                    Worker st = new Worker();
-                    st.setName(temp2[0]);
-                    st.setSurname(temp2[1]);
-                    String[] words = temp2[2].split("-");
-                    st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                    st.setPosition(temp2[3]);
-                    st.setExperience(Integer.parseInt(temp2[4]));
+                    if (temp2.length == 5) {
+                        if (isNumeric(temp2[4]) && positions.contains(temp2[3].toLowerCase())) {
+                            Worker st = new Worker();
+                            st.setName(temp2[0]);
+                            st.setSurname(temp2[1]);
+                            String[] words = temp2[2].split("-");
+                            st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
+                            st.setPosition(temp2[3]);
+                            st.setExperience(Integer.parseInt(temp2[4]));
 
-                    workerService.createWorker(st);
+                            workerService.createWorker(st);
+                        }
+                    }
                 }
             }
             while(temp!=null);

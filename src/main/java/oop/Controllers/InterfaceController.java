@@ -1,4 +1,4 @@
-package oop.Interface;
+package oop.Controllers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.collections.transformation.FilteredList;
-import oop.oop.User;
+import oop.Model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

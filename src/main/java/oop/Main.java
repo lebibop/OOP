@@ -1,16 +1,15 @@
-package oop.Interface;
+package oop;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.slf4j.*;
 
 import java.util.Objects;
 
-public class Interface extends Application {
+public class Main extends Application {
 
     private static final Logger log = LoggerFactory.getLogger("Main logger");
     @Override

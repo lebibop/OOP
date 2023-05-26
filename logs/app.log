@@ -2,9 +2,9 @@
 {Login logger} 2023-05-11 15:44:38.260 [DEBUG]: Button pressed
 {Login logger} 2023-05-11 15:44:38.301 [DEBUG]: password verification was successful. switching to a new screen
 {Interface logger} 2023-05-11 15:44:40.364 [DEBUG]: deleting a user
-{Interface logger} 2023-05-11 15:44:40.366 [WARN ]: Exception oop.Interface.InterfaceController$MyException: Choose a row to delete
+{Interface logger} 2023-05-11 15:44:40.366 [WARN ]: Exception oop.Controllers.InterfaceController$MyException: Choose a row to delete
 {Interface logger} 2023-05-11 15:44:43.098 [DEBUG]: deleting a user
-{Interface logger} 2023-05-11 15:44:43.099 [WARN ]: Exception oop.Interface.InterfaceController$MyException: Choose a row to delete
+{Interface logger} 2023-05-11 15:44:43.099 [WARN ]: Exception oop.Controllers.InterfaceController$MyException: Choose a row to delete
 {Interface logger} 2023-05-11 15:44:45.420 [DEBUG]: deleting a user
 {Interface logger} 2023-05-11 15:44:45.430 [INFO ]: user deleted
 {Interface logger} 2023-05-11 15:44:46.230 [DEBUG]: adding a user
@@ -28,7 +28,7 @@
 {Interface logger} 2023-05-11 15:44:55.110 [DEBUG]: deleting a user
 {Interface logger} 2023-05-11 15:44:55.111 [INFO ]: user deleted
 {Interface logger} 2023-05-11 15:44:55.752 [DEBUG]: deleting a user
-{Interface logger} 2023-05-11 15:44:55.753 [WARN ]: Exception oop.Interface.InterfaceController$MyException: Choose a row to delete
+{Interface logger} 2023-05-11 15:44:55.753 [WARN ]: Exception oop.Controllers.InterfaceController$MyException: Choose a row to delete
 {Interface logger} 2023-05-11 15:44:58.502 [DEBUG]: uploading to file
 {Interface logger} 2023-05-11 15:44:58.503 [INFO ]: uploaded to file
 {Main logger} 2023-05-21 20:25:20.020 [DEBUG]: Start program
@@ -1272,7 +1272,7 @@
 {Worker logger} 2023-05-23 22:52:53.563 [DEBUG]: adding a user
 {Worker logger} 2023-05-23 22:52:53.564 [INFO ]: user added
 {Worker logger} 2023-05-23 22:53:00.527 [DEBUG]: deleting a user
-{Worker logger} 2023-05-23 22:53:00.528 [WARN ]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-23 22:53:00.528 [WARN ]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
 {Worker logger} 2023-05-23 22:53:05.413 [DEBUG]: deleting a user
 {Worker logger} 2023-05-23 22:53:05.420 [INFO ]: user deleted
 {org.jboss.logging} 2023-05-23 23:41:01.519 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
@@ -4153,11 +4153,11 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-05-25 19:13:18.356 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-25 19:13:22.668 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-25 19:16:21.208 [ERROR]: Transition to WORKERS list scene
-{Worker logger} 2023-05-25 19:16:23.572 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-25 19:16:23.572 [ERROR]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
 {Scene Logger} 2023-05-25 19:24:30.940 [ERROR]: Transition to WORKERS list scene
-{Worker logger} 2023-05-25 19:24:34.051 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-25 19:24:34.051 [ERROR]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
 {Scene Logger} 2023-05-25 19:24:38.485 [ERROR]: Transition to WORKERS list scene
-{Worker logger} 2023-05-25 19:24:40.318 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-25 19:24:40.318 [ERROR]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
 {Scene Logger} 2023-05-25 19:31:59.698 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-25 19:32:27.284 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-25 19:34:00.270 [ERROR]: Transition to WORKERS list scene
@@ -4283,7 +4283,7 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-05-26 01:27:37.009 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 01:28:02.095 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 01:28:55.010 [ERROR]: Transition to WORKERS list scene
-{Worker logger} 2023-05-26 01:28:55.895 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-26 01:28:55.895 [ERROR]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
 {Scene Logger} 2023-05-26 01:29:01.640 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 13:46:56.352 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 13:50:13.457 [ERROR]: Transition to WORKERS list scene
@@ -4310,8 +4310,8 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-05-26 14:32:01.266 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 14:36:34.127 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 14:40:30.173 [ERROR]: Transition to WORKERS list scene
-{Worker logger} 2023-05-26 14:40:32.737 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
-{Worker logger} 2023-05-26 14:40:51.825 [ERROR]: Exception oop.Interface.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-26 14:40:32.737 [ERROR]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
+{Worker logger} 2023-05-26 14:40:51.825 [ERROR]: Exception oop.Controllers.WorkerController$MyException: Choose a row to delete
 {Scene Logger} 2023-05-26 14:41:03.493 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 14:44:20.735 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 14:44:45.929 [ERROR]: Transition to WORKERS list scene
@@ -4448,3 +4448,15 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-05-26 17:17:57.071 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 17:19:48.524 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 17:20:30.320 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:20:57.417 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:24:08.507 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:32:11.732 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:32:53.936 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:33:05.388 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:34:23.598 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:34:36.525 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:37:00.369 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:37:06.979 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:37:36.012 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:37:41.256 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 17:37:51.790 [ERROR]: Transition to WORKERS list scene
