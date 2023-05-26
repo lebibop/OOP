@@ -25,10 +25,10 @@ public class Worker {
 
     public Worker(Integer id_worker, String name, String surname, LocalDate date_bd, String position, Integer experience) {
         this.id_worker = id_worker;
-        this.name = name;
-        this.surname = surname;
+        this.name = capitalize(name.toLowerCase());
+        this.surname = capitalize(surname.toLowerCase());
         this.date_bd = date_bd;
-        this.position = position;
+        this.position = capitalize(position.toLowerCase());
         this.experience = experience;
     }
 
@@ -52,7 +52,7 @@ public class Worker {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = capitalize(name.toLowerCase());
     }
 
     public String getSurname() {
@@ -60,7 +60,7 @@ public class Worker {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = capitalize(surname.toLowerCase());
     }
 
 
@@ -77,7 +77,7 @@ public class Worker {
     }
 
     public void setPosition(String position) {
-        this.position = position;
+        this.position = capitalize(position.toLowerCase());
     }
 
     public Integer getExperience() {
@@ -86,6 +86,15 @@ public class Worker {
 
     public void setExperience(Integer experience) {
         this.experience = experience;
+    }
+
+    public static String capitalize(String str)
+    {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     @Override

@@ -32,40 +32,54 @@ public class AddWorkerController implements Initializable  {
     @FXML
     private TextField exp;
 
+
+
+
     @FXML
     private void saveNewVetToDb(ActionEvent event){
-//        if (true/*validateInputs()*/) {
+        if (validateInputs()) {
             Worker vet = createVetFromInput();
             boolean isSaved = new WorkerService().createWorker(vet);
             if (isSaved) {
                 UpdateStatus.setIsWorkerAdded(true);
                 delayWindowClose(event);
-//            }
+            }
         }
     }
 
-//    private boolean validateInputs() {
-//        if (name.getText().equals("")) {
-//            alertText.setText("*You must add first name!");
-//            return false;
-//        }
-//
-//        if (surname.getText().equals("")) {
-//            alertText.setText("*You must add last name!");
-//            return false;
-//        }
-//
-//        if (bday.getText().equals("")) {
-//            alertText.setText("*You must add speciality!");
-//            return false;
-//        }
-//
-//        if (vetAddress.getText().equals("")) {
-//            alertText.setText("*You must add address!");
-//            return false;
-//        }
-//        return true;
-//    }
+    public static boolean isNumeric(String str) {
+        try {
+            return Integer.parseInt(str) >= 0;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    private boolean validateInputs() {
+        Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
+        if (name.getText().equals("") || surname.getText().equals("") || position.getValue().equals("Choose a job") || bday.getValue() == null || exp.getText().equals("")) {
+            IOAlert.setContentText("You must fill empty field(-s) to continue");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+            return false;
+        }
+
+        if (!isNumeric(exp.getText())){
+            IOAlert.setContentText("Incorrect toe input for EXPERIENCE - you must input a number (>=0)");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+            return false;
+        }
+
+
+        return true;
+    }
 
     private Worker createVetFromInput() {
         Worker vet = new Worker();

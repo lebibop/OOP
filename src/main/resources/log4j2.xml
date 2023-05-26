@@ -9,6 +9,9 @@
         </Console>
     </Appenders>
 
+
+
+
     <Loggers>
         <Root level="error">
             <AppenderRef ref="file" />

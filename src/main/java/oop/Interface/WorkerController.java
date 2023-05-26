@@ -1,6 +1,7 @@
 package oop.Interface;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -12,19 +13,28 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import oop.oop.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static oop.oop.AddWorkerController.isNumeric;
 
 
 public class WorkerController implements Initializable
@@ -57,21 +67,6 @@ public class WorkerController implements Initializable
 
     WorkerService workerService = new WorkerService();
     ObservableList<Worker> List = FXCollections.observableArrayList();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @FXML
     private void getChoices(ActionEvent event) throws IOException {
@@ -155,6 +150,7 @@ public class WorkerController implements Initializable
         try
         {
             log.debug("saving to file");
+
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
             for(Worker workers : List)
             {
@@ -163,6 +159,7 @@ public class WorkerController implements Initializable
                 writer.newLine();
             }
             writer.close();
+            Desktop.getDesktop().open(new File("saves"));
             log.info("saved to file");
         }
         catch (IOException e)
@@ -181,30 +178,40 @@ public class WorkerController implements Initializable
     private void upload(ActionEvent event) throws IOException
     {
         try {
+            log.debug("uploading to file");
+
+            Stage stage = new Stage();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File("saves"));
+            fileChooser.setTitle("select file");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
+            File file = fileChooser.showOpenDialog(stage);
+
+            System.out.println(file.toURI().toString().substring(6));
+            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
             ObservableList<Worker> selectedRows = table.getItems();
             for (Worker worker : selectedRows) {
                 workerService.deleteWorker(worker);
             }
-
-
-
-
-            log.debug("uploading to file");
-            BufferedReader reader = new BufferedReader(new FileReader("saves/save.csv"));
+            java.util.List<String> positions = Arrays.asList("doorman", "receptionist", "bellboy", "liftman", "concierge", "porter", "waiter", "manager");
             String temp;
             do{
                 temp = reader.readLine();
-                if(temp!=null){
+                if(temp!=null) {
                     String[] temp2 = temp.split(";");
-                    Worker st = new Worker();
-                    st.setName(temp2[0]);
-                    st.setSurname(temp2[1]);
-                    String[] words = temp2[2].split("-");
-                    st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                    st.setPosition(temp2[3]);
-                    st.setExperience(Integer.parseInt(temp2[4]));
+                    if (temp2.length == 5) {
+                        if (isNumeric(temp2[4]) && positions.contains(temp2[3].toLowerCase())) {
+                            Worker st = new Worker();
+                            st.setName(temp2[0]);
+                            st.setSurname(temp2[1]);
+                            String[] words = temp2[2].split("-");
+                            st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
+                            st.setPosition(temp2[3]);
+                            st.setExperience(Integer.parseInt(temp2[4]));
 
-                    workerService.createWorker(st);
+                            workerService.createWorker(st);
+                        }
+                    }
                 }
             }
             while(temp!=null);
@@ -216,7 +223,7 @@ public class WorkerController implements Initializable
         {
             log.warn("Exception " + e);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
-            IOAlert.setContentText("Error");
+            IOAlert.setContentText("Can't find file to upload");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
             {
@@ -289,14 +296,18 @@ public class WorkerController implements Initializable
         selectedPet.setSurname(editEvent.getNewValue());
         workerService.updateWorker(selectedPet);
     }
+
     @FXML
     private void change_exp(TableColumn.CellEditEvent<Worker, Integer> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setExperience(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+
+        Integer ee = editEvent.getNewValue();
+        if (ee >= 0) {
+            selectedPet.setExperience(ee);
+            workerService.updateWorker(selectedPet);
+        }
+        else table.refresh();
     }
-
-
 
     @FXML
     private void change_pos(TableColumn.CellEditEvent<Worker, String> editEvent) {
@@ -334,13 +345,18 @@ public class WorkerController implements Initializable
                         return true;
                     } else if (worker.getName().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (worker.getDate_bd().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (date_converter(worker.getDate_bd().toString()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     } else if (worker.getSurname().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     } else return String.valueOf(worker.getExperience()).contains(lowerCaseFilter);
                 }));
         return filteredList;
+    }
+
+    private String date_converter(String temp){
+        String[] temp2 = temp.split("-");
+        return temp2[2] + '.' + temp2[1] + '.' + temp2[0];
     }
 
 
@@ -361,7 +377,7 @@ public class WorkerController implements Initializable
         //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
         surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
-//        date_column.setCellValueFactory(new PropertyValueFactory<Worker, String>("Date_bd"));
+        date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
         position_column.setCellValueFactory(new PropertyValueFactory<>("Position"));
         exp_column.setCellValueFactory(new PropertyValueFactory<>("Experience"));
 
@@ -369,25 +385,15 @@ public class WorkerController implements Initializable
         table.setEditable(true);
         name_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
         surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-        position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
-        exp_column.setCellFactory(TextFieldTableCell.<Worker, Integer>forTableColumn(new IntegerStringConverter()));
-
-        date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
         date_column.setCellFactory(new LocalDateCellFactory());
+        position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
+        exp_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 
 
 
 
 
 
-
-
-
-
-
-
-
-        System.out.println(getSortedList());
         table.setItems(getSortedList());
 
     }
