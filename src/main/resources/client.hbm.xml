@@ -5,8 +5,8 @@
 
 <hibernate-mapping package="oop">
 
-    <class name="oop.Model.Worker" table="worker">
-        <id name="id_worker" type="int" column="id_worker" >
+    <class name="oop.Model.Client" table="client">
+        <id name="id_client" type="int" column="id_client" >
             <generator class="increment" />
         </id>
 
@@ -19,11 +19,17 @@
         <property name="date_bd">
             <column name="date_bd" />
         </property>
-        <property name="position" >
-            <column name="position" />
+        <property name="date_arrival" >
+            <column name="date_arrival" />
         </property>
-        <property name="experience" >
-            <column name="experience" />
+        <property name="date_departure" >
+            <column name="date_departure" />
+        </property>
+        <property name="stay_lenght" >
+            <column name="stay_lenght" />
+        </property>
+        <property name="room" >
+            <column name="room_id_room" />
         </property>
     </class>
 

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import oop.Helpers.HibernateUtil;
 import org.slf4j.*;
 
 import java.util.Objects;
@@ -22,6 +23,14 @@ public class Main extends Application {
 //        MainStage.initStyle(StageStyle.UTILITY);
         MainStage.setTitle("Login");
         MainStage.show();
+    }
+
+
+    @Override
+    public void stop() throws Exception {
+        log.debug("End of a program");
+        super.stop();
+        HibernateUtil.shutdown();
     }
 
     public static void main(String[] args) {

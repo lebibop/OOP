@@ -22,6 +22,9 @@
         <property name="hibernate.connection.useUnicode">true</property>
 
         <mapping class="oop.Model.Worker" />
+        <mapping class="oop.Model.Client" />
+        <mapping class="oop.Model.Room" />
+        <mapping class="oop.Model.Report" />
 
 
 

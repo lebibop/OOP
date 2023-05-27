@@ -34,6 +34,6 @@ public class app_worker {
         }
 
         transaction.commit();
+        System.exit(0);
     }
-
 }

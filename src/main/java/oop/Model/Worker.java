@@ -23,6 +23,13 @@ public class Worker {
     private Integer experience;
 
 
+
+
+
+
+
+
+
     public Worker(Integer id_worker, String name, String surname, LocalDate date_bd, String position, Integer experience) {
         this.id_worker = id_worker;
         this.name = capitalize(name.toLowerCase());

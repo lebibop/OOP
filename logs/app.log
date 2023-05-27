@@ -4460,3 +4460,63 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-05-26 17:37:36.012 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 17:37:41.256 [ERROR]: Transition to WORKERS list scene
 {Scene Logger} 2023-05-26 17:37:51.790 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 19:01:48.040 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 20:13:51.887 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 22:20:48.468 [ERROR]: Transition to WORKERS list scene
+{Scene Logger} 2023-05-26 22:21:41.743 [ERROR]: Transition to WORKERS list scene
+{org.hibernate.internal.ExceptionMapperStandardImpl} 2023-05-26 22:56:40.036 [ERROR]: HHH000346: Error during managed flush [Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [oop.Model.Client#1]]
+{org.hibernate.internal.ExceptionMapperStandardImpl} 2023-05-26 22:58:21.028 [ERROR]: HHH000346: Error during managed flush [org.hibernate.TransientObjectException: object references an unsaved transient instance - save the transient instance before flushing: oop.Model.Room]
+{org.hibernate.internal.ExceptionMapperStandardImpl} 2023-05-26 23:00:15.902 [ERROR]: HHH000346: Error during managed flush [org.hibernate.TransientObjectException: object references an unsaved transient instance - save the transient instance before flushing: oop.Model.Room]
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:02:04.915 [ERROR]: Field 'report_id_report' doesn't have a default value
+{org.hibernate.internal.ExceptionMapperStandardImpl} 2023-05-26 23:02:22.531 [ERROR]: HHH000346: Error during managed flush [org.hibernate.TransientObjectException: object references an unsaved transient instance - save the transient instance before flushing: oop.Model.Room]
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:14:07.614 [ERROR]: Field 'report_id_report' doesn't have a default value
+{org.hibernate.internal.ExceptionMapperStandardImpl} 2023-05-26 23:22:41.608 [ERROR]: HHH000346: Error during managed flush [Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect) : [oop.Model.Client#1]]
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:24:07.674 [ERROR]: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`client`, CONSTRAINT `fk_client_room` FOREIGN KEY (`room_id_room`) REFERENCES `room` (`id_room`))
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:25:11.765 [ERROR]: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`client`, CONSTRAINT `fk_client_room` FOREIGN KEY (`room_id_room`) REFERENCES `room` (`id_room`))
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:27:47.114 [ERROR]: Cannot add or update a child row: a foreign key constraint fails (`mydb`.`client`, CONSTRAINT `fk_client_room` FOREIGN KEY (`room_id_room`) REFERENCES `room` (`id_room`))
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:36:28.024 [ERROR]: Field 'room_id_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:36:40.546 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:39:10.556 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:41:26.805 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:50:47.537 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-26 23:56:40.619 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 00:05:49.233 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 00:06:29.493 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 00:15:02.189 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 00:15:30.727 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:26:11.619 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:29:40.627 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:30:14.022 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:37:53.496 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:42:16.718 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:42:43.903 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:43:08.857 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:44:15.422 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:44:36.301 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:45:52.253 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:46:40.411 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:59:38.081 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 01:59:53.494 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:00:19.299 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:05:35.910 [ERROR]: Field 'room_id_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:05:54.991 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:06:53.058 [ERROR]: Field 'fk_client_room' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:15:46.979 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:16:32.612 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:20:50.218 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:22:13.097 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:22:43.410 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:25:16.207 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:28:21.161 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:31:28.994 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:34:25.156 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 02:40:04.778 [ERROR]: Field 'id_client' doesn't have a default value
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 03:37:24.543 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 04:08:08.538 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 04:08:57.729 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 04:13:35.259 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 04:13:49.273 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 04:14:11.233 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 04:17:15.273 [ERROR]: Column 'report_id_report' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 12:53:11.725 [ERROR]: Column 'room_id' cannot be null
+{org.hibernate.engine.jdbc.spi.SqlExceptionHelper} 2023-05-27 12:54:17.478 [ERROR]: Column 'room_id' cannot be null

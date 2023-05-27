@@ -1,5 +1,8 @@
 package oop.Helpers;
 
+import oop.Model.Client;
+import oop.Model.Report;
+import oop.Model.Room;
 import oop.Model.Worker;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -19,7 +22,6 @@ public class HibernateUtil {
             try {
                 Configuration configuration = new Configuration();
                 Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
                 settings.put(Environment.URL, "jdbc:mysql://localhost:3306/mydb");
                 settings.put(Environment.USER, "root");
                 settings.put(Environment.PASS, "1234");
@@ -30,6 +32,9 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Worker.class);
+                configuration.addAnnotatedClass(Client.class);
+                configuration.addAnnotatedClass(Room.class);
+                configuration.addAnnotatedClass(Report.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
