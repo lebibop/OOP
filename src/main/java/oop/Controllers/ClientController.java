@@ -1,7 +1,7 @@
 package oop.Controllers;
 
-import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -12,9 +12,9 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -22,9 +22,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oop.Helpers.CustomIntegerStringConverter;
 import oop.Helpers.LocalDateCellFactory;
+import oop.Helpers.LocalDateCellFactory_Client;
 import oop.Helpers.UpdateStatus;
-import oop.Model.Worker;
-import oop.Services.WorkerService;
+import oop.Model.Client;
+import oop.Model.Room;
+import oop.Services.ClientService;
+import oop.Services.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,26 +35,29 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 import static oop.AddControllers.AddWorkerController.isNumeric;
 
 
-public class WorkerController implements Initializable
+public class ClientController implements Initializable
 {
     @FXML
-    private TableColumn<Worker, String> name_column;
+    private TableColumn<Client, String> name_column;
     @FXML
-    private TableColumn<Worker, String> surname_column;
+    private TableColumn<Client, String> surname_column;
     @FXML
-    public TableColumn<Worker, LocalDate> date_column;
+    public TableColumn<Client, LocalDate> date_column;
     @FXML
-    public TableColumn<Worker, String> position_column;
+    public TableColumn<Client, LocalDate> arrival_column;
     @FXML
-    public TableColumn<Worker, Integer> exp_column;
-    private static final Logger log = LoggerFactory.getLogger("Worker logger");
+    public TableColumn<Client, LocalDate> departure_column;
+    @FXML
+    public TableColumn<Client, Integer> stay_column;
+    @FXML
+    public TableColumn<Client, Room> room_column;
+    private static final Logger log = LoggerFactory.getLogger("Client logger");
 
     @FXML
     private ChoiceBox<String> choice_box;
@@ -60,49 +66,51 @@ public class WorkerController implements Initializable
     private TextField search;
 
     @FXML
-    private TableView<Worker> table = new TableView<Worker>();
+    private TableView<Client> table = new TableView<Client>();
 
     @FXML
     private Label search_invalid_label;
 
     private final String[] choices = {"Workers","Clients","Rooms","Reports"};
 
-    WorkerService workerService = new WorkerService();
-    ObservableList<Worker> List = FXCollections.observableArrayList();
+    ClientService clientService = new ClientService();
+    RoomService roomService = new RoomService();
+    ObservableList<Client> List = FXCollections.observableArrayList();
 
     @FXML
     private void getChoices(ActionEvent event) throws IOException {
         String choice = choice_box.getValue();
-        if (Objects.equals(choice, "Clients"))
-            SceneController.getClientsScene(event);
+        if (Objects.equals(choice, "Workers"))
+            SceneController.getWorkersScene(event);
         if (Objects.equals(choice, "Rooms"))
             SceneController.getRoomsScene(event);
         if (Objects.equals(choice, "Reports"))
             SceneController.getReportsScene(event);
+
     }
 
 
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
-        SceneController.getWorkersScene(event);
+        SceneController.getClientsScene(event);
     }
     @FXML
     private void add(ActionEvent event) throws IOException {
-        log.debug("adding a worker");
+        log.debug("adding a client");
 
-        newWindowController.getNewWorkerWindow();
-        if(UpdateStatus.isIsWorkerAdded()) {
+        newWindowController.getNewClientWindow();
+        if(UpdateStatus.isIsClientAdded()) {
             refreshScreen(event);
-            UpdateStatus.setIsWorkerAdded(false);
+            UpdateStatus.setIsClientAdded(false);
         }
-        log.info("worker added");
+        log.info("Client added");
     }
 
 
 
     private void setObList() {
         List.clear();
-        List.addAll(workerService.getWorkers());
+        List.addAll(clientService.getClients());
     }
 
 
@@ -112,9 +120,9 @@ public class WorkerController implements Initializable
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
-            ObservableList<Worker> selectedRows = table.getSelectionModel().getSelectedItems();
-            for (Worker worker : selectedRows) {
-                workerService.deleteWorker(worker);
+            ObservableList<Client> selectedRows = table.getSelectionModel().getSelectedItems();
+            for (Client client : selectedRows) {
+                clientService.deleteClient(client);
             }
             refreshScreen(event);
         }
@@ -132,10 +140,10 @@ public class WorkerController implements Initializable
     private void delete(ActionEvent event)
     {
         try {
-            log.debug("deleting a worker");
+            log.debug("deleting a Client");
             search_invalid_label.setText("");
             remove_row(event);
-            log.info("worker deleted");
+            log.info("Client deleted");
         }
 
         catch (MyException | IOException myEx){
@@ -156,11 +164,13 @@ public class WorkerController implements Initializable
         {
             log.debug("saving to file");
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
-            for(Worker workers : List)
+            BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save_client.csv"));
+            for(Client clients : List)
             {
-                writer.write(workers.getName() + ";" + workers.getSurname() + ";"
-                        + workers.getDate_bd() + ";" + workers.getPosition() + ";" + workers.getExperience());
+                writer.write(clients.getName() + ";" + clients.getSurname() + ";"
+                        + clients.getDate_bd() + ";" + clients.getDate_arrival() + ";"
+                        + clients.getDate_departure() + ";"
+                        + clients.getRoom().getNumber());
                 writer.newLine();
             }
             writer.close();
@@ -193,27 +203,36 @@ public class WorkerController implements Initializable
             File file = fileChooser.showOpenDialog(stage);
 
             BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-            ObservableList<Worker> selectedRows = table.getItems();
-            for (Worker worker : selectedRows) {
-                workerService.deleteWorker(worker);
+            ObservableList<Client> selectedRows = table.getItems();
+
+            for (Client client : selectedRows) {
+                clientService.deleteClient(client);
             }
-            java.util.List<String> positions = Arrays.asList("doorman", "receptionist", "bellboy", "liftman", "concierge", "porter", "waiter", "manager");
             String temp;
             do{
                 temp = reader.readLine();
+                System.out.println(temp);
                 if(temp!=null) {
                     String[] temp2 = temp.split(";");
-                    if (temp2.length == 5) {
-                        if (isNumeric(temp2[4]) && positions.contains(temp2[3].toLowerCase())) {
-                            Worker st = new Worker();
+                    if (temp2.length == 6) {
+                        if (isNumeric(temp2[5])) {
+                            Client st = new Client();
                             st.setName(temp2[0]);
                             st.setSurname(temp2[1]);
                             String[] words = temp2[2].split("-");
                             st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                            st.setPosition(temp2[3]);
-                            st.setExperience(Integer.parseInt(temp2[4]));
+                            words = temp2[3].split("-");
+                            st.setDate_arrival(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
+                            words = temp2[4].split("-");
+                            st.setDate_departure(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
+                            st.setStay_lenght((int) ChronoUnit.DAYS.between(st.getDate_arrival(), st.getDate_departure()));
 
-                            workerService.createWorker(st);
+                            st.setRoom(roomService.getRoom_ByNumber(Integer.parseInt(temp2[5])));
+
+                            System.out.println(st.getRoom());
+
+
+                            clientService.createCl(st);
                         }
                     }
                 }
@@ -248,7 +267,7 @@ public class WorkerController implements Initializable
             PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
             my_pdf_report.open();
 
-            PdfPTable my_report_table = new PdfPTable(5);
+            PdfPTable my_report_table = new PdfPTable(7);
 
             PdfPCell table_cell;
             my_report_table.setHeaderRows(1);
@@ -257,24 +276,31 @@ public class WorkerController implements Initializable
             my_report_table.addCell(new PdfPCell(new Phrase("Name", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Surname", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Date", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Position", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Experience", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Arrival date", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Departure date", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Lenght stay", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Room", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+
 
             if (List.isEmpty()) throw new MyException();
 
-            for(Worker workers : List)
+            for(Client clients : List)
             {
 //                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
 //                my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getName()));
+                table_cell=new PdfPCell(new Phrase(clients.getName()));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getSurname()));
+                table_cell=new PdfPCell(new Phrase(clients.getSurname()));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(String.valueOf(workers.getDate_bd())));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(clients.getDate_bd())));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getPosition()));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(clients.getDate_arrival())));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(String.valueOf(workers.getExperience())));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(clients.getDate_departure())));
+                my_report_table.addCell(table_cell);
+                table_cell=new PdfPCell(new Phrase(String.valueOf(clients.getStay_lenght())));
+                my_report_table.addCell(table_cell);
+                table_cell=new PdfPCell(new Phrase(String.valueOf(clients.getRoom().getNumber())));
                 my_report_table.addCell(table_cell);
             }
             my_pdf_report.add(my_report_table);
@@ -289,71 +315,86 @@ public class WorkerController implements Initializable
     }
 
     @FXML
-    private void change_name(TableColumn.CellEditEvent<Worker, String> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+    private void change_name(TableColumn.CellEditEvent<Client, String> editEvent) {
+        Client selectedPet = table.getSelectionModel().getSelectedItem();
         selectedPet.setName(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+        clientService.updateClient(selectedPet);
     }
     @FXML
-    private void change_surname(TableColumn.CellEditEvent<Worker, String> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+    private void change_surname(TableColumn.CellEditEvent<Client, String> editEvent) {
+        Client selectedPet = table.getSelectionModel().getSelectedItem();
         selectedPet.setSurname(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+        clientService.updateClient(selectedPet);
     }
-
     @FXML
-    private void change_exp(TableColumn.CellEditEvent<Worker, Integer> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-
-        Integer ee = editEvent.getNewValue();
-        if (ee >= 0) {
-            selectedPet.setExperience(ee);
-            workerService.updateWorker(selectedPet);
-        }
-        else table.refresh();
-    }
-
-    @FXML
-    private void change_pos(TableColumn.CellEditEvent<Worker, String> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setPosition(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
-    }
-
-    @FXML
-    private void change_data(TableColumn.CellEditEvent<Worker, LocalDate> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+    private void change_data(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
+        Client selectedPet = table.getSelectionModel().getSelectedItem();
         selectedPet.setDate_bd(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+        clientService.updateClient(selectedPet);
+    }
+    @FXML
+    private void change_arrival(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
+        Client selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setDate_arrival(editEvent.getNewValue());
+        clientService.updateClient(selectedPet);
+    }
+
+    @FXML
+    private void change_departure(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
+        Client selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setDate_departure(editEvent.getNewValue());
+        clientService.updateClient(selectedPet);
     }
 
 
 
 
-    private SortedList<Worker> getSortedList() {
-        SortedList<Worker> sortedList = new SortedList<>(getFilteredList());
+    @FXML
+    private void change_room(TableColumn.CellEditEvent<Client, Room> editEvent) {
+        Client selectedPet = table.getSelectionModel().getSelectedItem();
+        Room room = editEvent.getNewValue();
+
+        selectedPet.setRoom(room);
+
+//        roomService.updateRoom(room);
+        clientService.updateClient(selectedPet);
+
+//        for (Client clients : List) {
+//            if (Objects.equals(clients.getRoom().getNumber(), ee)) {
+//                selectedPet.setRoom(clients.getRoom());
+//                clientService.updateClient(selectedPet);
+//            }
+//        }
+    }
+
+    private SortedList<Client> getSortedList() {
+        SortedList<Client> sortedList = new SortedList<>(getFilteredList());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         return sortedList;
     }
-    private FilteredList<Worker> getFilteredList() {
-        FilteredList<Worker> filteredList = new FilteredList<>(List, b -> true);
+    private FilteredList<Client> getFilteredList() {
+        FilteredList<Client> filteredList = new FilteredList<>(List, b -> true);
         search.textProperty().addListener((observable, oldValue, newValue) ->
-                filteredList.setPredicate(worker -> {
+                filteredList.setPredicate(client -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
 
                     String lowerCaseFilter = newValue.toLowerCase();
 
-                    if (worker.getPosition().toLowerCase().contains(lowerCaseFilter)) {
+                    if (String.valueOf(client.getRoom().getNumber()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (worker.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (client.getName().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (date_converter(worker.getDate_bd().toString()).toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (date_converter(client.getDate_bd().toString()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (worker.getSurname().toLowerCase().contains(lowerCaseFilter)) {
+                    }else if (date_converter(client.getDate_departure().toString()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else return String.valueOf(worker.getExperience()).contains(lowerCaseFilter);
+                    }else if (date_converter(client.getDate_arrival().toString()).toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (client.getSurname().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else return String.valueOf(client.getStay_lenght()).contains(lowerCaseFilter);
                 }));
         return filteredList;
     }
@@ -362,12 +403,6 @@ public class WorkerController implements Initializable
         String[] temp2 = temp.split("-");
         return temp2[2] + '.' + temp2[1] + '.' + temp2[0];
     }
-
-
-
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -382,29 +417,22 @@ public class WorkerController implements Initializable
         name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
         surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
-        position_column.setCellValueFactory(new PropertyValueFactory<>("Position"));
-        exp_column.setCellValueFactory(new PropertyValueFactory<>("Experience"));
+        arrival_column.setCellValueFactory(new PropertyValueFactory<>("Date_arrival"));
+        departure_column.setCellValueFactory(new PropertyValueFactory<>("Date_departure"));
+        stay_column.setCellValueFactory(new PropertyValueFactory<>("stay_lenght"));
+        room_column.setCellValueFactory(new PropertyValueFactory<>("room"));
 
+        ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomService.getRooms());
 
         table.setEditable(true);
-        name_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-        surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-        date_column.setCellFactory(new LocalDateCellFactory());
-        position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
-        exp_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
-
-
-
-
+        name_column.setCellFactory(TextFieldTableCell.<Client>forTableColumn());
+        surname_column.setCellFactory(TextFieldTableCell.<Client>forTableColumn());
+        date_column.setCellFactory(new LocalDateCellFactory_Client());
+        arrival_column.setCellFactory(new LocalDateCellFactory_Client());
+        departure_column.setCellFactory(new LocalDateCellFactory_Client());
+        room_column.setCellFactory(ChoiceBoxTableCell.forTableColumn(roomObservableList));
 
 
         table.setItems(getSortedList());
-
     }
-
-
-
-
-
 }
-

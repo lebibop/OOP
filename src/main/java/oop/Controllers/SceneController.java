@@ -28,9 +28,21 @@ public class SceneController {
 
     public static void getClientsScene(ActionEvent event) throws IOException {
 
-        logger.debug("Transition to CLIENTS list scene");
+        logger.error("Transition to CLIENTS list scene");
 
         changeScreen(event, "/Clients.fxml");
+    }
+    public static void getRoomsScene(ActionEvent event) throws IOException {
+
+        logger.error("Transition to ROOMS list scene");
+
+        changeScreen(event, "/Rooms.fxml");
+    }
+    public static void getReportsScene(ActionEvent event) throws IOException {
+
+        logger.error("Transition to REPORTS list scene");
+
+        changeScreen(event, "/Reports.fxml");
     }
 
     private static void changeScreen(ActionEvent event, String path) throws IOException

@@ -29,7 +29,7 @@
             <column name="stay_lenght" />
         </property>
         <property name="room" >
-            <column name="room_id_room" />
+            <column name="room_id" />
         </property>
     </class>
 

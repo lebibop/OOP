@@ -1,13 +1,8 @@
 package oop.Model;
 
-
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 @Entity
 @Table(name = "client")
 public class Client {
@@ -31,7 +26,6 @@ public class Client {
 
     @ManyToOne
     @JoinColumn(name = "room_id")
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Room room;
 
     public Room getRoom() {

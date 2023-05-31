@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="444.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.AddControllers.AddClientController">
+   <children>
+      <TextField fx:id="name" layoutX="33.0" layoutY="48.0" promptText="Enter name" />
+      <Button layoutX="259.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveNewVetToDb" prefHeight="26.0" prefWidth="126.0" text="Save" />
+      <Button layoutX="259.0" layoutY="152.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="26.0" prefWidth="126.0" text="Close" />
+      <Button layoutX="259.0" layoutY="250.0" mnemonicParsing="false" onAction="#add_file" prefHeight="26.0" prefWidth="126.0" text="Add from file" />
+      <ChoiceBox fx:id="room" layoutX="32.0" layoutY="250.0" prefWidth="150.0" />
+      <TextField fx:id="surname" layoutX="33.0" layoutY="84.0" promptText="Enter surname" />
+      <DatePicker fx:id="date_bd" layoutX="32.0" layoutY="123.0" promptText="Enter B-day" />
+      <DatePicker fx:id="date_arr" layoutX="32.0" layoutY="165.0" promptText="Enter arrival date" />
+      <DatePicker fx:id="date_dep" layoutX="32.0" layoutY="204.0" promptText="Enter departure date" />
+
+   </children>
+</AnchorPane>

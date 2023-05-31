@@ -1,7 +1,7 @@
 package oop.Controllers;
 
-import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -12,9 +12,9 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -23,7 +23,10 @@ import javafx.stage.Stage;
 import oop.Helpers.CustomIntegerStringConverter;
 import oop.Helpers.LocalDateCellFactory;
 import oop.Helpers.UpdateStatus;
+import oop.Model.Client;
+import oop.Model.Room;
 import oop.Model.Worker;
+import oop.Services.RoomService;
 import oop.Services.WorkerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,19 +42,17 @@ import java.util.ResourceBundle;
 import static oop.AddControllers.AddWorkerController.isNumeric;
 
 
-public class WorkerController implements Initializable
+public class RoomController implements Initializable
 {
     @FXML
-    private TableColumn<Worker, String> name_column;
+    private TableColumn<Room, Integer> number_column;
     @FXML
-    private TableColumn<Worker, String> surname_column;
+    private TableColumn<Room, String> status_column;
     @FXML
-    public TableColumn<Worker, LocalDate> date_column;
+    public TableColumn<Room, Integer> capacity_column;
     @FXML
-    public TableColumn<Worker, String> position_column;
-    @FXML
-    public TableColumn<Worker, Integer> exp_column;
-    private static final Logger log = LoggerFactory.getLogger("Worker logger");
+    public TableColumn<Room, Integer> price_column;
+    private static final Logger log = LoggerFactory.getLogger("Room logger");
 
     @FXML
     private ChoiceBox<String> choice_box;
@@ -60,49 +61,50 @@ public class WorkerController implements Initializable
     private TextField search;
 
     @FXML
-    private TableView<Worker> table = new TableView<Worker>();
+    private TableView<Room> table = new TableView<Room>();
 
     @FXML
     private Label search_invalid_label;
 
     private final String[] choices = {"Workers","Clients","Rooms","Reports"};
 
-    WorkerService workerService = new WorkerService();
-    ObservableList<Worker> List = FXCollections.observableArrayList();
+    RoomService roomService = new RoomService();
+    ObservableList<Room> List = FXCollections.observableArrayList();
 
     @FXML
     private void getChoices(ActionEvent event) throws IOException {
         String choice = choice_box.getValue();
         if (Objects.equals(choice, "Clients"))
             SceneController.getClientsScene(event);
-        if (Objects.equals(choice, "Rooms"))
-            SceneController.getRoomsScene(event);
+        if (Objects.equals(choice, "Workers"))
+            SceneController.getWorkersScene(event);
         if (Objects.equals(choice, "Reports"))
             SceneController.getReportsScene(event);
+
     }
 
 
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
-        SceneController.getWorkersScene(event);
+        SceneController.getRoomsScene(event);
     }
     @FXML
     private void add(ActionEvent event) throws IOException {
-        log.debug("adding a worker");
+        log.debug("adding a room");
 
-        newWindowController.getNewWorkerWindow();
-        if(UpdateStatus.isIsWorkerAdded()) {
+        newWindowController.getNewRoomWindow();
+        if(UpdateStatus.isIsRoomAdded()) {
             refreshScreen(event);
-            UpdateStatus.setIsWorkerAdded(false);
+            UpdateStatus.setIsRoomAdded(false);
         }
-        log.info("worker added");
+        log.info("room added");
     }
 
 
 
     private void setObList() {
         List.clear();
-        List.addAll(workerService.getWorkers());
+        List.addAll(roomService.getRooms());
     }
 
 
@@ -112,9 +114,9 @@ public class WorkerController implements Initializable
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
-            ObservableList<Worker> selectedRows = table.getSelectionModel().getSelectedItems();
-            for (Worker worker : selectedRows) {
-                workerService.deleteWorker(worker);
+            ObservableList<Room> selectedRows = table.getSelectionModel().getSelectedItems();
+            for (Room room : selectedRows) {
+                roomService.deleteRoom(room);
             }
             refreshScreen(event);
         }
@@ -132,10 +134,10 @@ public class WorkerController implements Initializable
     private void delete(ActionEvent event)
     {
         try {
-            log.debug("deleting a worker");
+            log.debug("deleting a room");
             search_invalid_label.setText("");
             remove_row(event);
-            log.info("worker deleted");
+            log.info("room deleted");
         }
 
         catch (MyException | IOException myEx){
@@ -157,10 +159,10 @@ public class WorkerController implements Initializable
             log.debug("saving to file");
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
-            for(Worker workers : List)
+            for(Room rooms : List)
             {
-                writer.write(workers.getName() + ";" + workers.getSurname() + ";"
-                        + workers.getDate_bd() + ";" + workers.getPosition() + ";" + workers.getExperience());
+                writer.write(rooms.getNumber() + ";" + rooms.getStatus() + ";"
+                        + rooms.getCapacity() + ";" + rooms.getPrice());
                 writer.newLine();
             }
             writer.close();
@@ -193,27 +195,25 @@ public class WorkerController implements Initializable
             File file = fileChooser.showOpenDialog(stage);
 
             BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-            ObservableList<Worker> selectedRows = table.getItems();
-            for (Worker worker : selectedRows) {
-                workerService.deleteWorker(worker);
+            ObservableList<Room> selectedRows = table.getItems();
+            for (Room room : selectedRows) {
+                roomService.deleteRoom(room);
             }
-            java.util.List<String> positions = Arrays.asList("doorman", "receptionist", "bellboy", "liftman", "concierge", "porter", "waiter", "manager");
+            java.util.List<String> positions = Arrays.asList("free", "booked");
             String temp;
             do{
                 temp = reader.readLine();
                 if(temp!=null) {
                     String[] temp2 = temp.split(";");
-                    if (temp2.length == 5) {
-                        if (isNumeric(temp2[4]) && positions.contains(temp2[3].toLowerCase())) {
-                            Worker st = new Worker();
-                            st.setName(temp2[0]);
-                            st.setSurname(temp2[1]);
-                            String[] words = temp2[2].split("-");
-                            st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                            st.setPosition(temp2[3]);
-                            st.setExperience(Integer.parseInt(temp2[4]));
+                    if (temp2.length == 4) {
+                        if (isNumeric(temp2[0]) && isNumeric(temp2[2]) && isNumeric(temp2[3]) && positions.contains(temp2[1].toLowerCase())) {
+                            Room st = new Room();
+                            st.setNumber(Integer.parseInt(temp2[0]));
+                            st.setStatus(temp2[1]);
+                            st.setCapacity(Integer.parseInt(temp2[2]));
+                            st.setPrice(Integer.parseInt(temp2[3]));
 
-                            workerService.createWorker(st);
+                            roomService.createRoom(st);
                         }
                     }
                 }
@@ -248,33 +248,30 @@ public class WorkerController implements Initializable
             PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
             my_pdf_report.open();
 
-            PdfPTable my_report_table = new PdfPTable(5);
+            PdfPTable my_report_table = new PdfPTable(4);
 
             PdfPCell table_cell;
             my_report_table.setHeaderRows(1);
 
             //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Name", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Surname", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Date", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Position", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Experience", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Number", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Status", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Capacity", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
+            my_report_table.addCell(new PdfPCell(new Phrase("Price", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
 
             if (List.isEmpty()) throw new MyException();
 
-            for(Worker workers : List)
+            for(Room rooms : List)
             {
 //                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
 //                my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getName()));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getNumber())));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getSurname()));
+                table_cell=new PdfPCell(new Phrase(rooms.getStatus()));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(String.valueOf(workers.getDate_bd())));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getCapacity())));
                 my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(workers.getPosition()));
-                my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(String.valueOf(workers.getExperience())));
+                table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getPrice())));
                 my_report_table.addCell(table_cell);
             }
             my_pdf_report.add(my_report_table);
@@ -289,82 +286,98 @@ public class WorkerController implements Initializable
     }
 
     @FXML
-    private void change_name(TableColumn.CellEditEvent<Worker, String> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setName(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+    private void change_number(TableColumn.CellEditEvent<Room, Integer> editEvent) throws MyException {
+        try {
+            Room selectedPet = table.getSelectionModel().getSelectedItem();
+
+            Integer ee = editEvent.getNewValue();
+            if (ee > 0) {
+                for (Room rooms : List) {
+                    if (Objects.equals(rooms.getNumber(), ee) && selectedPet != rooms) {
+                        throw new MyException();
+                    }
+                }
+                selectedPet.setNumber(ee);
+                roomService.updateRoom(selectedPet);
+            } else table.refresh();
+        }
+        catch (MyException myEx) {
+            log.error("Exception " + myEx);
+            Alert IOAlert = new Alert(Alert.AlertType.ERROR, myEx.getMessage(), ButtonType.OK);
+            IOAlert.setContentText("A room with this number already exists");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+            table.refresh();
+        }
     }
     @FXML
-    private void change_surname(TableColumn.CellEditEvent<Worker, String> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setSurname(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+    private void change_status(TableColumn.CellEditEvent<Room, String> editEvent) {
+        Room selectedPet = table.getSelectionModel().getSelectedItem();
+        selectedPet.setStatus(editEvent.getNewValue());
+        roomService.updateRoom(selectedPet);
     }
 
     @FXML
-    private void change_exp(TableColumn.CellEditEvent<Worker, Integer> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
+    private void change_capacity(TableColumn.CellEditEvent<Room, Integer> editEvent) {
+        Room selectedPet = table.getSelectionModel().getSelectedItem();
 
         Integer ee = editEvent.getNewValue();
-        if (ee >= 0) {
-            selectedPet.setExperience(ee);
-            workerService.updateWorker(selectedPet);
+        if (ee > 0) {
+            selectedPet.setCapacity(ee);
+            roomService.updateRoom(selectedPet);
         }
         else table.refresh();
     }
 
     @FXML
-    private void change_pos(TableColumn.CellEditEvent<Worker, String> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setPosition(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
+    private void change_price(TableColumn.CellEditEvent<Room, Integer> editEvent) {
+        Room selectedPet = table.getSelectionModel().getSelectedItem();
+
+        Integer ee = editEvent.getNewValue();
+        if (ee >= 0) {
+            selectedPet.setPrice(ee);
+            roomService.updateRoom(selectedPet);
+        }
+        else table.refresh();
     }
 
-    @FXML
-    private void change_data(TableColumn.CellEditEvent<Worker, LocalDate> editEvent) {
-        Worker selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setDate_bd(editEvent.getNewValue());
-        workerService.updateWorker(selectedPet);
-    }
 
-
-
-
-    private SortedList<Worker> getSortedList() {
-        SortedList<Worker> sortedList = new SortedList<>(getFilteredList());
+    private SortedList<Room> getSortedList() {
+        SortedList<Room> sortedList = new SortedList<>(getFilteredList());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         return sortedList;
     }
-    private FilteredList<Worker> getFilteredList() {
-        FilteredList<Worker> filteredList = new FilteredList<>(List, b -> true);
+    private FilteredList<Room> getFilteredList() {
+        FilteredList<Room> filteredList = new FilteredList<>(List, b -> true);
         search.textProperty().addListener((observable, oldValue, newValue) ->
-                filteredList.setPredicate(worker -> {
+                filteredList.setPredicate(room -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
 
                     String lowerCaseFilter = newValue.toLowerCase();
 
-                    if (worker.getPosition().toLowerCase().contains(lowerCaseFilter)) {
+                    if (String.valueOf(room.getNumber()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (worker.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (room.getStatus().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (date_converter(worker.getDate_bd().toString()).toLowerCase().contains(lowerCaseFilter)) {
+                    }  else if (String.valueOf(room.getCapacity()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (worker.getSurname().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    } else return String.valueOf(worker.getExperience()).contains(lowerCaseFilter);
+                    } else return String.valueOf(room.getPrice()).contains(lowerCaseFilter);
                 }));
         return filteredList;
     }
 
-    private String date_converter(String temp){
-        String[] temp2 = temp.split("-");
-        return temp2[2] + '.' + temp2[1] + '.' + temp2[0];
+    private boolean is_room(Integer number){
+        for (Room room : List){
+            if (Objects.equals(room.getNumber(), number))
+                return true;
+        }
+        return false;
     }
-
-
-
 
 
 
@@ -372,26 +385,27 @@ public class WorkerController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+
+
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
         choice_box.setValue("Choose a table");
 
         setObList();
 
-        //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
-        name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
-        date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
-        position_column.setCellValueFactory(new PropertyValueFactory<>("Position"));
-        exp_column.setCellValueFactory(new PropertyValueFactory<>("Experience"));
 
+        //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
+        number_column.setCellValueFactory(new PropertyValueFactory<>("Number"));
+        status_column.setCellValueFactory(new PropertyValueFactory<>("Status"));
+        capacity_column.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
+        price_column.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
         table.setEditable(true);
-        name_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-        surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-        date_column.setCellFactory(new LocalDateCellFactory());
-        position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
-        exp_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
+
+        number_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
+        status_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Free", "Booked"));
+        capacity_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
+        price_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 
 
 
@@ -401,10 +415,4 @@ public class WorkerController implements Initializable
         table.setItems(getSortedList());
 
     }
-
-
-
-
-
 }
-

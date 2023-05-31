@@ -25,22 +25,6 @@ public class Worker {
 
 
 
-
-
-
-
-
-    public Worker(Integer id_worker, String name, String surname, LocalDate date_bd, String position, Integer experience) {
-        this.id_worker = id_worker;
-        this.name = capitalize(name.toLowerCase());
-        this.surname = capitalize(surname.toLowerCase());
-        this.date_bd = date_bd;
-        this.position = capitalize(position.toLowerCase());
-        this.experience = experience;
-    }
-
-
-
     public Worker() {
 
     }

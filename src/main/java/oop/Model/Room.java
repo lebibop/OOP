@@ -85,7 +85,7 @@ public class Room {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = capitalize(status.toLowerCase());
     }
 
     public Integer getCapacity() {
@@ -105,9 +105,18 @@ public class Room {
     }
 
 
+    public static String capitalize(String str)
+    {
+        if (str == null || str.length() == 0) {
+            return str;
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+
     @Override
     public String toString() {
-        return String.format("%d %d %s %d %d",
-                this.id_room, this.number, this.status, this.capacity, this.price);
+        return String.format("%d", this.number);
     }
 }

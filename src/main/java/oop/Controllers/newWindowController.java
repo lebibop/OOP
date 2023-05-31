@@ -17,8 +17,20 @@ public class newWindowController {
     static double x;
     static double y;
 
-    public static void getNewPetWindow() throws IOException {
+    public static void getNewWorkerWindow() throws IOException {
         getPopUpWindow("/addWorker.fxml");
+    }
+
+    public static void getNewRoomWindow() throws IOException {
+        getPopUpWindow("/addRoom.fxml");
+    }
+
+    public static void getNewClientWindow() throws IOException {
+        getPopUpWindow("/addClient.fxml");
+    }
+
+    public static void getNewReportWindow() throws IOException {
+        getPopUpWindow("/addReport.fxml");
     }
 
 //    public static Stage getNewVetWindow() throws IOException {

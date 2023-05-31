@@ -1,12 +1,6 @@
 package oop.Model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "report")
@@ -21,21 +15,9 @@ public class Report {
     private Integer free_per_month;
     @Column(name = "booked_per_month")
     private Integer booked_per_month;
-
-//    @OneToOne(mappedBy = "report")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
     private Room room = new Room();
-
-    public Room getRoom() {
-        return room;
-    }
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-
-    public Report(){}
 
     public Integer getId_report() {
         return id_report;
@@ -67,6 +49,14 @@ public class Report {
 
     public void setBooked_per_month(Integer booked_per_month) {
         this.booked_per_month = booked_per_month;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override

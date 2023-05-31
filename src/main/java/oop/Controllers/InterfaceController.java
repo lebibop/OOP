@@ -58,6 +58,10 @@ public class InterfaceController implements Initializable
             SceneController.getClientsScene(event);
         if (Objects.equals(choice, "Workers"))
             SceneController.getWorkersScene(event);
+        if (Objects.equals(choice, "Rooms"))
+            SceneController.getRoomsScene(event);
+        if (Objects.equals(choice, "Reports"))
+            SceneController.getReportsScene(event);
 
         search();
     }

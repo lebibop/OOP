@@ -10,15 +10,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="540.0" prefWidth="962.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.Controllers.WorkerController">
+<AnchorPane prefHeight="540.0" prefWidth="962.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.Controllers.ReportController">
    <Label fx:id="search_invalid_label" layoutX="635.0" layoutY="14.0" prefHeight="18.0" prefWidth="124.0" textFill="RED" />
    <TableView fx:id="table" editable="true" layoutX="24.0" layoutY="110.0" prefHeight="415.0" prefWidth="914.0">
       <columns>
-         <TableColumn fx:id="name_column" onEditCommit="#change_name" prefWidth="171.20001220703125" text="Name" />
-         <TableColumn fx:id="surname_column" onEditCommit="#change_surname" prefWidth="171.20001220703125" text="Surname" />
-         <TableColumn fx:id="date_column" onEditCommit="#change_data" prefWidth="208.79998779296875" text="Date" />
-         <TableColumn fx:id="position_column" onEditCommit="#change_pos" prefWidth="171.2000732421875" text="Position" />
-         <TableColumn fx:id="exp_column" onEditCommit="#change_exp" prefWidth="193.60003662109375" text="Experience" />
+         <TableColumn fx:id="cpm_column" prefWidth="171.20001220703125" text="Clients per month" />
+         <TableColumn fx:id="fpm_column" prefWidth="171.20001220703125" text="Free per month" />
+         <TableColumn fx:id="bpm_column" prefWidth="208.79998779296875" text="Booked per month" />
+         <TableColumn fx:id="room_column" prefWidth="171.2000732421875" text="Room" />
       </columns>
       <columnResizePolicy>
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -27,11 +26,11 @@
    <ChoiceBox fx:id="choice_box" layoutX="24.0" layoutY="71.0" onAction="#getChoices" prefWidth="150.0" />
    <TextField fx:id="search" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="32.0" prefHeight="25.0" prefWidth="300.0" promptText="Search" />
    <Button layoutX="778.0" layoutY="71.0" mnemonicParsing="false" onAction="#toPDF" text="PDF" />
+   <Button layoutX="829.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
    <Button layoutX="638.0" layoutY="71.0" mnemonicParsing="false" onAction="#add" text="+" />
    <Button layoutX="672.0" layoutY="71.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="25.0" text="-" />
-   <Button layoutX="829.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
    <Button layoutX="882.0" layoutY="71.0" mnemonicParsing="false" onAction="#upload" text="Upload" />
-   <Text layoutX="317.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workers" wrappingWidth="190.31597900390625">
+   <Text layoutX="330.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports" wrappingWidth="190.31597900390625">
       <font>
          <Font size="49.0" />
       </font>

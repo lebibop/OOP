@@ -37,21 +37,21 @@ public class app_client {
         client.setDate_arrival(LocalDate.of(2023,5,20));
         client.setDate_departure(LocalDate.of(2023,5,29));
         client.setStay_lenght(Math.toIntExact(client.getDate_arrival().until(client.getDate_departure(), ChronoUnit.DAYS)));
-        System.out.println(client.toString());
+//        System.out.println(client.toString());
 
         Room room = new Room();
-        room.setNumber(134);
+        room.setId_room(134);
         room.setStatus("Free");
         room.setCapacity(3);
         room.setPrice(3500);
-        System.out.println(room.toString());
+//        System.out.println(room.toString());
 
         Room room1 = new Room();
-        room1.setNumber(22);
+        room1.setId_room(22);
         room1.setStatus("Free");
         room1.setCapacity(44);
         room1.setPrice(654);
-        System.out.println(room.toString());
+//        System.out.println(room.toString());
 
 
         Report report = new Report();
@@ -64,26 +64,29 @@ public class app_client {
         report1.setBooked_per_month(12);
         report1.setFree_per_month(77);
 
+        System.out.println(room);
 
 //        room.setReport(report);
 //        room1.setReport(report1);
 //        client.setRoom(room);
-
         report.setRoom(room);
         client.setRoom(room);
 
+        System.out.println(room);
 
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
 
-        session.saveOrUpdate(room);
-        session.saveOrUpdate(report);
-        session.saveOrUpdate(client);
+
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        Transaction transaction = session.beginTransaction();
+//
 //        session.saveOrUpdate(room);
-//        session.saveOrUpdate(room1);
+//        session.saveOrUpdate(report);
 //        session.saveOrUpdate(client);
-
-        transaction.commit();
-        System.exit(0);
+////        session.saveOrUpdate(room);
+////        session.saveOrUpdate(room1);
+////        session.saveOrUpdate(client);
+//
+//        transaction.commit();
+//        System.exit(0);
     }
 }
