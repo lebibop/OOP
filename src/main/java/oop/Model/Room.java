@@ -6,9 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "room")
@@ -19,16 +17,19 @@ public class Room {
     private Integer id_room;
     @Column(name = "number")
     private Integer number;
-    @Column(name = "status")
-    private String status;  // ChoiceBox ----> Free/Booked
     @Column(name = "capacity")
     private Integer capacity; // ChoiceBox -----> 1/2/3/4
 
     @Column(name = "price")
     private Integer price;
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    private List<Client> clientSet = new ArrayList<Client>();
+    private List<Report> reportSet = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "room", cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    private List<Client> clientSet = new ArrayList<>();
 
     public List<Client> getClientSet() {
         return clientSet;
@@ -37,7 +38,6 @@ public class Room {
     public void setClientSet(List<Client> clientSet) {
         this.clientSet = clientSet;
     }
-
 
     public void addClient(Client client) {
         clientSet.add(client);
@@ -48,19 +48,22 @@ public class Room {
         client.setRoom(null);
     }
 
-//    @OneToOne
-//    @JoinColumn(name = "report_id_report")
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    private Report report;
-    public Report getReport() {
-        return report;
-    }
-    public void setReport(Report report) {
-        this.report = report;
+    public List<Report> getReportSet() {
+        return reportSet;
     }
 
+    public void setReportSet(List<Report> reportSet) {
+        this.reportSet = reportSet;
+    }
 
+    public void addReport(Report report) {
+        reportSet.add(report);
+        report.setRoom(this);
+    }
+    public void removeReport(Report report) {
+        reportSet.remove(report);
+        report.setRoom(null);
+    }
 
     public Room(){}
 
@@ -78,14 +81,6 @@ public class Room {
 
     public void setNumber(Integer number) {
         this.number = number;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = capitalize(status.toLowerCase());
     }
 
     public Integer getCapacity() {

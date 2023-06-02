@@ -32,7 +32,6 @@ public class AddClientController implements Initializable  {
     RoomService roomService = new RoomService();
     @FXML
     private TextField name;
-
     @FXML
     private TextField surname;
     @FXML
@@ -162,7 +161,6 @@ public class AddClientController implements Initializable  {
     {
         ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomService.getRooms());
         room.getItems().addAll(roomObservableList);
-//        room.setValue("Choose a room");
     }
 }
 

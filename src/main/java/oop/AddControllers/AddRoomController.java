@@ -5,21 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import oop.Controllers.SceneController;
 import oop.Helpers.UpdateStatus;
+import oop.Model.Report;
 import oop.Model.Room;
+import oop.Services.ReportService;
 import oop.Services.RoomService;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -28,8 +21,6 @@ public class AddRoomController implements Initializable  {
     @FXML
     private TextField number;
     @FXML
-    private ChoiceBox<String> status;
-    @FXML
     private TextField capacity;
     @FXML
     private TextField price;
@@ -37,8 +28,108 @@ public class AddRoomController implements Initializable  {
     @FXML
     private void saveNewVetToDb(ActionEvent event){
         if (validateInputs()) {
-            Room vet = createVetFromInput();
-            boolean isSaved = new RoomService().createRoom(vet);
+            Report january = new Report();
+            january.setMonth(1);
+            january.setClients_per_month(0);
+            january.setFree_per_month(31);
+            january.setBooked_per_month(0);
+
+            Report february = new Report();
+            february.setMonth(2);
+            february.setClients_per_month(0);
+            february.setFree_per_month(28);
+            february.setBooked_per_month(0);
+
+            Report march = new Report();
+            march.setMonth(3);
+            march.setClients_per_month(0);
+            march.setFree_per_month(31);
+            march.setBooked_per_month(0);
+
+            Report april = new Report();
+            april.setMonth(4);
+            april.setClients_per_month(0);
+            april.setFree_per_month(30);
+            april.setBooked_per_month(0);
+
+            Report may = new Report();
+            may.setMonth(5);
+            may.setClients_per_month(0);
+            may.setFree_per_month(31);
+            may.setBooked_per_month(0);
+
+            Report june = new Report();
+            june.setMonth(6);
+            june.setClients_per_month(0);
+            june.setFree_per_month(30);
+            june.setBooked_per_month(0);
+
+            Report july = new Report();
+            july.setMonth(7);
+            july.setClients_per_month(0);
+            july.setFree_per_month(31);
+            july.setBooked_per_month(0);
+
+            Report august = new Report();
+            august.setMonth(8);
+            august.setClients_per_month(0);
+            august.setFree_per_month(31);
+            august.setBooked_per_month(0);
+
+            Report september = new Report();
+            september.setMonth(9);
+            september.setClients_per_month(0);
+            september.setFree_per_month(30);
+            september.setBooked_per_month(0);
+
+            Report october = new Report();
+            october.setMonth(10);
+            october.setClients_per_month(0);
+            october.setFree_per_month(31);
+            october.setBooked_per_month(0);
+
+            Report november = new Report();
+            november.setMonth(11);
+            november.setClients_per_month(0);
+            november.setFree_per_month(30);
+            november.setBooked_per_month(0);
+
+            Report december = new Report();
+            december.setMonth(12);
+            december.setClients_per_month(0);
+            december.setFree_per_month(31);
+            december.setBooked_per_month(0);
+
+
+            Room room = createVetFromInput();
+
+            january.setRoom(room);
+            february.setRoom(room);
+            march.setRoom(room);
+            april.setRoom(room);
+            may.setRoom(room);
+            june.setRoom(room);
+            july.setRoom(room);
+            august.setRoom(room);
+            september.setRoom(room);
+            october.setRoom(room);
+            november.setRoom(room);
+            december.setRoom(room);
+
+            room.addReport(january);
+            room.addReport(february);
+            room.addReport(march);
+            room.addReport(april);
+            room.addReport(may);
+            room.addReport(june);
+            room.addReport(july);
+            room.addReport(august);
+            room.addReport(september);
+            room.addReport(october);
+            room.addReport(november);
+            room.addReport(december);
+            boolean isSaved = new RoomService().createRoom(room);
+
             if (isSaved) {
                 UpdateStatus.setIsRoomAdded(true);
                 delayWindowClose(event);
@@ -56,7 +147,7 @@ public class AddRoomController implements Initializable  {
 
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
-        if (number.getText().equals("") || capacity.getText().equals("") || status.getValue().equals("Choose a status") || price.getText().equals("")) {
+        if (number.getText().equals("") || capacity.getText().equals("") || price.getText().equals("")) {
             IOAlert.setContentText("You must fill empty field(-s) to continue");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
@@ -77,7 +168,7 @@ public class AddRoomController implements Initializable  {
         }
 
         if (!correct_number(Integer.valueOf(number.getText()))){
-            IOAlert.setContentText("Incorrect toe input for ROOM NUMBER - A кщщь with this number already exists");
+            IOAlert.setContentText("Incorrect input for ROOM NUMBER - A ROOM with this number already exists");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
             {
@@ -87,7 +178,7 @@ public class AddRoomController implements Initializable  {
         }
 
         if (!isNumeric(capacity.getText())){
-            IOAlert.setContentText("Incorrect toe input for CAPACITY - you must input a number (>0)");
+            IOAlert.setContentText("Incorrect input for CAPACITY - you must input a number (>0)");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
             {
@@ -97,7 +188,7 @@ public class AddRoomController implements Initializable  {
         }
 
         if (!isNumeric(price.getText())){
-            IOAlert.setContentText("Incorrect toe input for PRICE - you must input a number (>0)");
+            IOAlert.setContentText("Incorrect input for PRICE - you must input a number (>0)");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
             {
@@ -121,7 +212,6 @@ public class AddRoomController implements Initializable  {
     private Room createVetFromInput() {
         Room vet = new Room();
         vet.setNumber(Integer.valueOf(number.getText()));
-        vet.setStatus(status.getValue());
         vet.setCapacity(Integer.valueOf(capacity.getText()));
         vet.setPrice(Integer.valueOf(price.getText()));
         return vet;
@@ -193,10 +283,8 @@ public class AddRoomController implements Initializable  {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        status.getItems().addAll("Free", "Booked");
-        status.setValue("Choose a status");
+    public void initialize(URL url, ResourceBundle rb) {
+
     }
 }
 

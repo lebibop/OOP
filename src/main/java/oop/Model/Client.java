@@ -24,7 +24,7 @@ public class Client {
     private Integer stay_lenght;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
     private Room room;
 

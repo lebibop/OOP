@@ -245,13 +245,18 @@ public class WorkerController implements Initializable
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
-            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf/report_worker.pdf"));
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(5);
 
+            PdfPCell headerCell = new PdfPCell(new Phrase("Workers REPORT"));
+            headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell.setColspan(5);
+            headerCell.setPaddingBottom(10);
+            my_report_table.addCell(headerCell);
+
             PdfPCell table_cell;
-            my_report_table.setHeaderRows(1);
 
             //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Name", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
@@ -374,7 +379,7 @@ public class WorkerController implements Initializable
     {
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
-        choice_box.setValue("Choose a table");
+        choice_box.setValue("Workers");
 
         setObList();
 

@@ -11,15 +11,21 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import oop.AddControllers.AddClientController;
 import oop.Helpers.CustomIntegerStringConverter;
 import oop.Helpers.LocalDateCellFactory;
 import oop.Helpers.LocalDateCellFactory_Client;
@@ -63,6 +69,13 @@ public class ClientController implements Initializable
     private ChoiceBox<String> choice_box;
 
     @FXML
+    private DatePicker arrival;
+    @FXML
+    private DatePicker departure;
+    @FXML
+    private ChoiceBox<Integer> cap;
+
+    @FXML
     private TextField search;
 
     @FXML
@@ -95,15 +108,35 @@ public class ClientController implements Initializable
         SceneController.getClientsScene(event);
     }
     @FXML
-    private void add(ActionEvent event) throws IOException {
-        log.debug("adding a client");
+    private void add(ActionEvent event) throws IOException, MyException {
+        try {
+            log.debug("adding a client");
 
-        newWindowController.getNewClientWindow();
-        if(UpdateStatus.isIsClientAdded()) {
-            refreshScreen(event);
-            UpdateStatus.setIsClientAdded(false);
+            LocalDate arr = arrival.getValue();
+            LocalDate dep = departure.getValue();
+            Integer capacity = cap.getValue();
+
+            if (arrival.getValue() == null || departure.getValue() == null)
+                throw new MyException();
+
+            newWindowController.getNewClientWindow();
+
+            if (UpdateStatus.isIsClientAdded()) {
+                refreshScreen(event);
+                UpdateStatus.setIsClientAdded(false);
+            }
+            log.info("Client added");
         }
-        log.info("Client added");
+        catch (MyException e) {
+            log.warn("Exception " + e);
+            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
+            IOAlert.setContentText("Incorrect input for Date search");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+        }
     }
 
 
@@ -264,13 +297,18 @@ public class ClientController implements Initializable
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
-            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf/report_client.pdf"));
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(7);
 
+            PdfPCell headerCell = new PdfPCell(new Phrase("Clients REPORT"));
+            headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell.setColspan(5);
+            headerCell.setPaddingBottom(10);
+            my_report_table.addCell(headerCell);
+
             PdfPCell table_cell;
-            my_report_table.setHeaderRows(1);
 
             //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Name", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
@@ -409,7 +447,10 @@ public class ClientController implements Initializable
     {
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
-        choice_box.setValue("Choose a table");
+        choice_box.setValue("Clients");
+
+        cap.getItems().addAll(1,2,3,4);
+        cap.setValue(1);
 
         setObList();
 

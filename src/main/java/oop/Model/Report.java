@@ -1,6 +1,7 @@
 package oop.Model;
 
 import javax.persistence.*;
+import java.time.Month;
 
 @Entity
 @Table(name = "report")
@@ -9,13 +10,15 @@ public class Report {
     @Column(name = "id_report")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_report;
+    @Column(name = "month")
+    private Integer month;
     @Column(name = "clients_per_month")
     private Integer clients_per_month;
     @Column(name = "free_per_month")
     private Integer free_per_month;
     @Column(name = "booked_per_month")
     private Integer booked_per_month;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
     private Room room = new Room();
 
@@ -59,9 +62,17 @@ public class Report {
         this.room = room;
     }
 
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
     @Override
     public String toString() {
         return String.format("%d %d %d %d",
-                this.id_report, this.clients_per_month, this.free_per_month, this.booked_per_month);
+                this.month, this.clients_per_month, this.free_per_month, this.booked_per_month);
     }
 }

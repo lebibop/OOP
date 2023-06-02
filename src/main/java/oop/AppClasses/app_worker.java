@@ -30,7 +30,7 @@ public class app_worker {
             st.setDate_bd(LocalDate.of(ThreadLocalRandom.current().nextInt(1960, 2000 + 1), ThreadLocalRandom.current().nextInt(1, 12), ThreadLocalRandom.current().nextInt(1, 28)));
             st.setPosition(positions.get(rand.nextInt(positions.size())));
             st.setExperience(ThreadLocalRandom.current().nextInt(1, 12));
-            session.saveOrUpdate(st);
+            session.save(st);
         }
 
         transaction.commit();

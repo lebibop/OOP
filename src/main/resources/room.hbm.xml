@@ -24,7 +24,12 @@
         </property>
 
 
-        <one-to-one name="report" cascade="all-delete-orphan"/>
+<!--        <one-to-one name="report" cascade="all-delete-orphan"/>-->
+
+        <set name="reportSet" inverse="true" cascade="all-delete-orphan">
+            <key column="room_id" />
+            <one-to-many class="oop.Model.Report" />
+        </set>
 
         <set name="clientSet" inverse="true" cascade="all-delete-orphan">
             <key column="room_id" />
@@ -41,7 +46,7 @@
         <id name="id_report" column="id_report">
             <generator class="identity"/>
         </id>
-        <one-to-one name="room" fetch="join" cascade="all" constrained="true"/>
+        <many-to-one name="room" class = "oop.Model.Room" cascade="all" column="room_id"/>
     </class>
 
 

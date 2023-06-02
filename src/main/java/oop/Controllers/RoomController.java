@@ -5,6 +5,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -21,6 +22,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oop.Helpers.CustomIntegerStringConverter;
+import oop.Helpers.HibernateUtil;
 import oop.Helpers.LocalDateCellFactory;
 import oop.Helpers.UpdateStatus;
 import oop.Model.Client;
@@ -28,6 +30,8 @@ import oop.Model.Room;
 import oop.Model.Worker;
 import oop.Services.RoomService;
 import oop.Services.WorkerService;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,9 +39,8 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.List;
 
 import static oop.AddControllers.AddWorkerController.isNumeric;
 
@@ -47,8 +50,6 @@ public class RoomController implements Initializable
     @FXML
     private TableColumn<Room, Integer> number_column;
     @FXML
-    private TableColumn<Room, String> status_column;
-    @FXML
     public TableColumn<Room, Integer> capacity_column;
     @FXML
     public TableColumn<Room, Integer> price_column;
@@ -56,6 +57,13 @@ public class RoomController implements Initializable
 
     @FXML
     private ChoiceBox<String> choice_box;
+
+    @FXML
+    private DatePicker arrival;
+    @FXML
+    private DatePicker departure;
+    @FXML
+    private ChoiceBox<Integer> cap;
 
     @FXML
     private TextField search;
@@ -83,6 +91,37 @@ public class RoomController implements Initializable
 
     }
 
+    @FXML
+    private void search_date() throws MyException{
+        try {
+            LocalDate arr = arrival.getValue();
+            LocalDate dep = departure.getValue();
+            Integer capacity = cap.getValue();
+
+            if (arrival.getValue() == null || departure.getValue() == null)
+                throw new MyException();
+
+            List.clear();
+            List.addAll(roomService.find_rooms(arr, dep, capacity));
+        }
+        catch (MyException e) {
+            log.warn("Exception " + e);
+            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
+            IOAlert.setContentText("Incorrect input for Date search");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+        }
+    }
+
+    @FXML
+    private void all_rooms() {
+        List.clear();
+        List.addAll(roomService.getRooms());
+    }
+
 
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
@@ -106,7 +145,6 @@ public class RoomController implements Initializable
         List.clear();
         List.addAll(roomService.getRooms());
     }
-
 
 
     private void remove_row(ActionEvent event) throws MyException, IOException {
@@ -161,7 +199,7 @@ public class RoomController implements Initializable
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
             for(Room rooms : List)
             {
-                writer.write(rooms.getNumber() + ";" + rooms.getStatus() + ";"
+                writer.write(rooms.getNumber()  + ";"
                         + rooms.getCapacity() + ";" + rooms.getPrice());
                 writer.newLine();
             }
@@ -184,78 +222,76 @@ public class RoomController implements Initializable
     @FXML
     private void upload(ActionEvent event) throws IOException
     {
-        try {
-            log.debug("uploading to file");
-
-            Stage stage = new Stage();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("saves"));
-            fileChooser.setTitle("select file");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
-            File file = fileChooser.showOpenDialog(stage);
-
-            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-            ObservableList<Room> selectedRows = table.getItems();
-            for (Room room : selectedRows) {
-                roomService.deleteRoom(room);
-            }
-            java.util.List<String> positions = Arrays.asList("free", "booked");
-            String temp;
-            do{
-                temp = reader.readLine();
-                if(temp!=null) {
-                    String[] temp2 = temp.split(";");
-                    if (temp2.length == 4) {
-                        if (isNumeric(temp2[0]) && isNumeric(temp2[2]) && isNumeric(temp2[3]) && positions.contains(temp2[1].toLowerCase())) {
-                            Room st = new Room();
-                            st.setNumber(Integer.parseInt(temp2[0]));
-                            st.setStatus(temp2[1]);
-                            st.setCapacity(Integer.parseInt(temp2[2]));
-                            st.setPrice(Integer.parseInt(temp2[3]));
-
-                            roomService.createRoom(st);
-                        }
-                    }
-                }
-            }
-            while(temp!=null);
-            reader.close();
-            refreshScreen(event);
-            log.info("uploaded to file");
-        }
-        catch (IOException e)
-        {
-            log.warn("Exception " + e);
-            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
-            IOAlert.setContentText("Can't find file to upload");
-            IOAlert.showAndWait();
-            if(IOAlert.getResult() == ButtonType.OK)
-            {
-                IOAlert.close();
-            }
-        }
+//        try {
+//            log.debug("uploading to file");
+//
+//            Stage stage = new Stage();
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setInitialDirectory(new File("saves"));
+//            fileChooser.setTitle("select file");
+//            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
+//            File file = fileChooser.showOpenDialog(stage);
+//
+//            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
+//            ObservableList<Room> selectedRows = table.getItems();
+//            for (Room room : selectedRows) {
+//                roomService.deleteRoom(room);
+//            }
+//            String temp;
+//            do{
+//                temp = reader.readLine();
+//                if(temp!=null) {
+//                    String[] temp2 = temp.split(";");
+//                    if (temp2.length == 3) {
+//                        if (isNumeric(temp2[0]) && isNumeric(temp2[2]) && isNumeric(temp2[3])) {
+//                            Room st = new Room();
+//                            st.setNumber(Integer.parseInt(temp2[0]));
+//                            st.setCapacity(Integer.parseInt(temp2[1]));
+//                            st.setPrice(Integer.parseInt(temp2[2]));
+//
+//                            roomService.createRoom(st);
+//                        }
+//                    }
+//                }
+//            }
+//            while(temp!=null);
+//            reader.close();
+//            refreshScreen(event);
+//            log.info("uploaded to file");
+//        }
+//        catch (IOException e)
+//        {
+//            log.warn("Exception " + e);
+//            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
+//            IOAlert.setContentText("Can't find file to upload");
+//            IOAlert.showAndWait();
+//            if(IOAlert.getResult() == ButtonType.OK)
+//            {
+//                IOAlert.close();
+//            }
+//        }
     }
-
-
-
-
 
     public void toPDF(ActionEvent actionEvent) throws Exception
     {
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
-            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf/report_room.pdf"));
             my_pdf_report.open();
 
-            PdfPTable my_report_table = new PdfPTable(4);
+            PdfPTable my_report_table = new PdfPTable(3);
+
+            PdfPCell headerCell = new PdfPCell(new Phrase("Rooms REPORT"));
+            headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell.setColspan(5);
+            headerCell.setPaddingBottom(10);
+            my_report_table.addCell(headerCell);
 
             PdfPCell table_cell;
-            my_report_table.setHeaderRows(1);
 
             //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Number", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
-            my_report_table.addCell(new PdfPCell(new Phrase("Status", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Capacity", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Price", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
 
@@ -266,8 +302,6 @@ public class RoomController implements Initializable
 //                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
 //                my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getNumber())));
-                my_report_table.addCell(table_cell);
-                table_cell=new PdfPCell(new Phrase(rooms.getStatus()));
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getCapacity())));
                 my_report_table.addCell(table_cell);
@@ -313,12 +347,6 @@ public class RoomController implements Initializable
             table.refresh();
         }
     }
-    @FXML
-    private void change_status(TableColumn.CellEditEvent<Room, String> editEvent) {
-        Room selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setStatus(editEvent.getNewValue());
-        roomService.updateRoom(selectedPet);
-    }
 
     @FXML
     private void change_capacity(TableColumn.CellEditEvent<Room, Integer> editEvent) {
@@ -362,9 +390,7 @@ public class RoomController implements Initializable
 
                     if (String.valueOf(room.getNumber()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (room.getStatus().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }  else if (String.valueOf(room.getCapacity()).toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (String.valueOf(room.getCapacity()).toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     } else return String.valueOf(room.getPrice()).contains(lowerCaseFilter);
                 }));
@@ -389,30 +415,33 @@ public class RoomController implements Initializable
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
-        choice_box.setValue("Choose a table");
+        choice_box.setValue("Rooms");
+
+        cap.getItems().addAll(1,2,3,4);
+        cap.setValue(1);
 
         setObList();
 
 
         //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         number_column.setCellValueFactory(new PropertyValueFactory<>("Number"));
-        status_column.setCellValueFactory(new PropertyValueFactory<>("Status"));
         capacity_column.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
         price_column.setCellValueFactory(new PropertyValueFactory<>("Price"));
 
         table.setEditable(true);
 
         number_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
-        status_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Free", "Booked"));
         capacity_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
         price_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 
 
 
-
-
-
         table.setItems(getSortedList());
 
+
+        LocalDate arrival = LocalDate.of(2023,6,1);
+        LocalDate departure = LocalDate.of(2023,6,2);
+
+        System.out.println(roomService.find_rooms(arrival, departure, 1));
     }
 }

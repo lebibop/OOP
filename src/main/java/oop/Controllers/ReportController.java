@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oop.Helpers.CustomIntegerStringConverter;
@@ -34,6 +35,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -55,6 +57,8 @@ public class ReportController implements Initializable
 
     @FXML
     private ChoiceBox<String> choice_box;
+    @FXML
+    private ChoiceBox<Month> choice_box_month;
 
     @FXML
     private TextField search;
@@ -83,6 +87,13 @@ public class ReportController implements Initializable
 
     }
 
+    @FXML
+    private void getChoices_month(ActionEvent event) throws IOException {
+        List.clear();
+        List.addAll(reportService.getReports(choice_box_month.getValue().getValue()));
+        choice_box_month.setValue(choice_box_month.getValue());
+    }
+
 
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
@@ -104,7 +115,7 @@ public class ReportController implements Initializable
 
     private void setObList() {
         List.clear();
-        List.addAll(reportService.getReports());
+        List.addAll(reportService.getReports(LocalDate.now().minusMonths(1).getMonthValue()));
     }
 
 
@@ -248,13 +259,18 @@ public class ReportController implements Initializable
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
-            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("report.pdf"));
+            PdfWriter.getInstance(my_pdf_report, new FileOutputStream("pdf/report_report.pdf"));
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(4);
 
+            PdfPCell headerCell = new PdfPCell(new Phrase("REPORT by " + String.valueOf(choice_box_month.getValue())));
+            headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            headerCell.setColspan(5);
+            headerCell.setPaddingBottom(10);
+            my_report_table.addCell(headerCell);
+
             PdfPCell table_cell;
-            my_report_table.setHeaderRows(1);
 
             //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Clients p/m", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
@@ -296,10 +312,8 @@ public class ReportController implements Initializable
     }
     private FilteredList<Report> getFilteredList() {
         FilteredList<Report> filteredList = new FilteredList<>(List, b -> true);
-        System.out.println(1111);
         search.textProperty().addListener((observable, oldValue, newValue) ->
                 filteredList.setPredicate(report -> {
-                    System.out.println(2222);
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
@@ -324,7 +338,11 @@ public class ReportController implements Initializable
     {
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
-        choice_box.setValue("Choose a table");
+        choice_box.setValue("Reports");
+
+        choice_box_month.getItems().addAll(Month.JANUARY, Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY,
+                Month.JUNE, Month.JULY, Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER);
+        choice_box_month.setValue(LocalDate.now().minusMonths(1).getMonth());
 
         setObList();
 

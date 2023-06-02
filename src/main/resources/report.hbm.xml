@@ -10,6 +10,9 @@
             <generator class="increment" />
         </id>
 
+        <property name="month" >
+            <column name="month" />
+        </property>
         <property name="clients_per_month" >
             <column name="clients_per_month" />
         </property>
