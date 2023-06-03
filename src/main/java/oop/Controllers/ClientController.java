@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,14 +28,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import oop.AddControllers.AddClientController;
-import oop.Helpers.CustomIntegerStringConverter;
-import oop.Helpers.LocalDateCellFactory;
-import oop.Helpers.LocalDateCellFactory_Client;
-import oop.Helpers.UpdateStatus;
+import oop.Helpers.*;
 import oop.Model.Client;
 import oop.Model.Room;
 import oop.Services.ClientService;
 import oop.Services.RoomService;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +49,8 @@ import static oop.AddControllers.AddWorkerController.isNumeric;
 
 public class ClientController implements Initializable
 {
+
+
     @FXML
     private TableColumn<Client, String> name_column;
     @FXML
@@ -66,14 +68,12 @@ public class ClientController implements Initializable
     private static final Logger log = LoggerFactory.getLogger("Client logger");
 
     @FXML
-    private ChoiceBox<String> choice_box;
-
-    @FXML
     private DatePicker arrival;
     @FXML
     private DatePicker departure;
+
     @FXML
-    private ChoiceBox<Integer> cap;
+    private ChoiceBox<String> choice_box;
 
     @FXML
     private TextField search;
@@ -104,30 +104,18 @@ public class ClientController implements Initializable
 
 
     @FXML
-    void refreshScreen(ActionEvent event) throws IOException {
-        SceneController.getClientsScene(event);
-    }
-    @FXML
-    private void add(ActionEvent event) throws IOException, MyException {
+    private void search_date() throws RoomController.MyException {
         try {
-            log.debug("adding a client");
-
             LocalDate arr = arrival.getValue();
             LocalDate dep = departure.getValue();
-            Integer capacity = cap.getValue();
 
             if (arrival.getValue() == null || departure.getValue() == null)
-                throw new MyException();
+                throw new RoomController.MyException();
 
-            newWindowController.getNewClientWindow();
-
-            if (UpdateStatus.isIsClientAdded()) {
-                refreshScreen(event);
-                UpdateStatus.setIsClientAdded(false);
-            }
-            log.info("Client added");
+            List.clear();
+            List.addAll(clientService.find_clients(arr, dep));
         }
-        catch (MyException e) {
+        catch (RoomController.MyException e) {
             log.warn("Exception " + e);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
             IOAlert.setContentText("Incorrect input for Date search");
@@ -139,7 +127,26 @@ public class ClientController implements Initializable
         }
     }
 
+    @FXML
+    private void all_clients() {
+        List.clear();
+        List.addAll(clientService.getClients());
+    }
 
+
+    @FXML
+    void refreshScreen(ActionEvent event) throws IOException {
+        SceneController.getClientsScene(event);
+    }
+    @FXML
+    private void add(ActionEvent event) throws IOException{
+            newWindowController.getNewClientWindow();
+            if (UpdateStatus.isIsClientAdded()) {
+                refreshScreen(event);
+                UpdateStatus.setIsClientAdded(false);
+            }
+            log.info("Client added");
+    }
 
     private void setObList() {
         List.clear();
@@ -153,8 +160,11 @@ public class ClientController implements Initializable
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
+            ReportUpdate reportUpdate = new ReportUpdate();
             ObservableList<Client> selectedRows = table.getSelectionModel().getSelectedItems();
             for (Client client : selectedRows) {
+                reportUpdate.update_report_delete(client, roomService.getRoom_ByNumber(client.getRoom().getNumber()));
+                roomService.updateRoom(roomService.getRoom_ByNumber(client.getRoom().getNumber()));
                 clientService.deleteClient(client);
             }
             refreshScreen(event);
@@ -448,9 +458,6 @@ public class ClientController implements Initializable
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
         choice_box.setValue("Clients");
-
-        cap.getItems().addAll(1,2,3,4);
-        cap.setValue(1);
 
         setObList();
 

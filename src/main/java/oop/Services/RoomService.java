@@ -4,6 +4,7 @@ package oop.Services;
 import oop.Helpers.HibernateUtil;
 import oop.Model.Client;
 import oop.Model.Room;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -72,7 +73,10 @@ public class RoomService {
 
     public Room getRoom(Integer id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.find(Room.class, id);
+            Room room = session.find(Room.class, id);
+            Hibernate.initialize(room.getReportSet());
+            Hibernate.initialize(room.getClientSet());
+            return room;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -81,12 +85,19 @@ public class RoomService {
 
     public List<Room> getRooms() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Room", Room.class).list();
+            List<Room> rooms = session.createQuery("from Room", Room.class).list();
+            for(Room room : rooms){
+                Hibernate.initialize(room.getReportSet());
+                Hibernate.initialize(room.getClientSet());
+            }
+            return rooms;
         } catch (Exception ex) {
             ex.printStackTrace();
             return new ArrayList<>();
         }
     }
+
+
 
     public List<Room> find_rooms(LocalDate arrival, LocalDate departure, Integer capacity){
         java.util.List<Room> r = getRooms();

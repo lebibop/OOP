@@ -2,12 +2,15 @@ package oop.Services;
 
 
 import oop.Helpers.HibernateUtil;
+import oop.Helpers.ReportUpdate;
 import oop.Model.Client;
+import oop.Model.Room;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,5 +94,15 @@ public class ClientService {
             ex.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    public List<Client> find_clients(LocalDate arrival, LocalDate departure){
+        java.util.List<Client> r = getClients();
+        java.util.List<Client> g = new ArrayList<>();
+        for (Client rr : r){
+            if (!rr.getDate_arrival().isBefore(arrival) && !rr.getDate_departure().isAfter(departure))
+                g.add(rr);
+            }
+        return g;
     }
 }

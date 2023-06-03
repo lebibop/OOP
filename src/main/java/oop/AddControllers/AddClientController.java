@@ -10,12 +10,17 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import oop.Controllers.ClientController;
 import oop.Controllers.SceneController;
+import oop.Helpers.HibernateUtil;
+import oop.Helpers.ReportUpdate;
 import oop.Helpers.UpdateStatus;
 import oop.Model.Room;
 import oop.Model.Client;
 import oop.Services.ClientService;
 import oop.Services.RoomService;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,14 +45,50 @@ public class AddClientController implements Initializable  {
     private DatePicker date_arr;
     @FXML
     private DatePicker date_dep;
+    @FXML
+    private ChoiceBox<Integer> cap;
+    @FXML
+    private ChoiceBox<Room> room_choose;
 
     @FXML
-    private ChoiceBox<Room> room;
+    private void search(ActionEvent event) throws  Exception{
+        try {
+            LocalDate arr = date_arr.getValue();
+            LocalDate dep = date_dep.getValue();
+            Integer capacity = cap.getValue();
+
+            if (date_arr.getValue() == null || date_dep.getValue() == null)
+                throw new Exception();
+
+            System.out.println(roomService.find_rooms(arr, dep, capacity));
+            ObservableList<Room> roomOb = FXCollections.observableArrayList(roomService.find_rooms(arr, dep, capacity));
+
+            room_choose.getItems().clear();
+            room_choose.getItems().addAll(roomOb);
+            room_choose.setValue(roomOb.get(0));
+        }
+        catch (Exception e)
+        {
+            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
+            IOAlert.setContentText("Incorrect input for Date search");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+        }
+    }
+
+
 
     @FXML
     private void saveNewVetToDb(ActionEvent event){
         if (validateInputs()) {
             Client vet = createVetFromInput();
+            Room room = new RoomService().getRoom_ByNumber(vet.getRoom().getNumber());
+            room.addClient(vet);
+            new ReportUpdate().update_report_add(vet, room);
+            new RoomService().updateRoom(room);
             boolean isSaved = new ClientService().createClient(vet);
             if (isSaved) {
                 UpdateStatus.setIsClientAdded(true);
@@ -66,7 +107,7 @@ public class AddClientController implements Initializable  {
 
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
-        if (name.getText().equals("") || surname.getText().equals("") || date_bd.getValue() == null || date_arr.getValue() == null || date_dep.getValue() == null || room.getValue() == null) {
+        if (name.getText().equals("") || surname.getText().equals("") || date_bd.getValue() == null || date_arr.getValue() == null || date_dep.getValue() == null || room_choose.getValue() == null) {
             IOAlert.setContentText("You must fill empty field(-s) to continue");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
@@ -87,7 +128,7 @@ public class AddClientController implements Initializable  {
         vet.setDate_arrival(date_arr.getValue());
         vet.setDate_departure(date_dep.getValue());
         vet.setStay_lenght((int) ChronoUnit.DAYS.between(vet.getDate_arrival(), vet.getDate_departure()));
-        vet.setRoom(room.getValue());
+        vet.setRoom(room_choose.getValue());
         return vet;
     }
 
@@ -102,65 +143,10 @@ public class AddClientController implements Initializable  {
         SceneController.close(event);
     }
 
-    @FXML
-    private void add_file(ActionEvent event){
-//        try {
-//            //log.debug("uploading to file");
-//            Stage stage = new Stage();
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setInitialDirectory(new File("saves"));
-//            fileChooser.setTitle("select file");
-//            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
-//            File file = fileChooser.showOpenDialog(stage);
-//
-//            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-//            java.util.List<String> positions = Arrays.asList("doorman", "receptionist", "bellboy", "liftman", "concierge", "porter", "waiter", "manager");
-//            String temp;
-//            do{
-//                temp = reader.readLine();
-//                if(temp!=null) {
-//                    String[] temp2 = temp.split(";");
-//                    if (temp2.length == 5) {
-//                        if (isNumeric(temp2[4]) && positions.contains(temp2[3].toLowerCase())) {
-//                            Worker st = new Worker();
-//                            st.setName(temp2[0]);
-//                            st.setSurname(temp2[1]);
-//                            String[] words = temp2[2].split("-");
-//                            st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-//                            st.setPosition(temp2[3]);
-//                            st.setExperience(Integer.parseInt(temp2[4]));
-//
-//                            workerService.createWorker(st);
-//                        }
-//                    }
-//                }
-//            }
-//            while(temp!=null);
-//            reader.close();
-//
-//            UpdateStatus.setIsWorkerAdded(true);
-//            delayWindowClose(event);
-//            //log.info("uploaded to file");
-//        }
-//        catch (IOException e)
-//        {
-//            //log.warn("Exception " + e);
-//            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
-//            IOAlert.setContentText("Error");
-//            IOAlert.showAndWait();
-//            if(IOAlert.getResult() == ButtonType.OK)
-//            {
-//                IOAlert.close();
-//            }
-//        }
-    }
-
-
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomService.getRooms());
-        room.getItems().addAll(roomObservableList);
+    public void initialize(URL url, ResourceBundle rb) {
+        cap.getItems().addAll(1,2,3,4);
+        cap.setValue(1);
     }
 }
 

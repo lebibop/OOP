@@ -21,10 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import oop.Helpers.CustomIntegerStringConverter;
-import oop.Helpers.HibernateUtil;
-import oop.Helpers.LocalDateCellFactory;
-import oop.Helpers.UpdateStatus;
+import oop.Helpers.*;
 import oop.Model.Client;
 import oop.Model.Room;
 import oop.Model.Worker;
@@ -356,6 +353,7 @@ public class RoomController implements Initializable
         if (ee > 0) {
             selectedPet.setCapacity(ee);
             roomService.updateRoom(selectedPet);
+            new ReportUpdate().update_report_change(roomService.getRoom_ByNumber(selectedPet.getNumber()));
         }
         else table.refresh();
     }
