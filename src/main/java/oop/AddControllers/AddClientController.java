@@ -7,33 +7,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import oop.Controllers.ClientController;
 import oop.Controllers.SceneController;
-import oop.Helpers.HibernateUtil;
 import oop.Helpers.ReportUpdate;
 import oop.Helpers.UpdateStatus;
 import oop.Model.Room;
 import oop.Model.Client;
 import oop.Services.ClientService;
 import oop.Services.RoomService;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class AddClientController implements Initializable  {
-    ClientService clientService = new ClientService();
     RoomService roomService = new RoomService();
     @FXML
     private TextField name;
@@ -51,7 +38,7 @@ public class AddClientController implements Initializable  {
     private ChoiceBox<Room> room_choose;
 
     @FXML
-    private void search(ActionEvent event) throws  Exception{
+    private void search() {
         try {
             LocalDate arr = date_arr.getValue();
             LocalDate dep = date_dep.getValue();
@@ -60,7 +47,6 @@ public class AddClientController implements Initializable  {
             if (date_arr.getValue() == null || date_dep.getValue() == null || !date_arr.getValue().isBefore(date_dep.getValue()))
                 throw new Exception();
 
-            System.out.println(roomService.find_rooms(arr, dep, capacity));
             ObservableList<Room> roomOb = FXCollections.observableArrayList(roomService.find_rooms(arr, dep, capacity));
 
             room_choose.getItems().clear();
@@ -97,14 +83,6 @@ public class AddClientController implements Initializable  {
         }
     }
 
-    public static boolean isNumeric(String str) {
-        try {
-            return Integer.parseInt(str) >= 0;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
-
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
         if (name.getText().equals("") || surname.getText().equals("") || date_bd.getValue() == null || date_arr.getValue() == null || date_dep.getValue() == null || room_choose.getValue() == null) {
@@ -115,6 +93,15 @@ public class AddClientController implements Initializable  {
                 IOAlert.close();
             }
             return false;
+        }
+        if (!roomService.find_rooms(date_arr.getValue(), date_dep.getValue(), cap.getValue()).contains(room_choose.getValue())) {
+            IOAlert.setContentText("You must press SEARCH button");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+        return false;
         }
 
         return true;

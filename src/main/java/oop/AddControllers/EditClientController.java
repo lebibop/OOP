@@ -15,7 +15,6 @@ import oop.Model.Client;
 import oop.Model.Room;
 import oop.Services.ClientService;
 import oop.Services.RoomService;
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -53,7 +52,7 @@ public class EditClientController implements Initializable  {
     }
 
     @FXML
-    private void search(ActionEvent event) throws  Exception{
+    private void search(){
         try {
             LocalDate arr = date_arr.getValue();
             LocalDate dep = date_dep.getValue();
@@ -62,7 +61,6 @@ public class EditClientController implements Initializable  {
             if (date_arr.getValue() == null || date_dep.getValue() == null || !date_arr.getValue().isBefore(date_dep.getValue()))
                 throw new Exception();
 
-            System.out.println(roomService.find_rooms(arr, dep, capacity));
             ObservableList<Room> roomOb = FXCollections.observableArrayList(roomService.find_rooms_edit(editedObject, arr, dep, capacity));
 
             room_choose.getItems().clear();
@@ -84,7 +82,7 @@ public class EditClientController implements Initializable  {
 
 
     @FXML
-    private void saveNewVetToDb(ActionEvent event) throws IOException {
+    private void saveNewVetToDb(ActionEvent event) {
         if (validateInputs()) {
             Client vet = createVetFromInput();
             new ReportUpdate().update_report_delete(this.editedObject, roomService.getRoom_ByNumber(this.editedObject.getRoom().getNumber()));
@@ -102,18 +100,19 @@ public class EditClientController implements Initializable  {
         }
     }
 
-    public static boolean isNumeric(String str) {
-        try {
-            return Integer.parseInt(str) >= 0;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
-
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
         if (name.getText().equals("") || surname.getText().equals("") || date_bd.getValue() == null || date_arr.getValue() == null || date_dep.getValue() == null || room_choose.getValue() == null) {
             IOAlert.setContentText("You must fill empty field(-s) to continue");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+            return false;
+        }
+        if (!roomService.find_rooms_edit(editedObject, date_arr.getValue(), date_dep.getValue(), cap.getValue()).contains(room_choose.getValue())) {
+            IOAlert.setContentText("You must press SEARCH button");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
             {

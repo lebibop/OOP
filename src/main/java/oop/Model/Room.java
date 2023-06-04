@@ -45,11 +45,6 @@ public class Room {
         clientSet.add(client);
         client.setRoom(this);
     }
-    public void removeClient(Client client) {
-        clientSet.remove(client);
-        client.setRoom(null);
-    }
-
     public List<Report> getReportSet() {
         return reportSet;
     }
@@ -61,10 +56,6 @@ public class Room {
     public void addReport(Report report) {
         reportSet.add(report);
         report.setRoom(this);
-    }
-    public void removeReport(Report report) {
-        reportSet.remove(report);
-        report.setRoom(null);
     }
 
     public Room(){}
@@ -101,20 +92,9 @@ public class Room {
         this.price = price;
     }
 
-
-    public static String capitalize(String str)
-    {
-        if (str == null || str.length() == 0) {
-            return str;
-        }
-
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
-    }
-
-
     @Override
     public String toString() {
-        return String.format("%d", this.number);
+        return String.format("%d (%d; %d)", this.number, this.capacity, this.price);
     }
 
     @Override

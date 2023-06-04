@@ -21,7 +21,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import oop.AddControllers.EditClientController;
@@ -36,10 +35,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
-
-import static oop.AddControllers.AddWorkerController.isNumeric;
 
 
 public class ClientController implements Initializable
@@ -72,7 +68,7 @@ public class ClientController implements Initializable
     private TextField search;
 
     @FXML
-    private TableView<Client> table = new TableView<Client>();
+    private TableView<Client> table = new TableView<>();
 
     @FXML
     private Label search_invalid_label;
@@ -106,7 +102,7 @@ public class ClientController implements Initializable
 
 
     @FXML
-    private void search_date() throws MyException {
+    private void search_date() {
         try {
             LocalDate arr = arrival.getValue();
             LocalDate dep = departure.getValue();
@@ -196,7 +192,7 @@ public class ClientController implements Initializable
         }
     }
     @FXML
-    private void save(ActionEvent event) throws IOException {
+    private void save() {
         try {
             log.debug("saving to file");
 
@@ -224,14 +220,8 @@ public class ClientController implements Initializable
             }
         }
     }
-    @FXML
-    private void upload(ActionEvent event) throws IOException {}
 
-
-
-
-    public void toPDF(ActionEvent actionEvent) throws Exception
-    {
+    public void toPDF() {
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
@@ -292,7 +282,7 @@ public class ClientController implements Initializable
 
 
     @FXML
-    private void edit(ActionEvent event) throws MyException{
+    private void edit(ActionEvent event) {
         try {
             int selectedID = table.getSelectionModel().getSelectedIndex();
             if (selectedID == -1) throw new MyException();
@@ -332,47 +322,6 @@ public class ClientController implements Initializable
                 IOAlert.close();
             }
         }
-    }
-
-    @FXML
-    private void change_name(TableColumn.CellEditEvent<Client, String> editEvent) {
-        Client selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setName(editEvent.getNewValue());
-        clientService.updateClient(selectedPet);
-    }
-    @FXML
-    private void change_surname(TableColumn.CellEditEvent<Client, String> editEvent) {
-        Client selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setSurname(editEvent.getNewValue());
-        clientService.updateClient(selectedPet);
-    }
-    @FXML
-    private void change_data(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
-//        Client selectedPet = table.getSelectionModel().getSelectedItem();
-//        System.out.println(editEvent.getNewValue());
-//        selectedPet.setDate_bd(editEvent.getNewValue());
-//        clientService.updateClient(selectedPet);
-    }
-    @FXML
-    private void change_arrival(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
-//        Client selectedPet = table.getSelectionModel().getSelectedItem();
-//        selectedPet.setDate_arrival(editEvent.getNewValue());
-//        clientService.updateClient(selectedPet);
-    }
-
-    @FXML
-    private void change_departure(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
-//        Client selectedPet = table.getSelectionModel().getSelectedItem();
-//        selectedPet.setDate_departure(editEvent.getNewValue());
-//        clientService.updateClient(selectedPet);
-    }
-
-    @FXML
-    private void change_room(TableColumn.CellEditEvent<Client, Room> editEvent) {
-//        Client selectedPet = table.getSelectionModel().getSelectedItem();
-//        Room room = editEvent.getNewValue();
-//        selectedPet.setRoom(room);
-//        clientService.updateClient(selectedPet);
     }
 
     private SortedList<Client> getSortedList() {
@@ -432,8 +381,8 @@ public class ClientController implements Initializable
         ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomService.getRooms());
 
         table.setEditable(false);
-        name_column.setCellFactory(TextFieldTableCell.<Client>forTableColumn());
-        surname_column.setCellFactory(TextFieldTableCell.<Client>forTableColumn());
+        name_column.setCellFactory(TextFieldTableCell.forTableColumn());
+        surname_column.setCellFactory(TextFieldTableCell.forTableColumn());
         date_column.setCellFactory(new LocalDateCellFactory_Client());
         arrival_column.setCellFactory(new LocalDateCellFactory_Client_arr());
         departure_column.setCellFactory(new LocalDateCellFactory_Client_dep());

@@ -42,7 +42,8 @@ public final class ReportUpdate {
             Report report_arr = room.getReportSet().get(arrival.getValue() - 1);
             Report report_dep = room.getReportSet().get(departure.getValue() - 1);
 
-            report_arr.setClients_per_month(report_arr.getClients_per_month() + room.getCapacity());
+            if (arrivalDate.getDayOfMonth() != arrival.maxLength())
+                report_arr.setClients_per_month(report_arr.getClients_per_month() + room.getCapacity());
             report_arr.setBooked_per_month(report_arr.getBooked_per_month() + (arrival.maxLength() - arrivalDate.getDayOfMonth()));
             report_arr.setFree_per_month(report_arr.getFree_per_month() - (arrival.maxLength() - arrivalDate.getDayOfMonth()));
 
@@ -89,8 +90,8 @@ public final class ReportUpdate {
             Report report_arr = room.getReportSet().get(arrival.getValue() - 1);
             Report report_dep = room.getReportSet().get(departure.getValue() - 1);
 
-            report_arr.setClients_per_month(report_arr.getClients_per_month() - room.getCapacity());
-            ////////////////////
+            if (arrivalDate.getDayOfMonth() != arrival.maxLength())
+                report_arr.setClients_per_month(report_arr.getClients_per_month() - room.getCapacity());
             report_arr.setBooked_per_month(report_arr.getBooked_per_month() - (arrival.maxLength() - arrivalDate.getDayOfMonth()));
             report_arr.setFree_per_month(report_arr.getFree_per_month() + (arrival.maxLength() - arrivalDate.getDayOfMonth()));
 

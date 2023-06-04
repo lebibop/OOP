@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -60,10 +59,7 @@ public class WorkerController implements Initializable
     private TextField search;
 
     @FXML
-    private TableView<Worker> table = new TableView<Worker>();
-
-    @FXML
-    private Label search_invalid_label;
+    private TableView<Worker> table = new TableView<>();
 
     private final String[] choices = {"Workers","Clients","Rooms","Reports"};
 
@@ -133,7 +129,6 @@ public class WorkerController implements Initializable
     {
         try {
             log.debug("deleting a worker");
-            search_invalid_label.setText("");
             remove_row(event);
             log.info("worker deleted");
         }
@@ -150,10 +145,8 @@ public class WorkerController implements Initializable
         }
     }
     @FXML
-    private void save(ActionEvent event) throws IOException
-    {
-        try
-        {
+    private void save() {
+        try {
             log.debug("saving to file");
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
@@ -180,7 +173,7 @@ public class WorkerController implements Initializable
         }
     }
     @FXML
-    private void upload(ActionEvent event) throws IOException
+    private void upload(ActionEvent event)
     {
         try {
             log.debug("uploading to file");
@@ -240,8 +233,7 @@ public class WorkerController implements Initializable
 
 
 
-    public void toPDF(ActionEvent actionEvent) throws Exception
-    {
+    public void toPDF() {
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
@@ -392,8 +384,8 @@ public class WorkerController implements Initializable
 
 
         table.setEditable(true);
-        name_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
-        surname_column.setCellFactory(TextFieldTableCell.<Worker>forTableColumn());
+        name_column.setCellFactory(TextFieldTableCell.forTableColumn());
+        surname_column.setCellFactory(TextFieldTableCell.forTableColumn());
         date_column.setCellFactory(new LocalDateCellFactory());
         position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
         exp_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));

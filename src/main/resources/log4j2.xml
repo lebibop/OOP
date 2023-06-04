@@ -13,9 +13,10 @@
 
 
     <Loggers>
-        <Root level="error">
+        <Root level="debug">
             <AppenderRef ref="file" />
             <AppenderRef ref="LogToConsole" />
         </Root>
+        <Logger name="org.hibernate" level="OFF" />
     </Loggers>
 </Configuration>
