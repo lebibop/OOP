@@ -25,11 +25,10 @@
    </TableView>
    <ChoiceBox fx:id="choice_box" layoutX="24.0" layoutY="71.0" onAction="#getChoices" prefWidth="150.0" />
    <TextField fx:id="search" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="32.0" prefHeight="25.0" prefWidth="300.0" promptText="Search" />
-   <Button layoutX="778.0" layoutY="71.0" mnemonicParsing="false" onAction="#toPDF" text="PDF" />
+   <Button layoutX="845.0" layoutY="71.0" mnemonicParsing="false" onAction="#toPDF" text="PDF" />
    <Button layoutX="638.0" layoutY="71.0" mnemonicParsing="false" onAction="#add" text="+" />
    <Button layoutX="672.0" layoutY="71.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="25.0" text="-" />
-   <Button layoutX="829.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
-   <Button layoutX="882.0" layoutY="71.0" mnemonicParsing="false" onAction="#upload" text="Upload" />
+   <Button layoutX="896.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
    <Text layoutX="21.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rooms" wrappingWidth="190.31597900390625">
       <font>
          <Font size="49.0" />
@@ -37,7 +36,7 @@
    </Text>
    <DatePicker fx:id="arrival" layoutX="221.0" layoutY="17.0" prefHeight="26.0" prefWidth="116.0" promptText="arrival" />
    <DatePicker fx:id="departure" layoutX="349.0" layoutY="17.0" prefHeight="26.0" prefWidth="106.0" promptText="departure" />
-   <Button layoutX="537.0" layoutY="17.0" mnemonicParsing="false" onAction="#search_date" text="Search" />
-   <ChoiceBox fx:id="cap" layoutX="471.0" layoutY="19.0" prefHeight="26.0" prefWidth="45.0" />
+   <Button layoutX="537.0" layoutY="18.0" mnemonicParsing="false" onAction="#search_date" text="Search" />
+   <ChoiceBox fx:id="cap" layoutX="471.0" layoutY="18.0" prefHeight="26.0" prefWidth="45.0" />
    <Button layoutX="221.0" layoutY="71.0" mnemonicParsing="false" onAction="#all_rooms" text="All Rooms" />
 </AnchorPane>

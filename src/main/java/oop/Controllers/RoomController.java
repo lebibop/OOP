@@ -5,7 +5,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,30 +15,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import oop.Helpers.*;
-import oop.Model.Client;
 import oop.Model.Room;
-import oop.Model.Worker;
 import oop.Services.RoomService;
-import oop.Services.WorkerService;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.List;
-
-import static oop.AddControllers.AddWorkerController.isNumeric;
 
 
 public class RoomController implements Initializable
@@ -95,7 +82,7 @@ public class RoomController implements Initializable
             LocalDate dep = departure.getValue();
             Integer capacity = cap.getValue();
 
-            if (arrival.getValue() == null || departure.getValue() == null)
+            if (arrival.getValue() == null || departure.getValue() == null || !arrival.getValue().isBefore(departure.getValue()))
                 throw new MyException();
 
             List.clear();
@@ -106,8 +93,7 @@ public class RoomController implements Initializable
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
             IOAlert.setContentText("Incorrect input for Date search");
             IOAlert.showAndWait();
-            if(IOAlert.getResult() == ButtonType.OK)
-            {
+            if(IOAlert.getResult() == ButtonType.OK) {
                 IOAlert.close();
             }
         }
@@ -145,7 +131,6 @@ public class RoomController implements Initializable
 
 
     private void remove_row(ActionEvent event) throws MyException, IOException {
-
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
@@ -157,8 +142,7 @@ public class RoomController implements Initializable
         }
     }
 
-    static class MyException extends Exception
-    {
+    static class MyException extends Exception {
         public MyException()
         {
             super("Choose a row to delete");
@@ -166,8 +150,7 @@ public class RoomController implements Initializable
     }
 
     @FXML
-    private void delete(ActionEvent event)
-    {
+    private void delete(ActionEvent event) {
         try {
             log.debug("deleting a room");
             search_invalid_label.setText("");
@@ -187,15 +170,12 @@ public class RoomController implements Initializable
         }
     }
     @FXML
-    private void save(ActionEvent event) throws IOException
-    {
-        try
-        {
+    private void save(ActionEvent event) throws IOException {
+        try {
             log.debug("saving to file");
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
-            for(Room rooms : List)
-            {
+            for(Room rooms : List) {
                 writer.write(rooms.getNumber()  + ";"
                         + rooms.getCapacity() + ";" + rooms.getPrice());
                 writer.newLine();
@@ -204,14 +184,12 @@ public class RoomController implements Initializable
             Desktop.getDesktop().open(new File("saves"));
             log.info("saved to file");
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             log.warn("Exception " + e);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
             IOAlert.setContentText("Error");
             IOAlert.showAndWait();
-            if(IOAlert.getResult() == ButtonType.OK)
-            {
+            if(IOAlert.getResult() == ButtonType.OK) {
                 IOAlert.close();
             }
         }
@@ -269,8 +247,7 @@ public class RoomController implements Initializable
 //        }
     }
 
-    public void toPDF(ActionEvent actionEvent) throws Exception
-    {
+    public void toPDF(ActionEvent actionEvent) throws Exception {
         try {
             log.debug("Saving to PDF");
             Document my_pdf_report = new Document();
@@ -278,26 +255,25 @@ public class RoomController implements Initializable
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(3);
+            my_report_table.setWidthPercentage(100f);
+            my_report_table.setTotalWidth(PageSize.A4.getWidth() - my_pdf_report.leftMargin() - my_pdf_report.rightMargin()); // устанавливаем фиксированную ширину таблицы
+            my_report_table.setLockedWidth(true);
 
             PdfPCell headerCell = new PdfPCell(new Phrase("Rooms REPORT"));
             headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            headerCell.setColspan(5);
+            headerCell.setColspan(3);
             headerCell.setPaddingBottom(10);
             my_report_table.addCell(headerCell);
 
             PdfPCell table_cell;
 
-            //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Number", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Capacity", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Price", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
 
             if (List.isEmpty()) throw new MyException();
 
-            for(Room rooms : List)
-            {
-//                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
-//                my_report_table.addCell(table_cell);
+            for(Room rooms : List) {
                 table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getNumber())));
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(String.valueOf(rooms.getCapacity())));
@@ -369,8 +345,6 @@ public class RoomController implements Initializable
         }
         else table.refresh();
     }
-
-
     private SortedList<Room> getSortedList() {
         SortedList<Room> sortedList = new SortedList<>(getFilteredList());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
@@ -395,33 +369,18 @@ public class RoomController implements Initializable
         return filteredList;
     }
 
-    private boolean is_room(Integer number){
-        for (Room room : List){
-            if (Objects.equals(room.getNumber(), number))
-                return true;
-        }
-        return false;
-    }
-
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-
-
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
         choice_box.setValue("Rooms");
 
-        cap.getItems().addAll(1,2,3,4);
+        cap.getItems().addAll(0,1,2,3,4);
         cap.setValue(1);
 
         setObList();
 
-
-        //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         number_column.setCellValueFactory(new PropertyValueFactory<>("Number"));
         capacity_column.setCellValueFactory(new PropertyValueFactory<>("Capacity"));
         price_column.setCellValueFactory(new PropertyValueFactory<>("Price"));
@@ -432,14 +391,6 @@ public class RoomController implements Initializable
         capacity_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
         price_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 
-
-
         table.setItems(getSortedList());
-
-
-        LocalDate arrival = LocalDate.of(2023,6,1);
-        LocalDate departure = LocalDate.of(2023,6,2);
-
-        System.out.println(roomService.find_rooms(arrival, departure, 1));
     }
 }

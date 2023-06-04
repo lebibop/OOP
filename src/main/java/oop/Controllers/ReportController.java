@@ -15,14 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import oop.Helpers.CustomIntegerStringConverter;
-import oop.Helpers.LocalDateCellFactory_Client;
 import oop.Helpers.UpdateStatus;
 import oop.Model.Report;
 import oop.Model.Room;
@@ -30,13 +25,11 @@ import oop.Services.ReportService;
 import oop.Services.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -194,64 +187,7 @@ public class ReportController implements Initializable
         }
     }
     @FXML
-    private void upload(ActionEvent event) throws IOException
-    {
-        try {
-            log.debug("uploading to file");
-
-            Stage stage = new Stage();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("saves"));
-            fileChooser.setTitle("select file");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
-            File file = fileChooser.showOpenDialog(stage);
-
-            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-            ObservableList<Report> selectedRows = table.getItems();
-
-            for (Report report : selectedRows) {
-                reportService.deleteReport(report);
-            }
-            String temp;
-            do{
-                temp = reader.readLine();
-                System.out.println(temp);
-                if(temp!=null) {
-                    String[] temp2 = temp.split(";");
-                    if (temp2.length == 4) {
-                        if (isNumeric(temp2[0]) && isNumeric(temp2[1]) && isNumeric(temp2[2]) && isNumeric(temp2[3])) {
-                            Report st = new Report();
-                            st.setClients_per_month(Integer.valueOf(temp2[0]));
-                            st.setFree_per_month(Integer.valueOf(temp2[1]));
-                            st.setBooked_per_month(Integer.valueOf(temp2[2]));
-                            st.setRoom(roomService.getRoom_ByNumber(Integer.parseInt(temp2[3])));
-
-
-                            reportService.createCl(st);
-                        }
-                    }
-                }
-            }
-            while(temp!=null);
-            reader.close();
-            refreshScreen(event);
-            log.info("uploaded to file");
-        }
-        catch (IOException e)
-        {
-            log.warn("Exception " + e);
-            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
-            IOAlert.setContentText("Can't find file to upload");
-            IOAlert.showAndWait();
-            if(IOAlert.getResult() == ButtonType.OK)
-            {
-                IOAlert.close();
-            }
-        }
-    }
-
-
-
+    private void upload(ActionEvent event) throws IOException {}
 
 
     public void toPDF(ActionEvent actionEvent) throws Exception
@@ -263,16 +199,18 @@ public class ReportController implements Initializable
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(4);
+            my_report_table.setWidthPercentage(100f);
+            my_report_table.setTotalWidth(PageSize.A4.getWidth() - my_pdf_report.leftMargin() - my_pdf_report.rightMargin()); // устанавливаем фиксированную ширину таблицы
+            my_report_table.setLockedWidth(true);
 
             PdfPCell headerCell = new PdfPCell(new Phrase("REPORT by " + String.valueOf(choice_box_month.getValue())));
             headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            headerCell.setColspan(5);
+            headerCell.setColspan(4);
             headerCell.setPaddingBottom(10);
             my_report_table.addCell(headerCell);
 
             PdfPCell table_cell;
 
-            //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Clients p/m", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Free p/m", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Booked p/m", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
@@ -283,8 +221,6 @@ public class ReportController implements Initializable
 
             for(Report reports : List)
             {
-//                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
-//                my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(String.valueOf(reports.getClients_per_month())));
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(String.valueOf(reports.getFree_per_month())));
@@ -346,13 +282,10 @@ public class ReportController implements Initializable
 
         setObList();
 
-        //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         cpm_column.setCellValueFactory(new PropertyValueFactory<>("clients_per_month"));
         fpm_column.setCellValueFactory(new PropertyValueFactory<>("free_per_month"));
         bpm_column.setCellValueFactory(new PropertyValueFactory<>("booked_per_month"));
         room_column.setCellValueFactory(new PropertyValueFactory<>("room"));
-
-//        ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomService.getRooms());
 
         table.setEditable(false);
 //        cpm_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));

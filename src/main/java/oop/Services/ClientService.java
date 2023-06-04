@@ -2,18 +2,13 @@ package oop.Services;
 
 
 import oop.Helpers.HibernateUtil;
-import oop.Helpers.ReportUpdate;
 import oop.Model.Client;
-import oop.Model.Room;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ClientService {
@@ -23,22 +18,6 @@ public class ClientService {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(client);
-            transaction.commit();
-            return transaction.getStatus() == TransactionStatus.COMMITTED;
-        } catch (Exception ex) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            ex.printStackTrace();
-        }
-        return false;
-    }
-
-    public Boolean createCl(Client client) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(client);
             transaction.commit();
             return transaction.getStatus() == TransactionStatus.COMMITTED;
         } catch (Exception ex) {
@@ -75,15 +54,6 @@ public class ClientService {
                 transaction.rollback();
             }
             ex.printStackTrace();
-        }
-    }
-
-    public Client getClient(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.find(Client.class, id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
         }
     }
 

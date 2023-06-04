@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="540.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.Controllers.ClientController">
+<AnchorPane prefHeight="540.0" prefWidth="962.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.Controllers.ClientController">
    <Label fx:id="search_invalid_label" layoutX="635.0" layoutY="14.0" prefHeight="18.0" prefWidth="124.0" textFill="RED" />
    <TableView fx:id="table" editable="true" layoutX="24.0" layoutY="110.0" prefHeight="415.0" prefWidth="914.0">
       <columns>
@@ -29,11 +29,10 @@
    </TableView>
    <ChoiceBox fx:id="choice_box" layoutX="24.0" layoutY="71.0" onAction="#getChoices" prefWidth="150.0" />
    <TextField fx:id="search" alignment="CENTER_RIGHT" layoutX="637.0" layoutY="32.0" prefHeight="25.0" prefWidth="300.0" promptText="Search" />
-   <Button layoutX="778.0" layoutY="71.0" mnemonicParsing="false" onAction="#toPDF" text="PDF" />
+   <Button layoutX="845.0" layoutY="71.0" mnemonicParsing="false" onAction="#toPDF" text="PDF" />
    <Button layoutX="638.0" layoutY="71.0" mnemonicParsing="false" onAction="#add" text="+" />
    <Button layoutX="672.0" layoutY="71.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="25.0" text="-" />
-   <Button layoutX="829.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
-   <Button layoutX="882.0" layoutY="71.0" mnemonicParsing="false" onAction="#upload" text="Upload" />
+   <Button layoutX="896.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
    <Text layoutX="24.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clients" wrappingWidth="190.31597900390625">
       <font>
          <Font size="49.0" />
@@ -41,6 +40,7 @@
    </Text>
    <DatePicker fx:id="arrival" layoutX="231.0" layoutY="27.0" prefHeight="26.0" prefWidth="116.0" promptText="arrival" />
    <DatePicker fx:id="departure" layoutX="359.0" layoutY="27.0" prefHeight="26.0" prefWidth="106.0" promptText="departure" />
-   <Button layoutX="547.0" layoutY="27.0" mnemonicParsing="false" onAction="#search_date" text="Search" />
+   <Button layoutX="481.0" layoutY="27.0" mnemonicParsing="false" onAction="#search_date" text="Search" />
    <Button layoutX="231.0" layoutY="71.0" mnemonicParsing="false" onAction="#all_clients" text="All Clients" />
+   <Button layoutX="795.0" layoutY="71.0" mnemonicParsing="false" onAction="#edit" text="Edit" />
 </AnchorPane>

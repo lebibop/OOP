@@ -1,7 +1,6 @@
 package oop.Model;
 
 import javax.persistence.*;
-import java.time.Month;
 
 @Entity
 @Table(name = "report")

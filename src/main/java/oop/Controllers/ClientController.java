@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,21 +21,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import oop.AddControllers.AddClientController;
+import oop.AddControllers.EditClientController;
 import oop.Helpers.*;
 import oop.Model.Client;
 import oop.Model.Room;
 import oop.Services.ClientService;
 import oop.Services.RoomService;
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
@@ -49,8 +44,6 @@ import static oop.AddControllers.AddWorkerController.isNumeric;
 
 public class ClientController implements Initializable
 {
-
-
     @FXML
     private TableColumn<Client, String> name_column;
     @FXML
@@ -88,6 +81,7 @@ public class ClientController implements Initializable
 
     ClientService clientService = new ClientService();
     RoomService roomService = new RoomService();
+    ReportUpdate reportUpdate = new ReportUpdate();
     ObservableList<Client> List = FXCollections.observableArrayList();
 
     @FXML
@@ -102,20 +96,28 @@ public class ClientController implements Initializable
 
     }
 
+    static class MyException extends Exception
+    {
+        public MyException()
+        {
+            super("Choose a row to delete");
+        }
+    }
+
 
     @FXML
-    private void search_date() throws RoomController.MyException {
+    private void search_date() throws MyException {
         try {
             LocalDate arr = arrival.getValue();
             LocalDate dep = departure.getValue();
 
-            if (arrival.getValue() == null || departure.getValue() == null)
-                throw new RoomController.MyException();
+            if (arrival.getValue() == null || departure.getValue() == null || !arrival.getValue().isBefore(departure.getValue()))
+                throw new MyException();
 
             List.clear();
             List.addAll(clientService.find_clients(arr, dep));
         }
-        catch (RoomController.MyException e) {
+        catch (MyException e) {
             log.warn("Exception " + e);
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
             IOAlert.setContentText("Incorrect input for Date search");
@@ -160,7 +162,6 @@ public class ClientController implements Initializable
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
-            ReportUpdate reportUpdate = new ReportUpdate();
             ObservableList<Client> selectedRows = table.getSelectionModel().getSelectedItems();
             for (Client client : selectedRows) {
                 reportUpdate.update_report_delete(client, roomService.getRoom_ByNumber(client.getRoom().getNumber()));
@@ -171,13 +172,7 @@ public class ClientController implements Initializable
         }
     }
 
-    static class MyException extends Exception
-    {
-        public MyException()
-        {
-            super("Choose a row to delete");
-        }
-    }
+
 
     @FXML
     private void delete(ActionEvent event)
@@ -201,15 +196,12 @@ public class ClientController implements Initializable
         }
     }
     @FXML
-    private void save(ActionEvent event) throws IOException
-    {
-        try
-        {
+    private void save(ActionEvent event) throws IOException {
+        try {
             log.debug("saving to file");
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save_client.csv"));
-            for(Client clients : List)
-            {
+            for(Client clients : List) {
                 writer.write(clients.getName() + ";" + clients.getSurname() + ";"
                         + clients.getDate_bd() + ";" + clients.getDate_arrival() + ";"
                         + clients.getDate_departure() + ";"
@@ -233,71 +225,7 @@ public class ClientController implements Initializable
         }
     }
     @FXML
-    private void upload(ActionEvent event) throws IOException
-    {
-        try {
-            log.debug("uploading to file");
-
-            Stage stage = new Stage();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("saves"));
-            fileChooser.setTitle("select file");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
-            File file = fileChooser.showOpenDialog(stage);
-
-            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-            ObservableList<Client> selectedRows = table.getItems();
-
-            for (Client client : selectedRows) {
-                clientService.deleteClient(client);
-            }
-            String temp;
-            do{
-                temp = reader.readLine();
-                System.out.println(temp);
-                if(temp!=null) {
-                    String[] temp2 = temp.split(";");
-                    if (temp2.length == 6) {
-                        if (isNumeric(temp2[5])) {
-                            Client st = new Client();
-                            st.setName(temp2[0]);
-                            st.setSurname(temp2[1]);
-                            String[] words = temp2[2].split("-");
-                            st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                            words = temp2[3].split("-");
-                            st.setDate_arrival(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                            words = temp2[4].split("-");
-                            st.setDate_departure(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-                            st.setStay_lenght((int) ChronoUnit.DAYS.between(st.getDate_arrival(), st.getDate_departure()));
-
-                            st.setRoom(roomService.getRoom_ByNumber(Integer.parseInt(temp2[5])));
-
-                            System.out.println(st.getRoom());
-
-
-                            clientService.createCl(st);
-                        }
-                    }
-                }
-            }
-            while(temp!=null);
-            reader.close();
-            refreshScreen(event);
-            log.info("uploaded to file");
-        }
-        catch (IOException e)
-        {
-            log.warn("Exception " + e);
-            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
-            IOAlert.setContentText("Can't find file to upload");
-            IOAlert.showAndWait();
-            if(IOAlert.getResult() == ButtonType.OK)
-            {
-                IOAlert.close();
-            }
-        }
-    }
-
+    private void upload(ActionEvent event) throws IOException {}
 
 
 
@@ -311,16 +239,18 @@ public class ClientController implements Initializable
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(7);
+            my_report_table.setWidthPercentage(100f);
+            my_report_table.setTotalWidth(PageSize.A4.getWidth() - my_pdf_report.leftMargin() - my_pdf_report.rightMargin()); // устанавливаем фиксированную ширину таблицы
+            my_report_table.setLockedWidth(true);
 
             PdfPCell headerCell = new PdfPCell(new Phrase("Clients REPORT"));
             headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            headerCell.setColspan(5);
+            headerCell.setColspan(7);
             headerCell.setPaddingBottom(10);
             my_report_table.addCell(headerCell);
 
             PdfPCell table_cell;
 
-            //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Name", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Surname", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Date", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
@@ -334,8 +264,6 @@ public class ClientController implements Initializable
 
             for(Client clients : List)
             {
-//                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
-//                my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(clients.getName()));
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(clients.getSurname()));
@@ -362,6 +290,50 @@ public class ClientController implements Initializable
         }
     }
 
+
+    @FXML
+    private void edit(ActionEvent event) throws MyException{
+        try {
+            int selectedID = table.getSelectionModel().getSelectedIndex();
+            if (selectedID == -1) throw new MyException();
+            Client selectedItem = table.getSelectionModel().getSelectedItem();
+            // вызываем окно редактирования объекта
+            try {
+                // загрузка FXML-файла с макетом окна редактирования
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/editClient.fxml"));
+                Parent root = loader.load();
+                // получение контроллера для окна редактирования
+                EditClientController editController = loader.getController();
+                // передаем выбранный элемент в контроллер
+                editController.setEditedObject(selectedItem);
+
+                // создание нового окна
+                Stage editStage = new Stage();
+                editStage.setTitle("Edit object");
+                editStage.setScene(new Scene(root));
+                // отображение нового окна как модального
+                editStage.initModality(Modality.APPLICATION_MODAL);
+                editStage.showAndWait();
+                if (UpdateStatus.isIsClientAdded()) {
+                    refreshScreen(event);
+                    UpdateStatus.setIsClientAdded(false);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        catch (MyException ex){
+            log.error("Exception " + ex);
+            Alert IOAlert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
+            IOAlert.setContentText("Select row to edit");
+            IOAlert.showAndWait();
+            if(IOAlert.getResult() == ButtonType.OK)
+            {
+                IOAlert.close();
+            }
+        }
+    }
+
     @FXML
     private void change_name(TableColumn.CellEditEvent<Client, String> editEvent) {
         Client selectedPet = table.getSelectionModel().getSelectedItem();
@@ -376,43 +348,31 @@ public class ClientController implements Initializable
     }
     @FXML
     private void change_data(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
-        Client selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setDate_bd(editEvent.getNewValue());
-        clientService.updateClient(selectedPet);
+//        Client selectedPet = table.getSelectionModel().getSelectedItem();
+//        System.out.println(editEvent.getNewValue());
+//        selectedPet.setDate_bd(editEvent.getNewValue());
+//        clientService.updateClient(selectedPet);
     }
     @FXML
     private void change_arrival(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
-        Client selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setDate_arrival(editEvent.getNewValue());
-        clientService.updateClient(selectedPet);
+//        Client selectedPet = table.getSelectionModel().getSelectedItem();
+//        selectedPet.setDate_arrival(editEvent.getNewValue());
+//        clientService.updateClient(selectedPet);
     }
 
     @FXML
     private void change_departure(TableColumn.CellEditEvent<Client, LocalDate> editEvent) {
-        Client selectedPet = table.getSelectionModel().getSelectedItem();
-        selectedPet.setDate_departure(editEvent.getNewValue());
-        clientService.updateClient(selectedPet);
+//        Client selectedPet = table.getSelectionModel().getSelectedItem();
+//        selectedPet.setDate_departure(editEvent.getNewValue());
+//        clientService.updateClient(selectedPet);
     }
-
-
-
 
     @FXML
     private void change_room(TableColumn.CellEditEvent<Client, Room> editEvent) {
-        Client selectedPet = table.getSelectionModel().getSelectedItem();
-        Room room = editEvent.getNewValue();
-
-        selectedPet.setRoom(room);
-
-//        roomService.updateRoom(room);
-        clientService.updateClient(selectedPet);
-
-//        for (Client clients : List) {
-//            if (Objects.equals(clients.getRoom().getNumber(), ee)) {
-//                selectedPet.setRoom(clients.getRoom());
-//                clientService.updateClient(selectedPet);
-//            }
-//        }
+//        Client selectedPet = table.getSelectionModel().getSelectedItem();
+//        Room room = editEvent.getNewValue();
+//        selectedPet.setRoom(room);
+//        clientService.updateClient(selectedPet);
     }
 
     private SortedList<Client> getSortedList() {
@@ -461,7 +421,6 @@ public class ClientController implements Initializable
 
         setObList();
 
-        //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
         surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
@@ -472,12 +431,12 @@ public class ClientController implements Initializable
 
         ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomService.getRooms());
 
-        table.setEditable(true);
+        table.setEditable(false);
         name_column.setCellFactory(TextFieldTableCell.<Client>forTableColumn());
         surname_column.setCellFactory(TextFieldTableCell.<Client>forTableColumn());
         date_column.setCellFactory(new LocalDateCellFactory_Client());
-        arrival_column.setCellFactory(new LocalDateCellFactory_Client());
-        departure_column.setCellFactory(new LocalDateCellFactory_Client());
+        arrival_column.setCellFactory(new LocalDateCellFactory_Client_arr());
+        departure_column.setCellFactory(new LocalDateCellFactory_Client_dep());
         room_column.setCellFactory(ChoiceBoxTableCell.forTableColumn(roomObservableList));
 
 

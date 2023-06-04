@@ -1,7 +1,6 @@
 package oop.Model;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity

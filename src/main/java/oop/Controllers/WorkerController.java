@@ -249,6 +249,9 @@ public class WorkerController implements Initializable
             my_pdf_report.open();
 
             PdfPTable my_report_table = new PdfPTable(5);
+            my_report_table.setWidthPercentage(100f);
+            my_report_table.setTotalWidth(PageSize.A4.getWidth() - my_pdf_report.leftMargin() - my_pdf_report.rightMargin()); // устанавливаем фиксированную ширину таблицы
+            my_report_table.setLockedWidth(true);
 
             PdfPCell headerCell = new PdfPCell(new Phrase("Workers REPORT"));
             headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -258,7 +261,6 @@ public class WorkerController implements Initializable
 
             PdfPCell table_cell;
 
-            //my_report_table.addCell(new PdfPCell(new Phrase("ID", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Name", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Surname", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
             my_report_table.addCell(new PdfPCell(new Phrase("Date", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
@@ -269,8 +271,6 @@ public class WorkerController implements Initializable
 
             for(Worker workers : List)
             {
-//                table_cell=new PdfPCell(new Phrase(workers.getId_worker()));
-//                my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(workers.getName()));
                 my_report_table.addCell(table_cell);
                 table_cell=new PdfPCell(new Phrase(workers.getSurname()));

@@ -31,7 +31,7 @@
    <Button layoutX="672.0" layoutY="71.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="25.0" text="-" />
    <Button layoutX="829.0" layoutY="71.0" mnemonicParsing="false" onAction="#save" text="Save" />
    <Button layoutX="882.0" layoutY="71.0" mnemonicParsing="false" onAction="#upload" text="Upload" />
-   <Text layoutX="317.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workers" wrappingWidth="190.31597900390625">
+   <Text layoutX="24.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Workers" wrappingWidth="190.31597900390625">
       <font>
          <Font size="49.0" />
       </font>

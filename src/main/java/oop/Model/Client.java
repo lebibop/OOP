@@ -1,8 +1,9 @@
 package oop.Model;
 
-import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
+
 @Entity
 @Table(name = "client")
 public class Client {
@@ -98,5 +99,25 @@ public class Client {
     public String toString() {
         return String.format("%d %s %s %s %s %s %d",
                 this.id_client, this.name, this.surname, this.date_bd, this.date_arrival, this.date_departure, this.stay_lenght);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(id_client, client.id_client) &&
+                Objects.equals(name, client.name) &&
+                Objects.equals(surname, client.surname) &&
+                Objects.equals(date_bd, client.date_bd) &&
+                Objects.equals(date_arrival, client.date_arrival) &&
+                Objects.equals(date_departure, client.date_departure) &&
+                Objects.equals(stay_lenght, client.stay_lenght) &&
+                Objects.equals(room, client.room);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_client, name, surname, date_bd, date_arrival, date_departure, stay_lenght, room);
     }
 }

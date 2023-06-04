@@ -17,11 +17,11 @@ public class Main extends Application {
     public void start(Stage MainStage) throws Exception
     {
         log.debug("Start program");
-        Parent LoginParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/login.fxml")));
-        Scene LoginScene = new Scene(LoginParent);
-        MainStage.setScene(LoginScene);
+        Parent MainParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/workers.fxml")));
+        Scene MainScene = new Scene(MainParent);
+        MainStage.setScene(MainScene);
 //        MainStage.initStyle(StageStyle.UTILITY);
-        MainStage.setTitle("Login");
+        MainStage.setTitle("Hotel");
         MainStage.show();
     }
 

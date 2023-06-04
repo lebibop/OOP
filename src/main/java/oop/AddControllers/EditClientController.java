@@ -7,32 +7,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import oop.Controllers.ClientController;
 import oop.Controllers.SceneController;
-import oop.Helpers.HibernateUtil;
 import oop.Helpers.ReportUpdate;
 import oop.Helpers.UpdateStatus;
-import oop.Model.Room;
 import oop.Model.Client;
+import oop.Model.Room;
 import oop.Services.ClientService;
 import oop.Services.RoomService;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class AddClientController implements Initializable  {
+public class EditClientController implements Initializable  {
+    private Client editedObject;
     ClientService clientService = new ClientService();
     RoomService roomService = new RoomService();
     @FXML
@@ -50,6 +40,18 @@ public class AddClientController implements Initializable  {
     @FXML
     private ChoiceBox<Room> room_choose;
 
+    public void setEditedObject(Client editedObject) {
+        this.editedObject = editedObject;
+
+        name.setText(editedObject.getName());
+        surname.setText(editedObject.getSurname());
+        date_bd.setValue(editedObject.getDate_bd());
+        date_arr.setValue(editedObject.getDate_arrival());
+        date_dep.setValue(editedObject.getDate_departure());
+        room_choose.setValue(editedObject.getRoom());
+        cap.setValue(editedObject.getRoom().getCapacity());
+    }
+
     @FXML
     private void search(ActionEvent event) throws  Exception{
         try {
@@ -61,7 +63,7 @@ public class AddClientController implements Initializable  {
                 throw new Exception();
 
             System.out.println(roomService.find_rooms(arr, dep, capacity));
-            ObservableList<Room> roomOb = FXCollections.observableArrayList(roomService.find_rooms(arr, dep, capacity));
+            ObservableList<Room> roomOb = FXCollections.observableArrayList(roomService.find_rooms_edit(editedObject, arr, dep, capacity));
 
             room_choose.getItems().clear();
             room_choose.getItems().addAll(roomOb);
@@ -82,18 +84,21 @@ public class AddClientController implements Initializable  {
 
 
     @FXML
-    private void saveNewVetToDb(ActionEvent event){
+    private void saveNewVetToDb(ActionEvent event) throws IOException {
         if (validateInputs()) {
             Client vet = createVetFromInput();
+            new ReportUpdate().update_report_delete(this.editedObject, roomService.getRoom_ByNumber(this.editedObject.getRoom().getNumber()));
             Room room = new RoomService().getRoom_ByNumber(vet.getRoom().getNumber());
             room.addClient(vet);
             new ReportUpdate().update_report_add(vet, room);
-            new RoomService().updateRoom(room);
-            boolean isSaved = new ClientService().createClient(vet);
-            if (isSaved) {
-                UpdateStatus.setIsClientAdded(true);
-                delayWindowClose(event);
-            }
+            roomService.updateRoom(room);
+            clientService.deleteClient(editedObject);
+
+            if (new ClientService().createClient(vet)) {
+                    UpdateStatus.setIsClientAdded(true);
+                    delayWindowClose(event);
+                }
+
         }
     }
 
@@ -116,7 +121,6 @@ public class AddClientController implements Initializable  {
             }
             return false;
         }
-
         return true;
     }
 

@@ -4,9 +4,6 @@ import oop.Model.Client;
 import oop.Model.Report;
 import oop.Model.Room;
 import oop.Services.ReportService;
-import oop.Services.RoomService;
-import org.hibernate.Hibernate;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;

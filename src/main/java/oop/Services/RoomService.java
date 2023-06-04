@@ -7,9 +7,7 @@ import oop.Model.Room;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +101,7 @@ public class RoomService {
         java.util.List<Room> r = getRooms();
         java.util.List<Room> g = new ArrayList<>();
         for (Room rr : r){
-            if (!Objects.equals(rr.getCapacity(), capacity))
+            if (!Objects.equals(rr.getCapacity(), capacity) && capacity!=0)
                 continue;
 
             boolean flag = true;
@@ -112,6 +110,29 @@ public class RoomService {
                         c.getDate_arrival().isEqual(arrival) ||
                         (c.getDate_arrival().isAfter(arrival) && c.getDate_arrival().isBefore(departure)))
                 {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) g.add(rr);
+        }
+        return g;
+    }
+
+    public List<Room> find_rooms_edit(Client client, LocalDate arrival, LocalDate departure, Integer capacity){
+        java.util.List<Room> r = getRooms();
+        java.util.List<Room> g = new ArrayList<>();
+        for (Room rr : r){
+            if (!Objects.equals(rr.getCapacity(), capacity))
+                continue;
+
+            boolean flag = true;
+            for (Client c : rr.getClientSet()) {
+                if (c.equals(client))
+                    continue;
+                if ( (c.getDate_arrival().isBefore(arrival) && c.getDate_departure().isAfter(arrival)) ||
+                        c.getDate_arrival().isEqual(arrival) ||
+                        (c.getDate_arrival().isAfter(arrival) && c.getDate_arrival().isBefore(departure))) {
                     flag = false;
                     break;
                 }
