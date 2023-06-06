@@ -7740,3 +7740,168 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-06-06 03:00:43.625 [INFO ]: Closing window
 {Room logger} 2023-06-06 03:00:43.631 [INFO ]: room added
 {Main logger} 2023-06-06 03:00:58.564 [DEBUG]: End of a program
+{Main logger} 2023-06-06 03:03:35.438 [DEBUG]: Start program
+{Worker logger} 2023-06-06 03:03:35.793 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 03:03:35.822 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 03:03:37.753 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 03:04:08.072 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 03:04:08.073 [INFO ]: Changing scene
+{Scene Logger} 2023-06-06 03:04:11.010 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 03:04:11.010 [INFO ]: Changing scene
+{Room logger} 2023-06-06 03:04:11.032 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 03:04:11.073 [INFO ]: Room table is done
+{Scene Logger} 2023-06-06 03:04:14.297 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 03:04:14.298 [INFO ]: Changing scene
+{Report logger} 2023-06-06 03:04:14.315 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 03:04:14.367 [INFO ]: Adding is done
+{Report logger} 2023-06-06 03:04:14.367 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 03:04:14.382 [INFO ]: Adding is done
+{Report logger} 2023-06-06 03:04:17.731 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 03:04:17.752 [INFO ]: Adding is done
+{Main logger} 2023-06-06 03:04:20.510 [DEBUG]: End of a program
+{Main logger} 2023-06-06 11:37:44.833 [DEBUG]: Start program
+{Worker logger} 2023-06-06 11:37:45.184 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 11:37:45.209 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 11:37:47.075 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 11:37:51.802 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 11:37:51.803 [INFO ]: Changing scene
+{Client logger} 2023-06-06 11:37:51.827 [DEBUG]: getting clients
+{Client logger} 2023-06-06 11:37:51.863 [INFO ]: getting is done
+{Scene Logger} 2023-06-06 11:37:56.001 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 11:37:56.002 [INFO ]: Changing scene
+{Room logger} 2023-06-06 11:37:56.038 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 11:37:56.072 [INFO ]: Room table is done
+{Scene Logger} 2023-06-06 11:38:00.299 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 11:38:00.300 [INFO ]: Changing scene
+{Report logger} 2023-06-06 11:38:00.334 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:38:00.375 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:38:00.375 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 11:38:00.388 [INFO ]: Adding is done
+{Report logger} 2023-06-06 11:38:03.988 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:38:04.010 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:38:07.265 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:38:07.298 [INFO ]: getting is done
+{Scene Logger} 2023-06-06 11:38:12.930 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 11:38:12.931 [INFO ]: Changing scene
+{Client logger} 2023-06-06 11:38:12.944 [DEBUG]: getting clients
+{Client logger} 2023-06-06 11:38:12.951 [INFO ]: getting is done
+{Scene Logger} 2023-06-06 11:38:44.524 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 11:38:44.525 [INFO ]: Changing scene
+{Report logger} 2023-06-06 11:38:44.532 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:38:44.541 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:38:44.541 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 11:38:44.550 [INFO ]: Adding is done
+{Report logger} 2023-06-06 11:38:47.065 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:38:47.088 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:38:51.087 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:38:51.101 [INFO ]: getting is done
+{Scene Logger} 2023-06-06 11:38:56.216 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 11:38:56.217 [INFO ]: Changing scene
+{Client logger} 2023-06-06 11:38:56.232 [DEBUG]: getting clients
+{Client logger} 2023-06-06 11:38:56.244 [INFO ]: getting is done
+{Client logger} 2023-06-06 11:39:03.883 [DEBUG]: editing a row
+{Scene Logger} 2023-06-06 11:39:30.369 [INFO ]: Closing window
+{Client logger} 2023-06-06 11:39:40.205 [DEBUG]: searching by date
+{Client logger} 2023-06-06 11:39:40.212 [INFO ]: searching is done
+{Client logger} 2023-06-06 11:39:44.599 [DEBUG]: searching by date
+{Client logger} 2023-06-06 11:39:44.611 [INFO ]: searching is done
+{Scene Logger} 2023-06-06 11:39:51.914 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 11:39:51.914 [INFO ]: Changing scene
+{Room logger} 2023-06-06 11:39:51.923 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 11:39:51.940 [INFO ]: Room table is done
+{Room logger} 2023-06-06 11:39:58.527 [DEBUG]: Searching
+{Room logger} 2023-06-06 11:39:58.568 [INFO ]: Search is done
+{Room logger} 2023-06-06 11:40:01.213 [DEBUG]: Searching
+{Room logger} 2023-06-06 11:40:01.253 [INFO ]: Search is done
+{Scene Logger} 2023-06-06 11:40:08.433 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 11:40:08.434 [INFO ]: Changing scene
+{Client logger} 2023-06-06 11:40:08.441 [DEBUG]: getting clients
+{Client logger} 2023-06-06 11:40:08.446 [INFO ]: getting is done
+{Scene Logger} 2023-06-06 11:40:15.095 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 11:40:15.095 [INFO ]: Changing scene
+{Room logger} 2023-06-06 11:40:15.109 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 11:40:15.139 [INFO ]: Room table is done
+{Scene Logger} 2023-06-06 11:40:21.428 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 11:40:21.428 [INFO ]: Changing scene
+{Report logger} 2023-06-06 11:40:21.434 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:40:21.441 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:40:21.441 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 11:40:21.447 [INFO ]: Adding is done
+{Scene Logger} 2023-06-06 11:40:32.179 [INFO ]: Transition to WORKERS list scene
+{Scene Logger} 2023-06-06 11:40:32.180 [INFO ]: Changing scene
+{Worker logger} 2023-06-06 11:40:32.219 [DEBUG]: adding a worker table
+{Worker logger} 2023-06-06 11:40:32.223 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 11:40:45.440 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 11:40:45.440 [INFO ]: Changing scene
+{Report logger} 2023-06-06 11:40:45.446 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:40:45.453 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:40:45.453 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 11:40:45.459 [INFO ]: Adding is done
+{Report logger} 2023-06-06 11:40:46.929 [DEBUG]: saving to file
+{Report logger} 2023-06-06 11:40:47.079 [INFO ]: saved to file
+{Report logger} 2023-06-06 11:41:04.625 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:41:04.642 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:41:05.704 [DEBUG]: saving to file
+{Report logger} 2023-06-06 11:41:05.722 [INFO ]: saved to file
+{Report logger} 2023-06-06 11:41:18.145 [DEBUG]: Saving to PDF
+{Report logger} 2023-06-06 11:41:18.392 [INFO ]: Saved to PDF
+{Scene Logger} 2023-06-06 11:41:39.847 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 11:41:39.847 [INFO ]: Changing scene
+{Room logger} 2023-06-06 11:41:39.855 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 11:41:39.870 [INFO ]: Room table is done
+{Room logger} 2023-06-06 11:41:46.960 [DEBUG]: saving to file
+{Room logger} 2023-06-06 11:41:46.996 [INFO ]: saved to file
+{Room logger} 2023-06-06 11:41:53.871 [DEBUG]: Saving to PDF
+{Room logger} 2023-06-06 11:41:53.881 [INFO ]: Saved to PDF
+{Scene Logger} 2023-06-06 11:42:09.801 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 11:42:09.801 [INFO ]: Changing scene
+{Client logger} 2023-06-06 11:42:09.813 [DEBUG]: getting clients
+{Client logger} 2023-06-06 11:42:09.824 [INFO ]: getting is done
+{Client logger} 2023-06-06 11:42:12.618 [DEBUG]: Saving to PDF
+{Client logger} 2023-06-06 11:42:12.652 [INFO ]: Saved to PDF
+{Client logger} 2023-06-06 11:42:22.501 [DEBUG]: saving to file
+{Client logger} 2023-06-06 11:42:22.551 [INFO ]: saved to file
+{Client logger} 2023-06-06 11:42:33.077 [DEBUG]: editing a row
+{Client logger} 2023-06-06 11:42:35.459 [DEBUG]: editing a row
+{Scene Logger} 2023-06-06 11:42:38.466 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 11:42:38.466 [INFO ]: Changing scene
+{Room logger} 2023-06-06 11:42:38.475 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 11:42:38.488 [INFO ]: Room table is done
+{Scene Logger} 2023-06-06 11:42:40.172 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 11:42:40.172 [INFO ]: Changing scene
+{Client logger} 2023-06-06 11:42:40.184 [DEBUG]: getting clients
+{Client logger} 2023-06-06 11:42:40.194 [INFO ]: getting is done
+{Client logger} 2023-06-06 11:42:41.472 [DEBUG]: editing a row
+{Client logger} 2023-06-06 11:42:41.472 [ERROR]: Exception Select row to edit
+{Client logger} 2023-06-06 11:42:46.532 [DEBUG]: editing a row
+{Scene Logger} 2023-06-06 11:42:53.522 [INFO ]: Closing window
+{Client logger} 2023-06-06 11:42:58.282 [DEBUG]: adding client
+{Scene Logger} 2023-06-06 11:43:00.286 [INFO ]: Closing window
+{Scene Logger} 2023-06-06 11:43:02.514 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 11:43:02.515 [INFO ]: Changing scene
+{Room logger} 2023-06-06 11:43:02.521 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 11:43:02.534 [INFO ]: Room table is done
+{Room logger} 2023-06-06 11:43:03.738 [DEBUG]: adding a room
+{Scene Logger} 2023-06-06 11:43:05.276 [INFO ]: Closing window
+{Scene Logger} 2023-06-06 11:43:07.386 [INFO ]: Transition to WORKERS list scene
+{Scene Logger} 2023-06-06 11:43:07.386 [INFO ]: Changing scene
+{Worker logger} 2023-06-06 11:43:07.394 [DEBUG]: adding a worker table
+{Worker logger} 2023-06-06 11:43:07.400 [INFO ]: worker table is added
+{Worker logger} 2023-06-06 11:43:13.238 [DEBUG]: saving to file
+{Worker logger} 2023-06-06 11:43:13.277 [INFO ]: saved to file
+{Worker logger} 2023-06-06 11:43:27.395 [DEBUG]: uploading to file
+{Scene Logger} 2023-06-06 11:43:32.262 [INFO ]: Transition to WORKERS list scene
+{Scene Logger} 2023-06-06 11:43:32.262 [INFO ]: Changing scene
+{Worker logger} 2023-06-06 11:43:32.265 [DEBUG]: adding a worker table
+{Worker logger} 2023-06-06 11:43:32.268 [INFO ]: worker table is added
+{Worker logger} 2023-06-06 11:43:32.332 [INFO ]: uploaded to file
+{Worker logger} 2023-06-06 11:43:43.556 [DEBUG]: adding a worker
+{Scene Logger} 2023-06-06 11:43:45.149 [INFO ]: Closing window
+{Worker logger} 2023-06-06 11:43:45.161 [INFO ]: worker added
+{Scene Logger} 2023-06-06 11:43:58.661 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 11:43:58.662 [INFO ]: Changing scene
+{Report logger} 2023-06-06 11:43:58.667 [DEBUG]: getting reports
+{Report logger} 2023-06-06 11:43:58.673 [INFO ]: getting is done
+{Report logger} 2023-06-06 11:43:58.673 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 11:43:58.678 [INFO ]: Adding is done
+{Main logger} 2023-06-06 11:44:01.703 [DEBUG]: End of a program

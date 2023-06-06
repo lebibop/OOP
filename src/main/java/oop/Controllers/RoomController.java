@@ -41,7 +41,6 @@ public class RoomController implements Initializable
     @FXML
     public TableColumn<Room, Integer> price_column;
     private static final Logger log = LoggerFactory.getLogger("Room logger");
-
     @FXML
     private ChoiceBox<String> choice_box;
 
@@ -152,10 +151,10 @@ public class RoomController implements Initializable
 
         newWindowController.getNewRoomWindow();
         if(UpdateStatus.isIsRoomAdded()) {
+            log.info("room added");
             refreshScreen(event);
             UpdateStatus.setIsRoomAdded(false);
         }
-        log.info("room added");
     }
 
     /**

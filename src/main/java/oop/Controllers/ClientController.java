@@ -84,6 +84,12 @@ public class ClientController implements Initializable
     ReportUpdate reportUpdate = new ReportUpdate();
     ObservableList<Client> List = FXCollections.observableArrayList();
 
+    /**
+     * Обработчик события выбора элемента в выпадающем списке.
+     * Определяет выбранный элемент и вызывает соответствующий метод SceneController для отображения соответствующей сцены.
+     * @param event Событие выбора элемента в выпадающем списке.
+     * @throws IOException Если произошла ошибка ввода-вывода при загрузке сцены.
+     */
     @FXML
     private void getChoices(ActionEvent event) throws IOException {
         String choice = choice_box.getValue();
@@ -104,10 +110,14 @@ public class ClientController implements Initializable
         }
     }
 
-
+    /**
+     * Выполняет поиск клиентов на основе выбранных дат заезда и выезда.
+     * Если даты недействительны, отображается сообщение об ошибке.
+     */
     @FXML
     private void search_date() {
         try {
+            log.debug("searching by date");
             LocalDate arr = arrival.getValue();
             LocalDate dep = departure.getValue();
 
@@ -116,9 +126,10 @@ public class ClientController implements Initializable
 
             List.clear();
             List.addAll(clientService.find_clients(arr, dep));
+            log.info("searching is done");
         }
         catch (MyException e) {
-            log.warn("Exception " + e);
+            log.warn("Exception " + "Incorrect input for Date search");
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error!", ButtonType.OK);
             IOAlert.setContentText("Incorrect input for Date search");
             IOAlert.showAndWait();
@@ -129,36 +140,70 @@ public class ClientController implements Initializable
         }
     }
 
+    /**
+     * Обработчик события отображения всех клиентов.
+     * Вызывает метод сервиса получения всех клиентов и добавляет их в список для отображения в таблице.
+     */
     @FXML
     private void all_clients() {
+        log.debug("getting all clients");
         List.clear();
         List.addAll(clientService.getClients());
+        log.info("getting is done");
     }
 
-
+    /**
+     * Обработчик события обновления экрана.
+     * Вызывает метод SceneController для отображения сцены с номерами.
+     * @param event Событие обновления экрана.
+     * @throws IOException Если произошла ошибка ввода-вывода при загрузке сцены.
+     */
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
         SceneController.getClientsScene(event);
     }
+
+    /**
+     * Обработчик события добавления нового клиента.
+     * Вызывает метод NewWindowController для отображения окна добавления нового клиента.
+     * Если номер был успешно добавлен, обновляет экран с клиентами.
+     * @param event Событие добавления нового клиента.
+     * @throws IOException Если произошла ошибка ввода-вывода при загрузке сцены.
+     */
     @FXML
     private void add(ActionEvent event) throws IOException{
+        log.debug("adding client");
             newWindowController.getNewClientWindow();
             if (UpdateStatus.isIsClientAdded()) {
+                log.info("Client added");
                 refreshScreen(event);
                 UpdateStatus.setIsClientAdded(false);
             }
-            log.info("Client added");
+
     }
 
+    /**
+     * Метод для установки списка клиентов в таблицу.
+     * Очищает список, затем добавляет в него всех клиентов из сервиса.
+     */
     private void setObList() {
+        log.debug("getting clients");
         List.clear();
         List.addAll(clientService.getClients());
+        log.info("getting is done");
     }
 
 
-
+    /**
+     * Обработчик события удаления выбранных клиентов из таблицы.
+     * Удаляет выбранных клиентов из сервиса.
+     * Если ни один клиент не выбран, выбрасывает исключение MyException.
+     * После удаления клиентов обновляет экран с клиентами.
+     * @param event Событие удаления номеров.
+     * @throws IOException Если произошла ошибка ввода-вывода при загрузке сцены.
+     */
     private void remove_row(ActionEvent event) throws MyException, IOException {
-
+        log.debug("removing a row");
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
@@ -169,11 +214,18 @@ public class ClientController implements Initializable
                 clientService.deleteClient(client);
             }
             refreshScreen(event);
+            log.info("removing is done");
         }
     }
 
 
-
+    /**
+     * Обработчик события удаления выбранных клиентов из таблицы.
+     * Удаляет выбранных клиентов из сервиса.
+     * Если ни один клиент не выбран, выбрасывает исключение MyException.
+     * После удаления клиентов обновляет экран с клиентами.
+     * @param event Событие удаления клиента.
+     */
     @FXML
     private void delete(ActionEvent event)
     {
@@ -195,6 +247,13 @@ public class ClientController implements Initializable
             }
         }
     }
+
+    /**
+     * Обработчик события сохранения списка клиентов в файл.
+     * Сохраняет список клиентов в файл "saves/save.csv".
+     * Если произошла ошибка ввода-вывода при сохранении, выбрасывает исключение IOException.
+     * После сохранения открывает папку "saves".
+     */
     @FXML
     private void save() {
         try {
@@ -225,6 +284,12 @@ public class ClientController implements Initializable
         }
     }
 
+    /**
+     * Обработчик события нажатия на кнопку сохранения таблицы клиентов в PDF файл.
+     * Сохраняет данные из таблицы в файл "pdf/report_client.pdf".
+     * Если список КЛИЕНТОВ пуст, выбрасывает исключение MyException.
+     * Если возникает ошибка ввода-вывода, выводит сообщение об ошибке.
+     */
     public void toPDF() {
         try {
             log.debug("Saving to PDF");
@@ -284,10 +349,16 @@ public class ClientController implements Initializable
         }
     }
 
-
+    /**
+     * Обрабатывает событие нажатия на кнопку редактирования.
+     * Если в таблице выбрана строка, открывает новое окно с выбранным элементом для редактирования.
+     * Если строка не выбрана, отображает сообщение об ошибке.
+     * @param event Событие действия, вызванное нажатием кнопки редактирования.
+     */
     @FXML
     private void edit(ActionEvent event) {
         try {
+            log.debug("editing a row");
             int selectedID = table.getSelectionModel().getSelectedIndex();
             if (selectedID == -1) throw new MyException();
             Client selectedItem = table.getSelectionModel().getSelectedItem();
@@ -309,6 +380,7 @@ public class ClientController implements Initializable
                 editStage.initModality(Modality.APPLICATION_MODAL);
                 editStage.showAndWait();
                 if (UpdateStatus.isIsClientAdded()) {
+                    log.info("editing is done");
                     refreshScreen(event);
                     UpdateStatus.setIsClientAdded(false);
                 }
@@ -317,7 +389,7 @@ public class ClientController implements Initializable
             }
         }
         catch (MyException ex){
-            log.error("Exception " + ex);
+            log.error("Exception " + "Select row to edit");
             Alert IOAlert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
             IOAlert.setContentText("Select row to edit");
             IOAlert.showAndWait();
@@ -328,11 +400,22 @@ public class ClientController implements Initializable
         }
     }
 
+    /**
+     * Возвращает отсортированный список клиентов с учетом фильтрации и текущего порядка сортировки в таблице.
+     * @return Отсортированный список клиентов.
+     */
     private SortedList<Client> getSortedList() {
         SortedList<Client> sortedList = new SortedList<>(getFilteredList());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         return sortedList;
     }
+
+    /**
+     * Метод для получения отфильтрованного списка клиентов на основе заданного текстового фильтра.
+     * Создает новый отфильтрованный список на основе исходного списка клиентов, используя заданный текстовый фильтр.
+     * Фильтр применяется к полям "имя", "фамилия", "дата рождения", "дата прибытия", "дата отбытия" и "номер комнаты" каждой комнаты.
+     * @return Отфильтрованный список работников.
+     */
     private FilteredList<Client> getFilteredList() {
         FilteredList<Client> filteredList = new FilteredList<>(List, b -> true);
         search.textProperty().addListener((observable, oldValue, newValue) ->

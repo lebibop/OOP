@@ -85,11 +85,11 @@ public class ReportController implements Initializable
      */
     @FXML
     private void getChoices_month() {
-        log.debug("Adding reports");
+        log.debug("getting reports");
         List.clear();
         List.addAll(reportService.getReports(choice_box_month.getValue().getValue()));
         choice_box_month.setValue(choice_box_month.getValue());
-        log.info("Adding is done");
+        log.info("getting is done");
     }
 
     /**
