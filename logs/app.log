@@ -7548,3 +7548,195 @@ java.sql.SQLSyntaxErrorException: Table 'mydb.hibernate_sequences' doesn't exist
 {Scene Logger} 2023-06-04 15:25:51.072 [DEBUG]: Closing window
 {Client logger} 2023-06-04 15:25:51.079 [INFO ]: Client added
 {Main logger} 2023-06-04 15:25:53.499 [DEBUG]: End of a program
+{Main logger} 2023-06-04 15:29:27.899 [DEBUG]: Start program
+{Main logger} 2023-06-04 15:29:27.903 [DEBUG]: End of a program
+{org.jboss.logging} 2023-06-04 15:29:27.927 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Main logger} 2023-06-04 15:29:56.499 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-04 15:29:56.849 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Scene Logger} 2023-06-04 15:30:01.993 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-04 15:30:01.993 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-04 15:30:06.474 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-04 15:30:06.475 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-04 15:30:08.390 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-04 15:30:08.391 [DEBUG]: Changing scene
+{Main logger} 2023-06-04 15:30:10.729 [DEBUG]: End of a program
+{Main logger} 2023-06-04 21:01:20.210 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-04 21:01:20.620 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Scene Logger} 2023-06-04 21:01:27.244 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-04 21:01:27.244 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-04 21:01:29.259 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-04 21:01:29.260 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-04 21:01:31.010 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-04 21:01:31.010 [DEBUG]: Changing scene
+{Main logger} 2023-06-04 21:01:32.811 [DEBUG]: End of a program
+{Main logger} 2023-06-05 14:43:00.271 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-05 14:43:00.639 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Scene Logger} 2023-06-05 14:43:13.203 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 14:43:13.203 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 14:43:21.716 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 14:43:21.716 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 14:43:25.532 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 14:43:25.532 [DEBUG]: Changing scene
+{Main logger} 2023-06-05 14:45:20.852 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-05 14:45:21.246 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Scene Logger} 2023-06-05 14:45:34.114 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 14:45:34.115 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 14:45:41.312 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 14:45:41.313 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 14:45:45.599 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 14:45:45.600 [DEBUG]: Changing scene
+{Main logger} 2023-06-05 14:45:48.959 [DEBUG]: End of a program
+{Main logger} 2023-06-05 16:45:25.725 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-05 16:45:26.086 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-05 16:46:53.614 [DEBUG]: adding a worker
+{Scene Logger} 2023-06-05 16:47:12.691 [DEBUG]: Closing window
+{Worker logger} 2023-06-05 16:47:12.701 [INFO ]: worker added
+{Main logger} 2023-06-05 16:47:15.246 [DEBUG]: End of a program
+{Main logger} 2023-06-05 16:48:13.844 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-05 16:48:14.235 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-05 16:48:19.065 [DEBUG]: adding a worker
+{Scene Logger} 2023-06-05 16:48:35.034 [DEBUG]: Closing window
+{Worker logger} 2023-06-05 16:48:35.042 [INFO ]: worker added
+{Scene Logger} 2023-06-05 16:49:06.482 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 16:49:06.483 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 16:49:41.484 [DEBUG]: Closing window
+{Scene Logger} 2023-06-05 16:49:41.496 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 16:49:41.496 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 16:50:44.940 [DEBUG]: Closing window
+{Scene Logger} 2023-06-05 16:50:44.957 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 16:50:44.958 [DEBUG]: Changing scene
+{Client logger} 2023-06-05 16:50:45.145 [INFO ]: Client added
+{Scene Logger} 2023-06-05 16:51:57.148 [DEBUG]: Closing window
+{Scene Logger} 2023-06-05 16:51:57.158 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 16:51:57.159 [DEBUG]: Changing scene
+{Client logger} 2023-06-05 16:51:57.308 [INFO ]: Client added
+{Scene Logger} 2023-06-05 16:53:52.924 [DEBUG]: Closing window
+{Scene Logger} 2023-06-05 16:53:52.933 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 16:53:52.934 [DEBUG]: Changing scene
+{Client logger} 2023-06-05 16:53:53.120 [INFO ]: Client added
+{Scene Logger} 2023-06-05 16:54:03.382 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 16:54:03.383 [DEBUG]: Changing scene
+{Room logger} 2023-06-05 16:54:10.776 [DEBUG]: deleting a room
+{Scene Logger} 2023-06-05 16:54:10.870 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 16:54:10.871 [DEBUG]: Changing scene
+{Room logger} 2023-06-05 16:54:10.917 [INFO ]: room deleted
+{Scene Logger} 2023-06-05 16:54:13.705 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 16:54:13.705 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 16:54:18.108 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 16:54:18.108 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 16:55:25.466 [DEBUG]: Closing window
+{Client logger} 2023-06-05 16:55:25.472 [INFO ]: Client added
+{Scene Logger} 2023-06-05 16:56:56.615 [DEBUG]: Closing window
+{Client logger} 2023-06-05 16:56:56.619 [INFO ]: Client added
+{Scene Logger} 2023-06-05 16:58:40.345 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 16:58:40.346 [DEBUG]: Changing scene
+{Room logger} 2023-06-05 16:59:28.353 [DEBUG]: adding a room
+{Scene Logger} 2023-06-05 16:59:42.741 [DEBUG]: Closing window
+{Room logger} 2023-06-05 16:59:42.749 [INFO ]: room added
+{Scene Logger} 2023-06-05 17:00:40.912 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 17:00:40.912 [DEBUG]: Changing scene
+{Main logger} 2023-06-05 17:00:54.744 [DEBUG]: End of a program
+{Main logger} 2023-06-05 17:05:11.817 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-05 17:05:12.195 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Scene Logger} 2023-06-05 17:13:50.626 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 17:13:50.627 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:17:31.642 [ERROR]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 17:17:31.642 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:20:52.968 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 17:20:52.969 [DEBUG]: Changing scene
+{Main logger} 2023-06-05 17:41:58.225 [DEBUG]: Start program
+{org.jboss.logging} 2023-06-05 17:41:58.605 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Scene Logger} 2023-06-05 17:42:04.280 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 17:42:04.280 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:42:25.062 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 17:42:25.063 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:42:38.730 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 17:42:38.731 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:43:00.289 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 17:43:00.290 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:43:06.116 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 17:43:06.116 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:43:27.084 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 17:43:27.084 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:43:38.414 [ERROR]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 17:43:38.414 [DEBUG]: Changing scene
+{Scene Logger} 2023-06-05 17:43:48.407 [ERROR]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 17:43:48.407 [DEBUG]: Changing scene
+{Main logger} 2023-06-05 17:43:54.902 [DEBUG]: End of a program
+{Main logger} 2023-06-05 17:59:55.070 [DEBUG]: Start program
+{Worker logger} 2023-06-05 17:59:55.417 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-05 17:59:55.451 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-05 17:59:57.338 [INFO ]: worker table is added
+{Scene Logger} 2023-06-05 18:00:01.370 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-05 18:00:01.370 [INFO ]: Changing scene
+{Scene Logger} 2023-06-05 18:00:09.376 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-05 18:00:09.376 [INFO ]: Changing scene
+{Room logger} 2023-06-05 18:00:09.397 [DEBUG]: Room table is adding
+{Room logger} 2023-06-05 18:00:09.437 [INFO ]: Room table is done
+{Scene Logger} 2023-06-05 18:00:11.556 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-05 18:00:11.556 [INFO ]: Changing scene
+{Report logger} 2023-06-05 18:00:11.571 [DEBUG]: Adding reports
+{Report logger} 2023-06-05 18:00:11.616 [INFO ]: Adding is done
+{Report logger} 2023-06-05 18:00:11.616 [DEBUG]: Adding reports
+{Report logger} 2023-06-05 18:00:11.630 [INFO ]: Adding is done
+{Main logger} 2023-06-05 18:00:18.178 [DEBUG]: End of a program
+{Main logger} 2023-06-06 02:19:02.783 [DEBUG]: Start program
+{Worker logger} 2023-06-06 02:19:03.174 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 02:19:03.208 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 02:19:05.382 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 02:19:09.278 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 02:19:09.279 [INFO ]: Changing scene
+{Report logger} 2023-06-06 02:19:09.300 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 02:19:09.375 [INFO ]: Adding is done
+{Report logger} 2023-06-06 02:19:09.376 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 02:19:09.393 [INFO ]: Adding is done
+{Report logger} 2023-06-06 02:19:11.546 [DEBUG]: saving to file
+{Report logger} 2023-06-06 02:19:11.691 [INFO ]: saved to file
+{Main logger} 2023-06-06 02:19:16.401 [DEBUG]: End of a program
+{Main logger} 2023-06-06 02:44:07.457 [DEBUG]: Start program
+{Worker logger} 2023-06-06 02:44:07.842 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 02:44:07.880 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 02:44:09.928 [INFO ]: worker table is added
+{Worker logger} 2023-06-06 02:44:14.388 [DEBUG]: saving to file
+{Worker logger} 2023-06-06 02:44:14.494 [INFO ]: saved to file
+{Main logger} 2023-06-06 02:44:21.002 [DEBUG]: End of a program
+{Main logger} 2023-06-06 02:44:53.384 [DEBUG]: Start program
+{Worker logger} 2023-06-06 02:44:53.767 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 02:44:53.805 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 02:44:55.786 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 02:45:00.074 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 02:45:00.075 [INFO ]: Changing scene
+{Room logger} 2023-06-06 02:45:00.096 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 02:45:00.166 [INFO ]: Room table is done
+{Room logger} 2023-06-06 02:45:01.900 [DEBUG]: saving to file
+{Room logger} 2023-06-06 02:45:01.996 [INFO ]: saved to file
+{Main logger} 2023-06-06 02:45:05.335 [DEBUG]: End of a program
+{Main logger} 2023-06-06 02:53:18.798 [DEBUG]: Start program
+{Worker logger} 2023-06-06 02:53:19.140 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 02:53:19.172 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 02:53:21.114 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 02:53:24.550 [INFO ]: Transition to CLIENTS list scene
+{Scene Logger} 2023-06-06 02:53:24.550 [INFO ]: Changing scene
+{Scene Logger} 2023-06-06 02:53:26.526 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 02:53:26.526 [INFO ]: Changing scene
+{Room logger} 2023-06-06 02:53:26.545 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 02:53:26.581 [INFO ]: Room table is done
+{Scene Logger} 2023-06-06 02:53:28.448 [INFO ]: Transition to REPORTS list scene
+{Scene Logger} 2023-06-06 02:53:28.449 [INFO ]: Changing scene
+{Report logger} 2023-06-06 02:53:28.465 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 02:53:28.511 [INFO ]: Adding is done
+{Report logger} 2023-06-06 02:53:28.511 [DEBUG]: Adding reports
+{Report logger} 2023-06-06 02:53:28.524 [INFO ]: Adding is done
+{Main logger} 2023-06-06 02:53:31.075 [DEBUG]: End of a program
+{Main logger} 2023-06-06 03:00:16.464 [DEBUG]: Start program
+{Worker logger} 2023-06-06 03:00:16.826 [DEBUG]: adding a worker table
+{org.jboss.logging} 2023-06-06 03:00:16.859 [DEBUG]: Logging Provider: org.jboss.logging.Log4j2LoggerProvider
+{Worker logger} 2023-06-06 03:00:18.842 [INFO ]: worker table is added
+{Scene Logger} 2023-06-06 03:00:25.615 [INFO ]: Transition to ROOMS list scene
+{Scene Logger} 2023-06-06 03:00:25.615 [INFO ]: Changing scene
+{Room logger} 2023-06-06 03:00:25.632 [DEBUG]: Room table is adding
+{Room logger} 2023-06-06 03:00:25.694 [INFO ]: Room table is done
+{Room logger} 2023-06-06 03:00:26.577 [DEBUG]: adding a room
+{Scene Logger} 2023-06-06 03:00:43.625 [INFO ]: Closing window
+{Room logger} 2023-06-06 03:00:43.631 [INFO ]: room added
+{Main logger} 2023-06-06 03:00:58.564 [DEBUG]: End of a program

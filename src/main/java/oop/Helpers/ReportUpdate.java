@@ -8,7 +8,16 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+/**
+ * Класс для обновления очтета
+ * @author lebibop
+ */
 public final class ReportUpdate {
+    /**
+     * Обновляет отчет комнаты, при добавлении нового клиента в комнату
+     * @param client объект, представляющий клиента
+     * @param room объект, представляющий комнату
+     */
     public void update_report_add(Client client, Room room){
         LocalDate arrivalDate = client.getDate_arrival();
         LocalDate departureDate = client.getDate_departure();
@@ -55,6 +64,12 @@ public final class ReportUpdate {
             room.addClient(client);
         }
     }
+
+    /**
+     * Обновляет отчет комнаты, при удалении клиента из комнаты
+     * @param client объект, представляющий клиента
+     * @param room объект, представляющий комнату
+     */
     public void update_report_delete(Client client, Room room){
         LocalDate arrivalDate = client.getDate_arrival();
         LocalDate departureDate = client.getDate_departure();
@@ -106,9 +121,10 @@ public final class ReportUpdate {
         }
     }
 
-
-
-
+    /**
+     * Обновляет отчет комнаты, при редактировании данных о комнате
+     * @param room объект, представляющий комнату
+     */
     public void update_report_change(Room room){
         List<Report> reports = room.getReportSet();
         Integer old = room.getClientSet().size();
@@ -116,6 +132,5 @@ public final class ReportUpdate {
             report.setClients_per_month((report.getClients_per_month()/old) * room.getCapacity());
             new ReportService().updateReport(report);
         }
-
     }
 }

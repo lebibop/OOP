@@ -20,7 +20,7 @@ public class Room {
     @Column(name = "number")
     private Integer number;
     @Column(name = "capacity")
-    private Integer capacity; // ChoiceBox -----> 1/2/3/4
+    private Integer capacity;
 
     @Column(name = "price")
     private Integer price;

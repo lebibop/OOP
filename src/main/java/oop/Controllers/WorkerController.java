@@ -37,7 +37,10 @@ import java.util.ResourceBundle;
 
 import static oop.AddControllers.AddWorkerController.isNumeric;
 
-
+/**
+ * Контроллер для таблицы работников.
+ * @author lebibop
+ */
 public class WorkerController implements Initializable
 {
     @FXML
@@ -66,6 +69,12 @@ public class WorkerController implements Initializable
     WorkerService workerService = new WorkerService();
     ObservableList<Worker> List = FXCollections.observableArrayList();
 
+    /**
+     * Обработчик события выбора значения в выпадающем списке.
+     * Получает выбранное значение и вызывает соответствующий метод в классе SceneController для отображения соответствующей сцены.
+     * @param event событие выбора значения в выпадающем списке
+     * @throws IOException если возникает ошибка ввода-вывода при отображении сцены
+     */
     @FXML
     private void getChoices(ActionEvent event) throws IOException {
         String choice = choice_box.getValue();
@@ -77,11 +86,23 @@ public class WorkerController implements Initializable
             SceneController.getReportsScene(event);
     }
 
-
+    /**
+     * Обновление экрана.
+     * Вызывает метод в классе SceneController для отображения сцены с работниками.
+     * @param event событие нажатия на кнопку обновления экрана
+     * @throws IOException если возникает ошибка ввода-вывода при отображении сцены
+     */
     @FXML
     void refreshScreen(ActionEvent event) throws IOException {
         SceneController.getWorkersScene(event);
     }
+
+    /**
+     * Обработчик события нажатия на кнопку добавления нового работника.
+     * Открывает окно для добавления нового работника и обновляет экран, если работник был успешно добавлен.
+     * @param event событие нажатия на кнопку добавления нового работника
+     * @throws IOException если возникает ошибка ввода-вывода при отображении окна добавления нового работника или при обновлении экрана
+     */
     @FXML
     private void add(ActionEvent event) throws IOException {
         log.debug("adding a worker");
@@ -95,16 +116,29 @@ public class WorkerController implements Initializable
     }
 
 
-
+    /**
+     * Метод для заполнения таблицы работников данными из базы данных.
+     * Очищает список работников, затем добавляет в него всех работников из базы данных.
+     */
     private void setObList() {
+        log.debug("adding a worker table");
         List.clear();
         List.addAll(workerService.getWorkers());
+        log.info("worker table is added");
     }
 
 
-
+    /**
+     * Метод для удаления выбранных строк из таблицы работников.
+     * Получает индекс выбранной строки, выбранные строки и удаляет их из базы данных.
+     * Если ни одна строка не выбрана, выбрасывает исключение MyException.
+     * После удаления строк обновляет экран.
+     * @param event событие нажатия на кнопку удаления строк
+     * @throws MyException если ни одна строка не выбрана
+     * @throws IOException если возникает ошибка ввода-вывода при обновлении экрана
+     */
     private void remove_row(ActionEvent event) throws MyException, IOException {
-
+        log.debug("removing a worker");
         int selectedID = table.getSelectionModel().getSelectedIndex();
         if (selectedID == -1) throw new MyException();
         else {
@@ -112,6 +146,7 @@ public class WorkerController implements Initializable
             for (Worker worker : selectedRows) {
                 workerService.deleteWorker(worker);
             }
+            log.info("remove is done");
             refreshScreen(event);
         }
     }
@@ -124,6 +159,12 @@ public class WorkerController implements Initializable
         }
     }
 
+    /**
+     * Обработчик события нажатия на кнопку удаления работника.
+     * Вызывает метод remove_row() для удаления выбранных строк из таблицы работников.
+     * Если ни одна строка не выбрана, выводит сообщение об ошибке.
+     * @param event событие нажатия на кнопку удаления работника
+     */
     @FXML
     private void delete(ActionEvent event)
     {
@@ -144,12 +185,19 @@ public class WorkerController implements Initializable
             }
         }
     }
+
+    /**
+     * Обработчик события нажатия на кнопку сохранения таблицы работников в файл.
+     * Сохраняет данные из таблицы в файл "saves/save.csv".
+     * Если возникает ошибка ввода-вывода, выводит сообщение об ошибке.
+     * После сохранения файла открывает папку "saves".
+     */
     @FXML
     private void save() {
         try {
             log.debug("saving to file");
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save.csv"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("saves/save_worker.csv"));
             for(Worker workers : List)
             {
                 writer.write(workers.getName() + ";" + workers.getSurname() + ";"
@@ -229,10 +277,13 @@ public class WorkerController implements Initializable
         }
     }
 
-
-
-
-
+    /**
+     * Обработчик события нажатия на кнопку сохранения таблицы работников в PDF файл.
+     * Сохраняет данные из таблицы в файл "pdf/report_worker.pdf".
+     * Если список работников пуст, выбрасывает исключение MyException.
+     * Если возникает ошибка ввода-вывода, выводит сообщение об ошибке.
+     */
+    @FXML
     public void toPDF() {
         try {
             log.debug("Saving to PDF");
@@ -285,12 +336,25 @@ public class WorkerController implements Initializable
         }
     }
 
+    /**
+     * Обработчик события изменения имени работника в таблице.
+     * Получает выделенного работника из таблицы и обновляет его имя в соответствии с новым значением.
+     * Затем вызывает метод updateWorker() из workerService для сохранения изменений в базе данных.
+     * @param editEvent Событие изменения ячейки таблицы, содержащее новое значение имени работника.
+     */
     @FXML
     private void change_name(TableColumn.CellEditEvent<Worker, String> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
         selectedPet.setName(editEvent.getNewValue());
         workerService.updateWorker(selectedPet);
     }
+
+    /**
+     * Обработчик события изменения фамилии работника в таблице.
+     * Получает выделенного работника из таблицы и обновляет его фамилию в соответствии с новым значением.
+     * Затем вызывает метод updateWorker() из workerService для сохранения изменений в базе данных.
+     * @param editEvent Событие изменения ячейки таблицы, содержащее новое значение фамилии работника.
+     */
     @FXML
     private void change_surname(TableColumn.CellEditEvent<Worker, String> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
@@ -298,6 +362,13 @@ public class WorkerController implements Initializable
         workerService.updateWorker(selectedPet);
     }
 
+    /**
+     * Обработчик события изменения опыта работы работника в таблице.
+     * Получает выделенного работника из таблицы и обновляет его опыт работы в соответствии с новым значением.
+     * Если новое значение опыта работы меньше нуля, обновление не происходит и таблица обновляется.
+     * Затем вызывает метод updateWorker() из workerService для сохранения изменений в базе данных.
+     * @param editEvent Событие изменения ячейки таблицы, содержащее новое значение опыта работы работника.
+     */
     @FXML
     private void change_exp(TableColumn.CellEditEvent<Worker, Integer> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
@@ -310,6 +381,12 @@ public class WorkerController implements Initializable
         else table.refresh();
     }
 
+    /**
+     * Обработчик события изменения должности работника в таблице.
+     * Получает выделенного работника из таблицы и обновляет его должность в соответствии с новым значением.
+     * Затем вызывает метод updateWorker() из workerService для сохранения изменений в базе данных.
+     * @param editEvent Событие изменения ячейки таблицы, содержащее новое значение должности работника.
+     */
     @FXML
     private void change_pos(TableColumn.CellEditEvent<Worker, String> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
@@ -317,6 +394,12 @@ public class WorkerController implements Initializable
         workerService.updateWorker(selectedPet);
     }
 
+    /**
+     * Обработчик события изменения даты рождения работника в таблице.
+     * Получает выделенного работника из таблицы и обновляет его дату рождения в соответствии с новым значением.
+     * Затем вызывает метод updateWorker() из workerService для сохранения изменений в базе данных.
+     * @param editEvent Событие изменения ячейки таблицы, содержащее новое значение даты рождения работника.
+     */
     @FXML
     private void change_data(TableColumn.CellEditEvent<Worker, LocalDate> editEvent) {
         Worker selectedPet = table.getSelectionModel().getSelectedItem();
@@ -324,14 +407,24 @@ public class WorkerController implements Initializable
         workerService.updateWorker(selectedPet);
     }
 
-
-
-
+    /**
+     * Метод для получения отфильтрованного и отсортированного списка работников.
+     * Создает новый отфильтрованный список на основе исходного списка работников, используя фильтр из searchField.
+     * Затем создает новый отсортированный список на основе отфильтрованного списка и связывает его с компаратором таблицы.
+     * @return Отсортированный список работников.
+     */
     private SortedList<Worker> getSortedList() {
         SortedList<Worker> sortedList = new SortedList<>(getFilteredList());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         return sortedList;
     }
+
+    /**
+     * Метод для получения отфильтрованного списка работников на основе заданного текстового фильтра.
+     * Создает новый отфильтрованный список на основе исходного списка работников, используя заданный текстовый фильтр.
+     * Фильтр применяется к полям "Должность", "Имя", "Фамилия", "Дата рождения" и "Опыт работы" каждого работника.
+     * @return Отфильтрованный список работников.
+     */
     private FilteredList<Worker> getFilteredList() {
         FilteredList<Worker> filteredList = new FilteredList<>(List, b -> true);
         search.textProperty().addListener((observable, oldValue, newValue) ->
@@ -355,33 +448,29 @@ public class WorkerController implements Initializable
         return filteredList;
     }
 
+    /**
+     * Метод для конвертации даты из формата "yyyy-MM-dd" в формат "dd.MM.yyyy".
+     * @param temp Дата в формате "yyyy-MM-dd".
+     * @return Дата в формате "dd.MM.yyyy".
+     */
     private String date_converter(String temp){
         String[] temp2 = temp.split("-");
         return temp2[2] + '.' + temp2[1] + '.' + temp2[0];
     }
 
-
-
-
-
-
-
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         choice_box.getItems().addAll(choices);
         choice_box.setValue("Workers");
 
         setObList();
 
-        //id_column.setCellValueFactory(new PropertyValueFactory<Worker, Integer>("ID"));
         name_column.setCellValueFactory(new PropertyValueFactory<>("Name"));
         surname_column.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         date_column.setCellValueFactory(new PropertyValueFactory<>("Date_bd"));
         position_column.setCellValueFactory(new PropertyValueFactory<>("Position"));
         exp_column.setCellValueFactory(new PropertyValueFactory<>("Experience"));
-
 
         table.setEditable(true);
         name_column.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -390,18 +479,6 @@ public class WorkerController implements Initializable
         position_column.setCellFactory(ChoiceBoxTableCell.forTableColumn("Doorman", "Receptionist", "Bellboy", "Liftman", "Concierge", "Porter", "Waiter", "Manager"));
         exp_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 
-
-
-
-
-
         table.setItems(getSortedList());
-
     }
-
-
-
-
-
 }
-

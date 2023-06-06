@@ -29,14 +29,6 @@ public class Client {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    public Room getRoom() {
-        return room;
-    }
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-
     public Client(){}
 
     public Integer getId_client() {
@@ -52,7 +44,7 @@ public class Client {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = capitalize(name);
     }
 
     public String getSurname() {
@@ -60,7 +52,7 @@ public class Client {
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.surname = capitalize(surname);
     }
 
     public LocalDate getDate_bd() {
@@ -93,6 +85,20 @@ public class Client {
 
     public void setStay_lenght(Integer stay_lenght) {
         this.stay_lenght = stay_lenght;
+    }
+
+
+    public Room getRoom() {
+        return room;
+    }
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public static String capitalize(String str) {
+        if (str == null || str.length() == 0)
+            return str;
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
     @Override

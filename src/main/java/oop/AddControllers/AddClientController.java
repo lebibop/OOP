@@ -37,6 +37,9 @@ public class AddClientController implements Initializable  {
     @FXML
     private ChoiceBox<Room> room_choose;
 
+    /**
+     * Выполняет поиск свободных номеров в базе данных и отображает их в выпадающем списке.
+     */
     @FXML
     private void search() {
         try {
@@ -65,8 +68,11 @@ public class AddClientController implements Initializable  {
         }
     }
 
-
-
+    /**
+     * Сохраняет изменения в базе данных после редактирования клиента.
+     * Если данные введены корректно, то создается новый объект клиента и происходит обновление базы данных.
+     * Если данные введены некорректно, то выводится сообщение об ошибке.
+     */
     @FXML
     private void saveNewVetToDb(ActionEvent event){
         if (validateInputs()) {
@@ -83,6 +89,11 @@ public class AddClientController implements Initializable  {
         }
     }
 
+    /**
+     * Проверяет корректность введенных данных.
+     * Если все поля заполнены и выбрана свободная комната, возвращает true.
+     * Если есть незаполненные поля или выбрана занятая комната, выводит сообщение об ошибке и возвращает false.
+     */
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
         if (name.getText().equals("") || surname.getText().equals("") || date_bd.getValue() == null || date_arr.getValue() == null || date_dep.getValue() == null || room_choose.getValue() == null) {
@@ -107,6 +118,10 @@ public class AddClientController implements Initializable  {
         return true;
     }
 
+    /**
+     * Создает новый объект клиента на основе введенных данных.
+     * @return новый объект клиента
+     */
     private Client createVetFromInput() {
         Client vet = new Client();
         vet.setName(name.getText());
@@ -119,12 +134,20 @@ public class AddClientController implements Initializable  {
         return vet;
     }
 
+    /**
+     * Задерживает закрытие окна на 1 секунду.
+     * @param event событие, вызвавшее метод
+     */
     private void delayWindowClose(ActionEvent event) {
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(event2 -> closeWindow(event));
         delay.play();
     }
 
+    /**
+     * Закрывает текущее окно.
+     * @param event событие, вызвавшее метод
+     */
     @FXML
     private void closeWindow(ActionEvent event) {
         SceneController.close(event);

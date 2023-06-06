@@ -12,17 +12,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import oop.Helpers.UpdateStatus;
 import oop.Model.Report;
 import oop.Model.Room;
 import oop.Services.ReportService;
-import oop.Services.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.*;
@@ -33,9 +28,11 @@ import java.time.Month;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import static oop.AddControllers.AddWorkerController.isNumeric;
 
-
+/**
+ * Контроллер для таблицы отчетов.
+ * @author lebibop
+ */
 public class ReportController implements Initializable
 {
     @FXML
@@ -57,17 +54,19 @@ public class ReportController implements Initializable
     private TextField search;
 
     @FXML
-    private TableView<Report> table = new TableView<Report>();
-
-    @FXML
-    private Label search_invalid_label;
+    private TableView<Report> table = new TableView<>();
 
     private final String[] choices = {"Workers","Clients","Rooms","Reports"};
 
     ReportService reportService = new ReportService();
-    RoomService roomService = new RoomService();
     ObservableList<Report> List = FXCollections.observableArrayList();
 
+    /**
+     * Обработчик события выбора значения в выпадающем списке.
+     * Получает выбранное значение и вызывает соответствующий метод в классе SceneController для отображения соответствующей сцены.
+     * @param event событие выбора значения в выпадающем списке
+     * @throws IOException если возникает ошибка ввода-вывода при отображении сцены
+     */
     @FXML
     private void getChoices(ActionEvent event) throws IOException {
         String choice = choice_box.getValue();
@@ -80,84 +79,36 @@ public class ReportController implements Initializable
 
     }
 
+    /**
+     * Обработчик события выбора месяца в выпадающем списке.
+     * Очищает список отчетов и добавляет в него отчеты за выбранный месяц.
+     */
     @FXML
-    private void getChoices_month(ActionEvent event) throws IOException {
+    private void getChoices_month() {
+        log.debug("Adding reports");
         List.clear();
         List.addAll(reportService.getReports(choice_box_month.getValue().getValue()));
         choice_box_month.setValue(choice_box_month.getValue());
+        log.info("Adding is done");
     }
 
-
-    @FXML
-    void refreshScreen(ActionEvent event) throws IOException {
-        SceneController.getReportsScene(event);
-    }
-    @FXML
-    private void add(ActionEvent event) throws IOException {
-        log.debug("adding a report");
-
-        newWindowController.getNewReportWindow();
-        if(UpdateStatus.isIsReportAdded()) {
-            refreshScreen(event);
-            UpdateStatus.setIsReportAdded(false);
-        }
-        log.info("Report added");
-    }
-
-
-
+    /**
+     * Устанавливает список отчетов.
+     * Добавляет в список отчеты за предыдущий месяц.
+     */
     private void setObList() {
+        log.debug("Adding reports");
         List.clear();
         List.addAll(reportService.getReports(LocalDate.now().minusMonths(1).getMonthValue()));
+        log.info("Adding is done");
     }
 
-
-
-    private void remove_row(ActionEvent event) throws MyException, IOException {
-
-        int selectedID = table.getSelectionModel().getSelectedIndex();
-        if (selectedID == -1) throw new MyException();
-        else {
-            ObservableList<Report> selectedRows = table.getSelectionModel().getSelectedItems();
-            for (Report report : selectedRows) {
-                reportService.deleteReport(report);
-            }
-            refreshScreen(event);
-        }
-    }
-
-    static class MyException extends Exception
-    {
-        public MyException()
-        {
-            super("Choose a row to delete");
-        }
-    }
-
+    /**
+     * Обработчик события нажатия на кнопку сохранения отчета в файл.
+     * Сохраняет отчет в формате CSV в файл "save_report.csv" в папке "saves".
+     */
     @FXML
-    private void delete(ActionEvent event)
-    {
-        try {
-            log.debug("deleting a Report");
-            search_invalid_label.setText("");
-            remove_row(event);
-            log.info("Report deleted");
-        }
-
-        catch (MyException | IOException myEx){
-            log.error("Exception " + myEx);
-            Alert IOAlert = new Alert(Alert.AlertType.ERROR, myEx.getMessage(), ButtonType.OK);
-            IOAlert.setContentText(myEx.getMessage());
-            IOAlert.showAndWait();
-            if(IOAlert.getResult() == ButtonType.OK)
-            {
-                IOAlert.close();
-            }
-        }
-    }
-    @FXML
-    private void save(ActionEvent event) throws IOException
-    {
+    private void save() {
         try
         {
             log.debug("saving to file");
@@ -186,11 +137,14 @@ public class ReportController implements Initializable
             }
         }
     }
-    @FXML
-    private void upload(ActionEvent event) throws IOException {}
 
-
-    public void toPDF(ActionEvent actionEvent) throws Exception
+    /**
+     * Обработчик события нажатия на кнопку сохранения таблицы отчетов в PDF файл.
+     * Сохраняет данные из таблицы в файл "pdf/report_report.pdf".
+     * Если список работников пуст, выбрасывает исключение MyException.
+     * Если возникает ошибка ввода-вывода, выводит сообщение об ошибке.
+     */
+    public void toPDF() throws Exception
     {
         try {
             log.debug("Saving to PDF");
@@ -203,7 +157,7 @@ public class ReportController implements Initializable
             my_report_table.setTotalWidth(PageSize.A4.getWidth() - my_pdf_report.leftMargin() - my_pdf_report.rightMargin()); // устанавливаем фиксированную ширину таблицы
             my_report_table.setLockedWidth(true);
 
-            PdfPCell headerCell = new PdfPCell(new Phrase("REPORT by " + String.valueOf(choice_box_month.getValue())));
+            PdfPCell headerCell = new PdfPCell(new Phrase("REPORT by " + choice_box_month.getValue()));
             headerCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             headerCell.setColspan(4);
             headerCell.setPaddingBottom(10);
@@ -217,7 +171,7 @@ public class ReportController implements Initializable
             my_report_table.addCell(new PdfPCell(new Phrase("Room", FontFactory.getFont(FontFactory.COURIER, 16, Font.BOLD))));
 
 
-            if (List.isEmpty()) throw new MyException();
+            if (List.isEmpty()) throw new Exception();
 
             for(Report reports : List)
             {
@@ -234,18 +188,31 @@ public class ReportController implements Initializable
             my_pdf_report.close();
             log.info("Saved to PDF");
         }
-        catch (FileNotFoundException | DocumentException | MyException e)
+        catch (FileNotFoundException | DocumentException e)
         {
             log.warn("Exception " + e);
             e.printStackTrace();
         }
     }
 
+    /**
+     * Метод для получения отфильтрованного и отсортированного списка отчетов.
+     * Создает новый отфильтрованный список на основе исходного списка отчетов, используя фильтр из searchField.
+     * Затем создает новый отсортированный список на основе отфильтрованного списка и связывает его с компаратором таблицы.
+     * @return Отсортированный список отчетов.
+     */
     private SortedList<Report> getSortedList() {
         SortedList<Report> sortedList = new SortedList<>(getFilteredList());
         sortedList.comparatorProperty().bind(table.comparatorProperty());
         return sortedList;
     }
+
+    /**
+     * Метод для получения отфильтрованного списка отчетов на основе заданного текстового фильтра.
+     * Создает новый отфильтрованный список на основе исходного списка отчетов, используя заданный текстовый фильтр.
+     * Фильтр применяется к полям "Номер комнаты", "Количество клиентов за месяц", "Занятые дни за месяц", "Свободные дни за месяц" каждого отчета.
+     * @return Отфильтрованный список отчетов.
+     */
     private FilteredList<Report> getFilteredList() {
         FilteredList<Report> filteredList = new FilteredList<>(List, b -> true);
         search.textProperty().addListener((observable, oldValue, newValue) ->
@@ -292,7 +259,6 @@ public class ReportController implements Initializable
 //        fpm_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 //        bpm_column.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter()));
 //        room_column.setCellFactory(ChoiceBoxTableCell.forTableColumn());
-
 
         table.setItems(getSortedList());
     }

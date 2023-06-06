@@ -3,15 +3,25 @@ package oop.Services;
 
 import oop.Helpers.HibernateUtil;
 import oop.Model.Worker;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Класс для работы с таблицей Worker в базе данных
+ * @author lebibop
+ */
 public class WorkerService {
 
+    /**
+     * Создает нового работника в базе данных или обновляет существующего.
+     * @param worker объект, представляющий работника
+     * @return true, если транзакция была успешно завершена, иначе false
+     * @throws HibernateException если возникла ошибка при работе с Hibernate
+     */
     public Boolean createWorker(Worker worker) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -28,6 +38,11 @@ public class WorkerService {
         return false;
     }
 
+    /**
+     * Обновляет данные о работнике в базе данных.
+     * @param worker объект, представляющий работника
+     * @throws HibernateException если возникла ошибка при работе с Hibernate
+     */
     public void updateWorker(Worker worker) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -42,6 +57,11 @@ public class WorkerService {
         }
     }
 
+    /**
+     * Удаляет данные о работнике из базы данных.
+     * @param worker объект, представляющий работника
+     * @throws HibernateException если возникла ошибка при работе с Hibernate
+     */
     public void deleteWorker(Worker worker) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -56,15 +76,11 @@ public class WorkerService {
         }
     }
 
-    public Worker getWorker(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.find(Worker.class, id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
+    /**
+     * Получает список всех работников из базы данных.
+     * @return список объектов, представляющих работников
+     * @throws HibernateException если возникла ошибка при работе с Hibernate
+     */
     public List<Worker> getWorkers() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Worker", Worker.class).list();

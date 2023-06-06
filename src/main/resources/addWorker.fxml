@@ -6,16 +6,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0" prefWidth="444.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oop.AddControllers.AddWorkerController">
-   <children>
-      <TextField fx:id="name" layoutX="33.0" layoutY="65.0" promptText="Enter Name" />
-      <TextField fx:id="surname" layoutX="33.0" layoutY="111.0" promptText="Enter Surname" />
-      <DatePicker fx:id="bday" layoutX="33.0" layoutY="152.0" promptText="Choose B-day" />
-      <TextField fx:id="exp" layoutX="33.0" layoutY="251.0" promptText="Enter Experience" />
-      <Button layoutX="259.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveNewVetToDb" prefHeight="26.0" prefWidth="126.0" text="Save" />
-      <Button layoutX="259.0" layoutY="152.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="26.0" prefWidth="126.0" text="Close" />
-      <ChoiceBox fx:id="position" layoutX="32.0" layoutY="202.0" prefWidth="150.0" />
-      <Button layoutX="259.0" layoutY="250.0" mnemonicParsing="false" onAction="#add_file" prefHeight="26.0" prefWidth="126.0" text="Add from file" />
-
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="319.0"
+            prefWidth="444.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="oop.AddControllers.AddWorkerController">
+   <TextField fx:id="name" layoutX="33.0" layoutY="65.0" promptText="Enter Name"/>
+   <TextField fx:id="surname" layoutX="33.0" layoutY="111.0" promptText="Enter Surname"/>
+   <DatePicker fx:id="bday" layoutX="33.0" layoutY="152.0" promptText="Choose B-day"/>
+   <TextField fx:id="exp" layoutX="33.0" layoutY="251.0" promptText="Enter Experience"/>
+   <Button layoutX="259.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveNewVetToDb" prefHeight="26.0"
+           prefWidth="126.0" text="Save"/>
+   <Button layoutX="259.0" layoutY="152.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="26.0"
+           prefWidth="126.0" text="Close"/>
+   <ChoiceBox fx:id="position" layoutX="32.0" layoutY="202.0" prefWidth="150.0"/>
 </AnchorPane>

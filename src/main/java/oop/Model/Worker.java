@@ -22,12 +22,7 @@ public class Worker {
     private Integer experience;
 
 
-
-
-    public Worker() {
-
-    }
-
+    public Worker() {}
 
     public Integer getId_worker() {
         return id_worker;
@@ -78,12 +73,9 @@ public class Worker {
         this.experience = experience;
     }
 
-    public static String capitalize(String str)
-    {
-        if (str == null || str.length() == 0) {
+    public static String capitalize(String str) {
+        if (str == null || str.length() == 0)
             return str;
-        }
-
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
@@ -92,5 +84,4 @@ public class Worker {
         return String.format("%d %s %s %s %s %s",
                 this.id_worker, this.name, this.surname, this.date_bd, this.position, this.experience);
     }
-
 }

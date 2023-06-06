@@ -1,15 +1,16 @@
 package oop.Helpers;
 
+/**
+ * Класс для проверки на добавление элемента в базу данных
+ * @author lebibop
+ */
 public final class UpdateStatus {
 
-    private UpdateStatus() {
-
-    }
+    private UpdateStatus() {}
 
     private static boolean isWorkerAdded;
     private static boolean isRoomAdded;
     private static boolean isClientAdded;
-    private static boolean isReportAdded;
 
     public static boolean isIsWorkerAdded() {
         return isWorkerAdded;
@@ -33,13 +34,5 @@ public final class UpdateStatus {
 
     public static void setIsClientAdded(boolean isClientAdded) {
         UpdateStatus.isClientAdded = isClientAdded;
-    }
-
-    public static boolean isIsReportAdded() {
-        return isReportAdded;
-    }
-
-    public static void setIsReportAdded(boolean isReportAdded) {
-        UpdateStatus.isReportAdded = isReportAdded;
     }
 }

@@ -20,6 +20,11 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
+
+/**
+ * Контроллер для редактирования клиента.
+ * @author lebibop
+ */
 public class EditClientController implements Initializable  {
     private Client editedObject;
     ClientService clientService = new ClientService();
@@ -39,6 +44,10 @@ public class EditClientController implements Initializable  {
     @FXML
     private ChoiceBox<Room> room_choose;
 
+    /**
+     * Устанавливает объект, который будет редактироваться в окне.
+     * @param editedObject Объект, который будет редактироваться.
+     */
     public void setEditedObject(Client editedObject) {
         this.editedObject = editedObject;
 
@@ -51,6 +60,11 @@ public class EditClientController implements Initializable  {
         cap.setValue(editedObject.getRoom().getCapacity());
     }
 
+    /**
+     * Выполняет поиск свободных комнат в заданный период времени с заданной вместимостью.
+     * Если комнаты найдены, они добавляются в выпадающий список комнат.
+     * Если комнаты не найдены, выводится сообщение об ошибке.
+     */
     @FXML
     private void search(){
         try {
@@ -79,8 +93,11 @@ public class EditClientController implements Initializable  {
         }
     }
 
-
-
+    /**
+     * Сохраняет изменения в базе данных после редактирования клиента.
+     * Если данные введены корректно, то создается новый объект клиента и происходит обновление базы данных.
+     * Если данные введены некорректно, то выводится сообщение об ошибке.
+     */
     @FXML
     private void saveNewVetToDb(ActionEvent event) {
         if (validateInputs()) {
@@ -100,6 +117,11 @@ public class EditClientController implements Initializable  {
         }
     }
 
+    /**
+     * Проверяет корректность введенных данных.
+     * Если все поля заполнены и выбрана свободная комната, возвращает true.
+     * Если есть незаполненные поля или выбрана занятая комната, выводит сообщение об ошибке и возвращает false.
+     */
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
         if (name.getText().equals("") || surname.getText().equals("") || date_bd.getValue() == null || date_arr.getValue() == null || date_dep.getValue() == null || room_choose.getValue() == null) {
@@ -123,6 +145,10 @@ public class EditClientController implements Initializable  {
         return true;
     }
 
+    /**
+     * Создает новый объект клиента на основе введенных данных.
+     * @return новый объект клиента
+     */
     private Client createVetFromInput() {
         Client vet = new Client();
         vet.setName(name.getText());
@@ -135,12 +161,20 @@ public class EditClientController implements Initializable  {
         return vet;
     }
 
+    /**
+     * Задерживает закрытие окна на 1 секунду.
+     * @param event событие, вызвавшее метод
+     */
     private void delayWindowClose(ActionEvent event) {
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(event2 -> closeWindow(event));
         delay.play();
     }
 
+    /**
+     * Закрывает текущее окно.
+     * @param event событие, вызвавшее метод
+     */
     @FXML
     private void closeWindow(ActionEvent event) {
         SceneController.close(event);

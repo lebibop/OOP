@@ -10,7 +10,6 @@ import oop.Controllers.SceneController;
 import oop.Helpers.UpdateStatus;
 import oop.Model.Report;
 import oop.Model.Room;
-import oop.Services.ReportService;
 import oop.Services.RoomService;
 import java.net.URL;
 import java.util.Objects;
@@ -25,6 +24,11 @@ public class AddRoomController implements Initializable  {
     @FXML
     private TextField price;
 
+    /**
+     * Сохраняет изменения в базе данных после редактирования комнаты.
+     * Если данные введены корректно, то создается новый объект комнаты и происходит обновление базы данных.
+     * Если данные введены некорректно, то выводится сообщение об ошибке.
+     */
     @FXML
     private void saveNewVetToDb(ActionEvent event){
         if (validateInputs()) {
@@ -137,14 +141,24 @@ public class AddRoomController implements Initializable  {
         }
     }
 
+    /**
+     * Проверяет, является ли строка числом.
+     * @param str строка для проверки
+     * @return true, если строка является числом, иначе false
+     */
     public static boolean isNumeric(String str) {
         try {
-            return Integer.parseInt(str) > 0;
+            return Integer.parseInt(str) <= 0;
         } catch(NumberFormatException e){
-            return false;
+            return true;
         }
     }
 
+    /**
+     * Проверяет корректность введенных данных.
+     * Если все поля заполнены и выбрана свободная комната, возвращает true.
+     * Если есть незаполненные поля или выбрана занятая комната, выводит сообщение об ошибке и возвращает false.
+     */
     private boolean validateInputs() {
         Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Input Error", ButtonType.OK);
         if (number.getText().equals("") || capacity.getText().equals("") || price.getText().equals("")) {
@@ -157,7 +171,7 @@ public class AddRoomController implements Initializable  {
             return false;
         }
 
-        if (!isNumeric(number.getText())){
+        if (isNumeric(number.getText())){
             IOAlert.setContentText("Incorrect toe input for ROOM NUMBER - you must input a number (>0)");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
@@ -177,7 +191,7 @@ public class AddRoomController implements Initializable  {
             return false;
         }
 
-        if (!isNumeric(capacity.getText())){
+        if (isNumeric(capacity.getText())){
             IOAlert.setContentText("Incorrect input for CAPACITY - you must input a number (>0)");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
@@ -187,7 +201,7 @@ public class AddRoomController implements Initializable  {
             return false;
         }
 
-        if (!isNumeric(price.getText())){
+        if (isNumeric(price.getText())){
             IOAlert.setContentText("Incorrect input for PRICE - you must input a number (>0)");
             IOAlert.showAndWait();
             if(IOAlert.getResult() == ButtonType.OK)
@@ -200,7 +214,11 @@ public class AddRoomController implements Initializable  {
         return true;
     }
 
-
+    /**
+     * Проверяет, является ли номер комнаты корректным.
+     * @param number номер комнаты для проверки
+     * @return true, если номер корректный, иначе false
+     */
     private boolean correct_number(Integer number){
         for (Room rooms : roomService.getRooms()){
             if (Objects.equals(rooms.getNumber(), number))
@@ -209,6 +227,10 @@ public class AddRoomController implements Initializable  {
         return true;
     }
 
+    /**
+     * Создает новый объект комнаты на основе введенных данных.
+     * @return новый объект комнаты
+     */
     private Room createVetFromInput() {
         Room vet = new Room();
         vet.setNumber(Integer.valueOf(number.getText()));
@@ -217,70 +239,24 @@ public class AddRoomController implements Initializable  {
         return vet;
     }
 
+    /**
+     * Задерживает закрытие окна на 1 секунду.
+     * @param event событие, вызвавшее метод
+     */
     private void delayWindowClose(ActionEvent event) {
         PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(event2 -> closeWindow(event));
         delay.play();
     }
 
+    /**
+     * Закрывает текущее окно.
+     * @param event событие, вызвавшее метод
+     */
     @FXML
     private void closeWindow(ActionEvent event) {
         SceneController.close(event);
     }
-
-    @FXML
-    private void add_file(ActionEvent event){
-//        try {
-//            //log.debug("uploading to file");
-//            Stage stage = new Stage();
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setInitialDirectory(new File("saves"));
-//            fileChooser.setTitle("select file");
-//            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Select csv","*.csv"));
-//            File file = fileChooser.showOpenDialog(stage);
-//
-//            BufferedReader reader = new BufferedReader(new FileReader(file.toURI().toString().substring(6)));
-//            java.util.List<String> positions = Arrays.asList("doorman", "receptionist", "bellboy", "liftman", "concierge", "porter", "waiter", "manager");
-//            String temp;
-//            do{
-//                temp = reader.readLine();
-//                if(temp!=null) {
-//                    String[] temp2 = temp.split(";");
-//                    if (temp2.length == 5) {
-//                        if (isNumeric(temp2[4]) && positions.contains(temp2[3].toLowerCase())) {
-//                            Worker st = new Worker();
-//                            st.setName(temp2[0]);
-//                            st.setSurname(temp2[1]);
-//                            String[] words = temp2[2].split("-");
-//                            st.setDate_bd(LocalDate.of(Integer.parseInt(words[0]), Integer.parseInt(words[1]), Integer.parseInt(words[2])));
-//                            st.setPosition(temp2[3]);
-//                            st.setExperience(Integer.parseInt(temp2[4]));
-//
-//                            workerService.createWorker(st);
-//                        }
-//                    }
-//                }
-//            }
-//            while(temp!=null);
-//            reader.close();
-//
-//            UpdateStatus.setIsWorkerAdded(true);
-//            delayWindowClose(event);
-//            //log.info("uploaded to file");
-//        }
-//        catch (IOException e)
-//        {
-//            //log.warn("Exception " + e);
-//            Alert IOAlert = new Alert(Alert.AlertType.ERROR, "Error", ButtonType.OK);
-//            IOAlert.setContentText("Error");
-//            IOAlert.showAndWait();
-//            if(IOAlert.getResult() == ButtonType.OK)
-//            {
-//                IOAlert.close();
-//            }
-//        }
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

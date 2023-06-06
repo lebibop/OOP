@@ -6,7 +6,6 @@ import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import oop.Model.Client;
 import oop.Services.ClientService;
-
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -15,14 +14,12 @@ public class LocalDateCellFactory_Client_dep implements Callback<TableColumn<Cli
     ClientService clientService = new ClientService();
     @Override
     public TableCell<Client, LocalDate> call(TableColumn<Client, LocalDate> col) {
-        return new TableCell<Client, LocalDate>() {
+        return new TableCell<>() {
             private final DatePicker datePicker = new DatePicker();
 
             {
                 datePicker.editableProperty().set(false);
-                datePicker.setOnAction((e) -> {
-                    commitEdit(datePicker.getValue());
-                });
+                datePicker.setOnAction((e) -> commitEdit(datePicker.getValue()));
                 this.setGraphic(datePicker);
             }
 

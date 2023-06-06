@@ -38,6 +38,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 
+/**
+ * Контроллер для таблицы клиентов.
+ * @author lebibop
+ */
 public class ClientController implements Initializable
 {
     @FXML
